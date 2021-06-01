@@ -21,6 +21,7 @@ Route::get('/select-user-type', [Controller\UserController::class, 'selectUserTy
 Route::post('/password-forgot', [Controller\Auth\ForgotPasswordController::class, 'recoverPassword'])->name('auth.password-recover');
 Route::get('/', [Controller\DashboardController::class, 'Dashboard'])->name('user.dashboard');
 Route::get('/password-forgot', [Controller\UserController::class, 'forgotPassword'])->name('auth.password-forgot');
+Route::get('/wallet-tansfer', [Controller\WalletController::class, 'fwalletDashboard'])->name('wallet.transfer');
 
 // Auth::routes();
 

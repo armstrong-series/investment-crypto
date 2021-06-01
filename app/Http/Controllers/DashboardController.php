@@ -17,16 +17,20 @@ class DashboardController extends Controller
     {
         try {
             $users = User::where(['id' => Auth::id()])->get();
-            // $data = [
-            //     'page' => 'dashboard',
-            //     'subs' => '',
-            //     'users' => $users,
+            $data = [
+                'page' => 'dashboard',
+                'subs' => '',
+                'users' => $users,
 
-            // ];
-            return view('App.dashboard');
+            ];
+            return view('App.dashboard', $data);
         } catch (Exception $error) {
-            Log::info('DashboardController::class "dashboard"');
-            return $error;
+            Log::info("DashboardController@Dashboard error message:" . $error->getMessage());
+            $response = [
+                'status' =>false,
+                "message" => "Encountered an error"
+            ];
+            return $response;
         }
     }
 }
