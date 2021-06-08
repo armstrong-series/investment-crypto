@@ -34,7 +34,7 @@
                     <button type="submit" class="btn btn-primary">Login</button>
                 </form>
                 <div class="d-flex align-items-center mt-4"> <span class="text-muted me-1">Don't have an account?</span>
-                    <a href="#">Sign Up</a>
+                    <a href="{{ route('auth.register') }}">Sign Up</a>
                 </div>
                 <div class="d-flex align-items-center mt-4">
                     <a href="{{ route('auth.password-forgot') }}">Forgot Password?</a>

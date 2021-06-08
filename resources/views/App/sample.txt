@@ -1,0 +1,149 @@
+@extends('Layout.master')
+
+@section('title')
+    <title>Wallet </title>
+@endsection
+
+<body>
+	<!--wrapper-->
+	<div class="wrapper">
+		<!--sidebar wrapper -->
+        @section('content')
+		<!--end header -->
+		<!--start page wrapper -->
+		<div class="page-wrapper" id="investment">
+			<div class="page-content">
+				<!--breadcrumb-->
+				<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+					<button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#withdraw"  style="box-shadow: 4px 3px 4px grey;">Withdraw</button>
+					<div class="ms-auto">
+                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" style="box-shadow: 4px 3px 4px grey;">Invest</button>
+					</div>
+				</div>
+				<!--end breadcrumb-->
+				<div class="row">
+                    <div class="card col-md-8 radius-10">
+                        <div class="card-body">
+                            <div class="card-title">
+                                <h5 class="mb-0">Recent Transaction</h5>
+                            </div>
+                            <hr/>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Transaction ID</th>
+                                            <th>Type</th>
+                                            <th>Date</th>
+                                            <th>Amount</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>X-Small</td>
+                                            <td>&lt;576px</td>
+                                            <td>&lt;576px</td>
+                                            <td>6000</td>
+                                            <td>
+                                                <button type="button" class="btn btn-info">Details</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card col-md-4 radius-10" >
+                        <div class="card-body">
+                            <div class="card-title">
+                                <h5 class="mb-0">Amount</h5>
+                            </div>
+                            <h5 class="mb-0">2000 USD</h5>
+                        </div>
+                    </div>
+                </div>
+			</div>
+
+            <!-- Modal -->
+
+            <div class="col">
+					<!-- Button trigger modal -->
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <!-- <label for="exampleInputEmail1">Email address</label> -->
+                                    <input @keyup="percentageIncrement()" type="text" v-model="investment.amount" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Amount in USD">
+                                    <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Enter a Name</label>
+                                    <input @keyup="percentageIncrement()" type="text" v-model="investment.name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter a descriptive Name">
+                                    <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                                </div>
+                                <label for="exampleInputEmail1">Increment</label>
+                                <input  v-model="investment.increment" type="text" class="form-control" id="exampleInputEmail1" disabled aria-describedby="emailHelp" placeholder="20% Monthly Increment">
+                               
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button v-on:click="invest()" type="button" class="btn btn-primary">Proceed</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /End Modal -->
+
+
+
+
+            <!-- Modal -->
+
+            <div class="col">
+					<!-- Button trigger modal -->
+                <!-- Modal -->
+                <div class="modal fade" id="withdraw" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Amount</label>
+                                    <input  type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Amount in USD">
+                                   
+                                </div>
+                                
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Proceed</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /End Modal -->
+
+         <textarea name="" style="display: none;" id="createInvestment" cols="30" rows="10">{{ route('users.invest') }}</textarea>
+		</div>
+        @endsection
+		<!--end page wrapper -->
+		<!--start overlay-->
+	
+
+    @section('script')
+        <script src="{{ asset('assets/js/app/investment.js') }}"></script>
+    @endsection
+</body>
+
+</html>

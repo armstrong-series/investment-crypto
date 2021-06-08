@@ -11,10 +11,12 @@ class WalletController extends Controller
     {
         try {
 
-            $data = [
-                'page' => 'wallet',
-                'subs' => ''
-            ]
+            // $data = [
+            //     'page' => 'wallet',
+            //     'subs' => ''
+            // ];
+
+            return view('App.e-wallet', $data);
             
         } catch (Exception $error) {
             Log::info("WalletController@walletDashboard error message:" . $error->getMessage());

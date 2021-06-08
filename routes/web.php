@@ -21,7 +21,11 @@ Route::get('/select-user-type', [Controller\UserController::class, 'selectUserTy
 Route::post('/password-forgot', [Controller\Auth\ForgotPasswordController::class, 'recoverPassword'])->name('auth.password-recover');
 Route::get('/', [Controller\DashboardController::class, 'Dashboard'])->name('user.dashboard');
 Route::get('/password-forgot', [Controller\UserController::class, 'forgotPassword'])->name('auth.password-forgot');
-Route::get('/wallet-tansfer', [Controller\WalletController::class, 'fwalletDashboard'])->name('wallet.transfer');
+Route::get('/wallet-tansfer', [Controller\InvestmentController::class, 'dashboard'])->name('users.wallet');
+Route::post('/create-invest', [Controller\InvestmentController::class, 'invest'])->name('users.invest');
+Route::get('/admin', [Controller\Admin\AdminController::class, 'Dashboard'])->name('admin.dashboard');
+Route::get('/settings', [Controller\Settings\SettingsController::class, 'settingsDashboard'])->name('users.settings');
+Route::get('/settings/security', [Controller\Settings\SettingsController::class, 'security'])->name('users.settings.security');
 
 // Auth::routes();
 

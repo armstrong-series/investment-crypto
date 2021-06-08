@@ -51,8 +51,6 @@ class LoginController extends Controller
         if($user->user_type == "admin" || $user->user_type == "support")
         {
             return response()->redirectToRoute('admin.dashboard');
-        }elseif($user->user_type == "agent"){
-            return response()->redirectToRoute('agent.dashboard');
         }
         return response()->redirectToRoute('user.dashboard');
     }

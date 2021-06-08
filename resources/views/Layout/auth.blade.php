@@ -10,6 +10,8 @@
 <meta name="author" content="www.themeht.com" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"> -->
+
 <!-- Favicon Icon -->
 <link rel="shortcut icon" href="{{ asset('auth/assets/images/favicon.ico') }}" />
 
@@ -65,13 +67,13 @@
 @yield('auth-content')
 
 <!--body content end--> 
-
-
-
-
 </div>
 
 
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="{{ asset('assets/libraries/axios.min.js') }}"></script>
+<script src="{{ asset('assets/libraries/vue.js') }}"></script>
+<script src="https://unpkg.com/vue-toastr/dist/vue-toastr.umd.min.js"></script>
 <script src="{{ asset('auth/assets/js/theme-plugin.js') }}"></script>
 <script src="{{ asset('auth/assets/js/theme-script.js') }}"></script>
 @yield('script')
