@@ -37,7 +37,6 @@
 		<!--end sidebar wrapper -->
 		<!--start header -->
         @include('Includes.header')
-		
 		<!--end header -->
 		<!--start page wrapper -->
         @yield('content')

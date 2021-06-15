@@ -28,9 +28,6 @@
                     <button type="submit" class="btn btn-primary"><small>Reset</small></button>
                     <a href="{{ route('login') }}" style="float: right;"><small>Remember now?</small></a>
                 </form>
-                <!-- <div class="d-flex align-items-center mt-4">
-                    <a href="{{ route('login') }}"><small>Remember now?</small></a>
-                </div> -->
                 </div>
             </div>
             </div>

@@ -73,7 +73,6 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="{{ asset('assets/libraries/axios.min.js') }}"></script>
 <script src="{{ asset('assets/libraries/vue.js') }}"></script>
-<script src="https://unpkg.com/vue-toastr/dist/vue-toastr.umd.min.js"></script>
 <script src="{{ asset('auth/assets/js/theme-plugin.js') }}"></script>
 <script src="{{ asset('auth/assets/js/theme-script.js') }}"></script>
 @yield('script')

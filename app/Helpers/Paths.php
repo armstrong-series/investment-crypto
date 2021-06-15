@@ -7,4 +7,5 @@ class Paths {
 
 
     const MEDIA_PATH = 'public/media';
+    const PROFILE_PICS = 'public/media/profile_pics';
 }

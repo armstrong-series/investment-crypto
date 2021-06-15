@@ -6,6 +6,10 @@ use App\Models\PaymentTransactionLog;
 use Illuminate\Http\Request;
 use App\Helpers\Configuration;
 use Exception, Log, Auth, Storage;
+use \GuzzleHttp\Client;
+
+
+
 class InvestmentController extends Controller
 {
     public function __construct()
@@ -18,10 +22,16 @@ class InvestmentController extends Controller
     {
         try {
             $investment = Investment::where(['user_id' => Auth::id()])->get();
+            $rate = "https://api.alternative.me/v2/ticker/?convert=USD";
+            $price = file_get_contents($rate);
+            $result = json_decode($price, true);
+            $currencies =$result['data'];
+            
             $data = [
                 'page' => 'wallet',
                 'subs' => '',
-                'investment' => $investment
+                'investment' => $investment,
+                'currencies' => $currencies
             ];
             return view('App.crypto-wallet', $data);
 
@@ -35,16 +45,31 @@ class InvestmentController extends Controller
         }
     }
 
-    public function makeTransaction(Request $request)
-    {
+
+    // public function totalBalance(Request $request){
+    //     try {
+    //         $balance = PaymentTransactionLog::where(['user_id' => Auth::id, 'amount' =>$request->amount])->get();
+    //         $data = [
+    //             'balance' => 
+    //         ]
+    //     } catch (Exception $error) {
+    //         //throw $th;
+    //     }
+    // }
+
+    public function withdrawal(Request $request) {
         try {
-            $investment = Investment::where(['user_id' => Auth::id()])->get();
-           $data  = [
-            'investment' => $investment
-           ];
-            return view('App.payment', $data);
+           
+            $withdrawal = Investment::where(['user_id' => Auth::id()])->get();
+            $data = [
+                'withdrawal' => $withdrawal,
+                'page' => 'withdrawal',
+                'subs' => '',
+            ];
+             return view('App.withdrawal', $data);
+
         } catch (Exception $error) {
-            Log::info("InvestmentController@makeTransaction error message:" . $error->getMessage());
+            Log::info("InvestmentController@withdrawal error message:" . $error->getMessage());
             $response = [
                 'status' =>false,
                 "message" => "Encountered an error"
@@ -54,44 +79,13 @@ class InvestmentController extends Controller
     }
 
 
-    public function invest(Request $request)
+    public function coinUSDConversion()
     {
-        try {
-            if(!$request->amount || !$request->name){
-                $message = "All field is required!";
-                return response()->json(['message' => $message], 400);
-            }
-            $investment = new Investment();
-
-            $transaction =  new PaymentTransactionLog();
-            $transaction->user_id = Auth::id();
-            $transaction->txn_id = (string) \Str::uuid();
-            $transaction->amount = $request->amount;
-            $transaction->name = $request->name;
-            $transaction->currency = Configuration::INVESTMENT_CURRENCY;
-            $transaction->type = Configuration::INVESTMENT_TYPE;
-            $transaction->save();
-            if($transaction->save()){
-                $investment->user_id = $transaction->user_id;
-                $investment->name =  $transaction->name;
-                $investment->save();
-
-                return response()->json([
-                    'message' => "Investment Done Successfully",
-                ], 200);
-
-            }
-           
-            
-
-        } catch (Exception $error) {
-            Log::info("InvestmentController@invest error message:" . $error->getMessage());
-            $response = [
-                'status' =>false,
-                "message" => "Encountered an error"
-            ];
-            return $response;
-        }
+        $rate = "https://api.alternative.me/v2/ticker/?convert=USD";
+        $price = file_get_contents($rate);
+        $result = json_decode($price, true);
+        dd($result);
+        // $currencies =$result['data'];
     }
 
 }

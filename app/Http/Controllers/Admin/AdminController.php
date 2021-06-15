@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Auth, Log, Exception, Dotenv\Validator;
+use Auth, Log, Exception, Validator;
+use Hash;
 
 class AdminController extends Controller
 {
@@ -14,6 +15,22 @@ class AdminController extends Controller
     }
 
 
+
+
+    public function Users(Request $request)
+    {
+        try {
+
+            $users = User::where(['id' => Auth::id()])->get();
+            return response()->json([
+                'error' => false,
+                "message" => "Successful",
+                'users' => $users
+            ], 200);
+        } catch (Exception $error) {
+            Log::info("Admin\AdminController@Users error message:" . $error->getMessage());
+        }
+    }
     public function Dashboard()
     {
         try {
@@ -43,20 +60,37 @@ class AdminController extends Controller
             return $response;
         }
     }
+    public function userManagement(Request $request)
+    {
+        try {
+        
+            if (Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'support') {
+                $users = User::all();
+                $admin = User::where(['user_type' => 'admin'])->get();
+                $support = User::where(['user_type' => 'support'])->get();
+                $data = [
+                    'page' => 'user-management',
+                    'subs' => '',
+                    'support' => $support,
+                    'admin' => $admin,
+                    'users' => $users,
+    
+                ];
+            }else {
+                return redirect()->back();
+            }
+                return view('App.user-management', $data);
 
+        } catch (Exception $error){
+            
+        }
+    }
 
     public function createUser(Request $request)
     {
         try {
 
-            $validator = Validator::make($request->all(), [
-                'name' => 'required',
-                'email' => 'required|unique:users',
-                'password' => 'required|between:6,255',
-                'password_confirmation' => 'required|same:password',
-                // 'user_type' => 'required',
-
-            ]);
+            $validator = $this->validator($request->all());
             if ($validator->fails()) {
                 $message = $validator->errors()->all();
                 foreach ($message as $messages) {
@@ -68,6 +102,8 @@ class AdminController extends Controller
             $user->uuid = (string) \Str::uuid();
             $user->name = $request->name;
             $user->email = $request->email;
+            $user->nationality = $request->nationality;
+            $user->mobile = $request->mobile;
             $user->password = Hash::make($request->password);
             $user->user_type = $request->user_type;
             $user->save();
@@ -91,14 +127,7 @@ class AdminController extends Controller
     public function updateUser(Request $request)
     {
         try {
-            $validator = Validator::make($request->all(), [
-                'name' => 'required',
-                'email' => 'required|unique:users',
-                'password' => 'required|between:6,255',
-                'phone_number' => 'required',
-                'password_confirmation' => 'required|same:password',
-
-            ]);
+            $validator = $this->validator($request->all());
             if ($validator->fails()) {
                 $message = $validator->errors()->all();
                 foreach ($message as $messages) {
@@ -151,5 +180,18 @@ class AdminController extends Controller
             return $error;
         }
     }
+
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'name' => ['required', 'string', ],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'nationality' => ['required', 'string'],
+            'user_type' => ['required', 'string'],
+            
+        ]);
+    }
+
     
 }

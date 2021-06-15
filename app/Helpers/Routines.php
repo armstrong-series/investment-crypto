@@ -5,42 +5,74 @@ function availableCurrency() {
 
         [
             "name" => "Austrialian Dollar",
-            "code" => "AUD"
+            "symbol" => "AUD"
         ],
         [
             "name" => "British Pounds",
-            "code" => "GBP"
+            "symbol" => "GBP"
         ],
         [
             "name" => "Canadian Dollar",
-            "code" => "CAD"
+            "symbol" => "CAD"
         ],
         [
             "name" => "Euro",
-            "code" => "EU"
+            "symbol" => "EU"
         ],
         
         [
             "name" => "Japanese Yen",
-            "code" => "JPY"
+            "symbol" => "JPY"
         ],
         [
             "name" => "Cedis",
-            "code" => "CD"
+            "symbol" => "CD"
         ],
         [
             "name" => "Naira",
-            "code" => "NGN"
+            "symbol" => "NGN"
         ],
         [
             "name" => "Chinese Yuan",
-            "code" => "CHY"
+            "symbol" => "CHY"
         ],
         [
             "name" => "US Dollar",
-            "code" => "USD"
+            "symbol" => "USD"
         ],
     
         
     ];
 }
+
+
+function cryptoCurrencies()
+{
+    return [
+
+        [
+            "name" => "Bitcoin",
+            "symbol" => "BTC"
+        ],
+        [
+            "name" => "Etherium",
+            "symbol" => "ETH"
+        ],
+        [
+            "name" => "Litecoin",
+            "symbol" => "LTC"
+        ],
+        [
+            "name" => "Dogecoin",
+            "symbol" => "DOGE"
+        ],
+        [
+            "name" => "XRP",
+            "symbol" => "XRP"
+        ],
+        
+        
+    ];
+}
+
+

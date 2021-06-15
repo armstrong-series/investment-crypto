@@ -214,7 +214,13 @@
 							</div>
 						</a>
 						<ul class="dropdown-menu dropdown-menu-end">
-				
+						<li><a class="dropdown-item" href="{{ route('users.profile') }}"><i class='bx bx-user'></i><span>Profile</span></a>
+							</li>
+							<li>
+								<div class="dropdown-divider mb-0"></div>
+							</li>
+							<li><a class="dropdown-item" href="{{ route('users.settings') }}"><i class="bx bx-cog"></i><span>Settings</span></a>
+							</li>
 							<li>
 								<div class="dropdown-divider mb-0"></div>
 							</li>
@@ -222,8 +228,6 @@
 							</li>
 							<li>
 								<div class="dropdown-divider mb-0"></div>
-							</li>
-							<li><a class="dropdown-item" href="{{ route('users.settings') }}"><i class="bx bx-cog"></i><span>Settings</span></a>
 							</li>
 						</ul>
 					</div>

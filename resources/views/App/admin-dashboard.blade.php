@@ -84,7 +84,8 @@
 					   <div class="d-flex align-items-center float-right">
 					   <button type="button"
 					    style="border-radius: 50%; box-shadow: 3px 4px 4px grey;"
-						 class="btn btn-md btn-primary" data-toggle="modal" data-target="#users">+</button>  
+						 class="btn btn-md btn-primary"data-bs-toggle="modal"
+                         data-bs-target="#users" >+</button>  
 					   </div>
 					  
 					<div class="table-responsive">
@@ -113,56 +114,8 @@
 					 </div>
 					</div>
 			   </div>
-				<!-- Modal -->
-				<div class="modal fade" id="users" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-					<div class="modal-header">
-						
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Enter Username">
-						</div>
-
-						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Enter Email Address">
-						</div>
-						<label for="">Password</label>
-						<div class="form-group">
-							<input type="password" class="form-control" placeholder="Enter Password">
-						</div>
-						<label for="">Confirm Password</label>
-						<div class="form-group">
-							<input type="password" class="form-control" placeholder="Confirm Password">
-						</div>
-						<label for="">Attach a Profile Image</label>
-						<div class="form-group">
-							<input type="file" class="form-control">
-						</div>
-							<label for="">User Role</label>
-						<div class="form-group">
-							<select name="" id="" class="form-control">
-								<option value="admin">Admin</option>
-								<option value="support">Support</option>
-								<option value="regular">Regular</option>
-							</select>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary btn-md">Proceed</button>
-						<button class="btn btn-outline-success" type="button" disabled>
- 						 	<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-  								Processing...
-						</button>
-					</div>
-					</div>
-				</div>
-				</div>
+				
+				
 			</div>
 		</div>
 		@endsection

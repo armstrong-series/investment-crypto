@@ -13,7 +13,7 @@
         <div class="container">
             <div class="row align-items-center">
             <div class="col-lg-7 col-12">
-                <img class="img-fluid" src="{{ asset('auth/assets/img/auth.jpg') }}" alt="">
+                <img class="img-fluid" src="{{ asset('assets/images/authentication.svg') }}" alt="">
                 <!-- <img class="img-fluid" src="{{ asset('auth/assets/img/password.png') }}" alt=""> -->
             </div>
             <div class="col-lg-5 col-12">

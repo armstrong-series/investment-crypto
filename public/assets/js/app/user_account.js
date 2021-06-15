@@ -11,26 +11,85 @@ new Vue({
             password: '',
             password_confirmation: '',
             nationality: '',
-            phone_number: ''
+            user_type: '',
+            mobile: ''
         },
 
-        url: {
-            create: ''
+        users: [],
+
+        route: {
+            create: '',
+            create_user: ''
         }
     },
     mounted() {
-        this.url.create = $('#create').val();
-   
-        this.$toastr.defaultPosition = "toast-top-right";
-         this.$toastr.s(
-            "This Message From Toastr Plugin\n You can access this plugin : <font color='yellow'>this.$toastr</font>"
-          );
+        this.route.create = $('#create').val();
+        this.route.create_user = $('#create_users').val();
+        this.users = $('#all-users').val() ? JSON.parse($('#all-users').val()) : [];
+        
     },
 
     methods: {
+
+        createUser(){
+        this.isloading = false;
+        axios.post(this.route.create_user, {
+            name: this.account.name,
+            email: this.account.email,
+            nationality: this.account.nationality,
+            password: this.account.password,
+            mobile: this.account.mobile,
+            user_type: this.account.user_type,
+            password_confirmation: this.account.password_confirmation
+        }).then((response) => {
+            $('#users').modal('hide');
+            this.isloading = false;
+            const data = response.data
+                Command: toastr["success"](response.data.message)
+                toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+                }
+            }).catch((error) => {
+                console.log(error.response)
+                this.isLoading = false;
+                Command: toastr["info"](error.response.data.message)
+                    toastr.options = {
+                    "closeButton": false,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                    }
+            });
+        },
+
         createAccount() {
             this.isloading = false;
-            axios.post(this.url.create, {
+            axios.post(this.route.create, {
                 name: this.account.name,
                 email: this.account.email,
                 nationality: this.account.nationality,
@@ -39,19 +98,48 @@ new Vue({
             }).then((response) => {
                 this.isLoading = false;
                 const data = response.data
-                window.location.href = data.url,
-                // this.$toastr.defaultPosition = "toast-top-right";
-                this.$toastr.s(
-                    response.data.message
-                    ).catch((error) => {
-                    console.log(error.response)
-                    this.isLoading = false;
-                    this.$toastr.defaultPosition = "toast-top-right";
-                    this.$toastr.e(
-                         error.response.data.message
-                         )
-                    });
-                 })
+                Command: toastr["success"](response.data.message)
+                toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+                }
+                window.location.href = data.route
+                 }).catch((error) => {
+                console.log(error.response)
+                this.isLoading = false;
+                Command: toastr["error"](error.response.data.message)
+                    toastr.options = {
+                    "closeButton": false,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                    }
+                
+                });
         }
     }
 })

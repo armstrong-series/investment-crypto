@@ -2,6 +2,7 @@
 
 @section('title')
 <title>Account | Create</title>
+
 @endsection
 
 @section('auth-content')
@@ -13,11 +14,11 @@
         <div class="container" id="auth">
             <div class="row align-items-center">
             <div class="col-lg-7 col-12">
-                <img class="img-fluid" src="{{ asset('auth/assets/images/login.png') }}" alt="">
+                <img class="img-fluid" src="{{ asset('assets/images/authentication.svg') }}" alt="">
             </div>
             <div class="col-lg-5 col-12">
                 <div>
-                <h2 class="mb-3">Creeate an Account</h2>
+                <h2 class="mb-3">Create an Account</h2>
                 <form method="post" action="">
                  @csrf
                     <div class="messages"></div>
@@ -26,7 +27,7 @@
                     <div class="help-block with-errors"></div>
                     </div>
                     <div class="form-group">
-                     <input id="form_email" v-model="account.email" type="text" name="email" class="form-control" placeholder="Enter Email Address" required="required" data-error="password is required.">
+                     <input id="form_email" v-model="account.email" type="text" name="email" class="form-control" placeholder=" Email Address" required="required" data-error="password is required.">
                     <div class="help-block with-errors"></div>
                     </div>
                     <input id="form_phone" v-model="account.nationality" type="text" name="phone" class="form-control" placeholder="Nationality" required="required" data-error="phone number is required.">
@@ -62,8 +63,7 @@
 @endsection
 
 @section('script')  
-    <script src="https://unpkg.com/vue/dist/vue.js"></script>
-    <script src="https://unpkg.com/vue-toastr/dist/vue-toastr.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="{{ asset('assets/js/app/user_account.js') }}"></script>
     
     
