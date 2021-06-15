@@ -15,24 +15,13 @@ new Vue({
 
         
      
-         cryptocurrencies: {
-            coin: '', 
-            price: ''
-         },  
         
-       
 
         route: {
             init_payment: ''
         }
     },
 
-    computed:{
-
-        amountInUSD(){
-
-        },
-    },
     mounted() {
         this.route.init_payment = $('#initializePayment').val();
     },
@@ -47,16 +36,7 @@ new Vue({
 
          },
 
-    
-         selectCoin(event){
-            this.cryptocurrencies.coin = event.target.options[event.target.options.selectedIndex].text
-            console.log('selected-coin', this.cryptocurrencies.coin);
-         },
-
-        //  amountInUSD(){
-
-        //  },
-
+       
         initiateTransaction() {
             this.isloading = false;
             axios.post(this.route.init_payment, {

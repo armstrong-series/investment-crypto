@@ -54,9 +54,9 @@
 										<div class="progress-bar bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
 										<div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
 									</div>
-											<hr class="my-4" />	
-										</div>
+										<hr class="my-4" />	
 									</div>
+								 </div>
 								</div>
 								<div class="col-lg-8">
 									<div class="card">
@@ -64,12 +64,8 @@
 											<div class="row mb-3">
 												<div class="input-group mb-3">
 													<select class="form-select" v-model="selected_coin">
-														<option value="">Choose</option>
-															<option v-for="(currency, key) in cryptocurrencies.currencies"
-															v-bind:value="key">@{{ currency.name }}
-															</option>
-						
-													
+														<option value="" disabled>Choose</option>
+														<option v-for="(currency, key) in cryptocurrencies.currencies" v-bind:value="key">@{{ currency.name }}</option>					
 													</select>
 													<label class="input-group-text" for="inputGroupSelect02">Coin</label>
 												</div>
@@ -88,16 +84,17 @@
 											</div>	
 											<div class="row mb-3">										
 												<div class="input-group mb-3">
+													<input v-model="investment.increment" type="text" class="form-control"  placeholder=" 20% Monthly Increment in USD">
+													<label class="input-group-text" for="inputGroupSelect02">ROI</label>
+												</div>
+											</div>
+											<div class="row mb-3">										
+												<div class="input-group mb-3">
 													<textarea name="" id="" v-model="investment.description" cols="30" rows="5" placeholder="Enter Transaction Description" class="form-control"></textarea>
 												</div>
 											</div>	
 											
-											<div class="row mb-3">										
-												<div class="input-group mb-3">
-													<input v-model="investment.increment" type="text" class="form-control"  placeholder=" 20% Monthly Increment in USD">
-													<label class="input-group-text" for="inputGroupSelect02">ROI</label>
-												</div>
-											</div>									
+																				
 											<div class="row mb-3">
 												<button v-on:click="initiateTransaction()" class="btn btn-md" style="background: navy; color:white;">Pay</button>
 											</div>
@@ -119,7 +116,7 @@
 
 
 	@section('script')	
-
+	
 	<script>
 		new Vue ({
 
@@ -147,7 +144,7 @@
 					if(this.selected_coin  && this.entered_price){
 						this.cryptocurrencies.currencies[this.selected_coin]
 						const value = this.cryptocurrencies.currencies[this.selected_coin]
-						 const result = value.quotes.USD.price * this.entered_price
+						const result = value.quotes.USD.price * this.entered_price
 						 return result;
 
 						console.log('value', value)
@@ -162,9 +159,9 @@
 
 
 		})
-	</script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-        <script src="{{ asset('assets/js/app/investment.js') }}"></script>
+	</script>   
+	<script src="{{ asset('assets/js/app/investment.js') }}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 	@endsection
 </body>
 </html>

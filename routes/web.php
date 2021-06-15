@@ -19,6 +19,7 @@ Route::get('/logout', [Controller\Auth\LoginController::class, 'logout'])->name(
 Route::get('/account-create', [Controller\UserController::class, 'accountView'])->name('auth.register');
 
 
+
 Route::post('/payment', [Controller\Integrations\RaveController::class, 'initialize'])->name('make-payment');
 Route::get('/payment-callback', [Controller\Integrations\RaveController::class, 'callback'])->name('users.payment.callback');
 Route::get('/withdrawal', [Controller\InvestmentController::class, 'withdrawal'])->name('users.withdrawal');
