@@ -10,7 +10,7 @@
     @section('content')
 		<!--end header -->
 		<!--start page wrapper -->
-		<div id="transaction">
+		
 			<div class="page-wrapper">
 				<div class="page-content">
 					<!--breadcrumb-->
@@ -46,7 +46,7 @@
 									<div class="mt-3"></div>
 									<div class="d-flex align-items-center">
 										<div class="flex-grow-1 ms-2">
-											<h3 class="mb-0 text-secondary font-weight-bold">1,756 USD</h3>
+											<h3 class="mb-0 text-secondary font-weight-bold">{{ $account_balance }} USD</h3>
 										</div>	
 									</div>
 									<div class="progress mt-3" style="height:7px;">
@@ -55,6 +55,19 @@
 										<div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
 									</div>
 										<hr class="my-4" />	
+									</div>
+									
+									<div class="d-flex align-items-center">
+										<div class="flex-grow-1 ms-2">
+											<button type="button" class="btn btn-md btn-secondary" 
+											 data-bs-toggle="modal" data-bs-target="#withdraw"  style="color:white; box-shadow: 4px 3px 4px grey;">
+												<i class="bx bxs-wallet" style="color:white;"></i>Withdraw</button>
+										</div>	
+									</div>
+									<div class="progress mt-3" style="height:7px;">
+										<div class="progress-bar" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+										<div class="progress-bar bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+										<div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
 									</div>
 								 </div>
 								</div>
@@ -77,14 +90,16 @@
 											</div>	
 											<div class="row mb-3">										
 												<div class="input-group mb-3">
-													<input  v-bind:value="convertedPrice" type="text" class="form-control"  disabled placeholder="USD Equivalent">
+													<!-- <input  @keyup="percentageIncrement()"  v-bind:value="convertedPrice" type="text" class="form-control"  disabled placeholder="USD Equivalent"> -->
+													<input  @keyup="convertedPrice()"  v-bind:value="convertedPrice" type="text" class="form-control"  disabled placeholder="USD Equivalent">
+										
 													<!-- <input @keyup="percentageIncrement()"  v-model="investment.amount" type="text" class="form-control"  placeholder="USD Equivalent"> -->
 													<label class="input-group-text" for="inputGroupSelect02">USD</label>
 												</div>
 											</div>	
 											<div class="row mb-3">										
 												<div class="input-group mb-3">
-													<input v-model="investment.increment" type="text" class="form-control"  placeholder=" 20% Monthly Increment in USD">
+													<input v-model="increment" type="text" class="form-control" disabled placeholder=" 20% Monthly Increment in USD">
 													<label class="input-group-text" for="inputGroupSelect02">ROI</label>
 												</div>
 											</div>
@@ -103,6 +118,43 @@
 								</div>
 							</div>
 
+
+							  <!-- Modal -->
+							  <div class="modal fade" id="withdraw" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                    <div class="modal-body">
+										<div class="row mb-3">
+											<div class="input-group mb-3">
+												<select class="form-select" v-model="selected_coin">
+													<option value="" disabled>Choose</option>
+													<option v-for="(currency, key) in cryptocurrencies.currencies" v-bind:value="key">@{{ currency.name }}</option>					
+												</select>
+												<label class="input-group-text" for="inputGroupSelect02">Coin</label>
+											</div>
+										</div>
+										<div class="row mb-3">										
+											<div class="input-group mb-3">
+												<input  type="text" class="form-control" d placeholder=" Enter Amount">
+												<label class="input-group-text" for="inputGroupSelect02">Amount</label>
+											</div>
+										</div>
+										<div class="row mb-3">										
+											<div class="input-group mb-3">
+												<input  type="text" class="form-control" d placeholder=" Enter Narration ">
+												<label class="input-group-text" for="inputGroupSelect02">Narration</label>
+											</div>
+										</div>
+                                    </div>
+                                    <div class="modal-footer">
+                                   		 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button  type="button" class="btn btn-primary btn-md">Proceed</button>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- /End modal -->
 						</div>
 					</div>
 					<!--end row-->
@@ -111,13 +163,15 @@
 				<textarea name=""  id="currencies" style="display:none;" id="" cols="30" rows="10">{{ json_encode($currencies) }}</textarea>
 			</div>
 		<!--end page wrapper -->
-		</div>
+		
 	@endsection	
-
+	</div>
 
 	@section('script')	
-	
-	<script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+	<script src="{{ asset('assets/js/app/investment.js') }}"></script>
+	<!-- <script src="{{ asset('assets/js/app/exchange-rate.js') }}"></script> -->
+	<!-- <script>
 		new Vue ({
 
 			el: '#investment',
@@ -159,9 +213,9 @@
 
 
 		})
-	</script>   
-	<script src="{{ asset('assets/js/app/investment.js') }}"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+	</script>    -->
+
+	
 	@endsection
 </body>
 </html>

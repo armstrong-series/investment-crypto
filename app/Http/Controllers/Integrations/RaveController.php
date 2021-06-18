@@ -78,11 +78,11 @@ class RaveController extends Controller
         
         } catch (Exception $error) {
             Log::info("Integrations\RaveController@initialize error message:" . $error->getMessage());
-            $response = [
-                'status' =>false,
-                "message" => "Encountered an error"
-            ];
-            return $response;
+            
+            return  response()->json([
+                "message" => "Unable to process request",
+                "error" => true
+            ], 500);
         }
     }
 
@@ -114,11 +114,11 @@ class RaveController extends Controller
             
         } catch (Exception $error) {
             Log::info("Integrations\RaveController@callback error message:" . $error->getMessage());
-            $response = [
-                'status' =>false,
-                "message" => "Encountered an error"
-            ];
-            return $response;
+             $message = "Unable to complete Request";
+            return response()->json([
+                "message" => $message,
+                "error" =>true
+            ], 500);
         }
     }
 
@@ -126,7 +126,7 @@ class RaveController extends Controller
     protected function checkTransaction(array $data)
     {
         return Validator::make($data, [
-            'amount' => ['required', 'integer'],
+            'amount' => ['required'],
            
               
         ]);

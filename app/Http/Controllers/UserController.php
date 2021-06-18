@@ -86,14 +86,15 @@ class UserController extends Controller
     public function updateProfile(Request $request)
     {
         try {
-
+           
+        
             if ($request->hasFile('profile_pics')) {
                 $imagePath = storage_path('app/' . Paths::PROFILE_PICS);
                 $extension = $request->file('profile_pics')->getClientOriginalExtension();
                 if (in_array(strtolower($extension), ["jpg", "png", "jpeg"])) {
                     $fileName = time() . '.' . $extension;
                     $request->file('profile_pics')->move($imagePath, $fileName);
-                    $user = User::where(['id' => $request->id])->first();
+                    $user = User::where(['id' => Auth::id()])->first();
                     if (!$user) {
                         $message = 'User not found';
                         return response()->json([
@@ -103,7 +104,7 @@ class UserController extends Controller
                     $user->name = $request->name ? $request->name : $user->name;
                     $user->mobile = $request->mobile  ? $request->mobile  : $user->mobile;
                     $user->profile_pics = $fileName ? $fileName :  $user->profile_pics;
-                    $user->nationality = Hash::make($request->nationality) ? Hash::make($request->nationality) : $user->nationality;
+                    $user->nationality = $request->nationality ? $request->nationality : $user->nationality;
                     $user->save();
                     return response()->json([
                         'message' => "Profile updated successfully!",
@@ -119,6 +120,7 @@ class UserController extends Controller
                     $message = "Request has no file";
                     return response()->json(['message' => $message], 400);
                 }
+            
           
 
         } catch (Exception $error) {
@@ -131,6 +133,7 @@ class UserController extends Controller
         }
     }
 
+  
 
     public function profilePics(Request $request)
     {
@@ -160,8 +163,7 @@ class UserController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', ],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'mobile' => ['required', 'string', 'min:8'],
+            'password' => ['required', 'string', 'confirmed'],
             'nationality' => ['required', 'string'],
             
         ]);

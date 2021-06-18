@@ -11,10 +11,13 @@ new Vue({
         uploadPercentage: 0,
 
         profile:{
+            id: "",
             mobile: "",
             nationality: "",
             name: "",
         },
+        users:[],
+        profile: [],
 
         route:{
             profile_update: ""
@@ -23,6 +26,9 @@ new Vue({
 
     mounted() {
         this.route.profile_update = $('#profileUpdate').val();
+        this.users = $('#users').val() ? JSON.parse($('#users').val()) : [];
+        this.profile = $('#profile').val() ? JSON.parse($('#profile').val()) : [];
+        console.log('profile', this.profile)
     },
 
     methods: {
@@ -31,9 +37,9 @@ new Vue({
             this.isloading = false;
             let formData = new FormData();
             formData.append('profile_pics', this.imageFile);
-            formData.append('name', profile.name);
-            formData.append('nationality', profile.nationality);
-            formData.append('mobile', profile.mobile);
+            formData.append('name', this.profile.name);
+            formData.append('nationality', this.profile.nationality);
+            formData.append('mobile', this.profile.mobile);
             axios.post(this.route.profile_update, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'

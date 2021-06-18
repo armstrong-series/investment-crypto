@@ -20,16 +20,24 @@
 					@if(Auth::user()->user_type == "admin" || Auth::user()->user_type  == "support")
 						<a href="{{ route('admin.dashboard') }}" class="{{ $page == 'admin' ? 'show-sub active' : '' }}">
 							<div class="parent-icon">
-							<i class="fadeIn animated bx bx-shield-quarter"></i>
+								<i class="fadeIn animated bx bx-shield-quarter"></i>
 							</div>
 							<div class="menu-title">Admin</div>
 						</a>
 					@endif
 				</li>
-				<li> <a href="{{ route('users.wallet') }}" title="wallet"	class="{{ $page == 'wallet' ? 'active' : '' }}"><i class="lni lni-wallet"></i></a>
-						</li>
-				<li> <a href="{{ route('users.withdrawal') }}" title="withdrawal" class="{{ $page == 'withdrawal' ? 'active' : '' }}"><i class="lni lni-google-wallet"></i></a>
-						</li>
+				<li> <a href="{{ route('users.wallet') }}" title="wallet"	class="{{ $page == 'wallet' ? 'active' : '' }}">
+						<div class="parent-icon"><i class="lni lni-wallet"></i></div>
+						<div class="menu-title">Wallet</div>
+					</a>
+				</li>
+				<li> <a href="{{ route('users.withdrawal') }}" title="withdrawal" class="{{ $page == 'withdrawal' ? 'active' : '' }}">
+						<div class="parent-icon">
+							<i class="lni lni-google-wallet"></i>
+						</div>
+						<div class="menu-title">Transactions</div>
+					</a>
+				</li>
 			
 				@if(Auth::user()->user_type == "admin" || Auth::user()->user_type  == "support")
 				<li>

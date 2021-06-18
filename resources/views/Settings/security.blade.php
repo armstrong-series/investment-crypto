@@ -40,18 +40,6 @@
 						
 						<h6 class="mb-0">Enable Two Factor Authentication</h6>
 						<hr/>
-						<div class="card">
-							<div class="card-body">
-								<div class="input-group mb-3">
-									<input type="text" class="form-control" placeholder="Enter Password">
-								</div>
-								<!-- Material checked -->
-								<label class="c-switch c-switch-success">
-									<input type="checkbox" class="c-switch-input form-control" checked>
-									<span class="c-switch-slider"></span>
-								</label>
-							</div>
-						</div>
 					</div>
 				</div>
 				<!--end row-->

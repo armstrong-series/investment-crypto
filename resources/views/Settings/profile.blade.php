@@ -3,7 +3,7 @@
 
 @section('title')
     <title>Profile </title>
-
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 @endsection
 <body>
 	<!--wrapper-->
@@ -77,36 +77,29 @@
 							<div class="col-lg-8">
 								<div class="card">
 									<div class="card-body">
-										<div class="row mb-3">
-											<div class="col-sm-3">
-												<h6 class="mb-0">Full Name</h6>
-											</div>
-											<div class="col-sm-9 text-secondary">
-												<input type="text" class="form-control" placeholder="Enter Name" v-model="profile.name">
+										<div class="row mb-3">	
+											<div class="input-group mb-3">
+												<input v-model="profile.name" type="text" class="form-control" placeholder="{{ Auth::user()->name }}">
+												<label class="input-group-text" for="inputGroupSelect02">Username</label>
 											</div>
 										</div>
 										<div class="row mb-3">
-											<div class="col-sm-3">
-												<h6 class="mb-0">Email</h6>
+											<div class="input-group mb-3">
+												<input type="text" class="form-control"  disabled placeholder="{{ Auth::user()->email }}">
+												<label class="input-group-text" for="inputGroupSelect02">Email</label>
 											</div>
-											<div class="col-sm-9 text-secondary">
-												<input type="text" class="form-control" disabled placeholder="{{ Auth::user()->email}}">
+										</div>
+										
+										<div class="row mb-3">
+											<div class="input-group mb-3">
+												<input v-model="profile.mobile" type="text" class="form-control"   placeholder="{{ Auth::user()->mobile }}">
+												<label class="input-group-text" for="inputGroupSelect02">Mobile</label>
 											</div>
 										</div>
 										<div class="row mb-3">
-											<div class="col-sm-3">
-												<h6 class="mb-0">Phone</h6>
-											</div>
-											<div class="col-sm-9 text-secondary">
-												<input type="text" class="form-control" v-model="profile.mobile">
-											</div>
-										</div>
-										<div class="row mb-3">
-											<div class="col-sm-3">
-												<h6 class="mb-0">Nationality</h6>
-											</div>
-											<div class="col-sm-9 text-secondary">
-												<input type="text" v-model="profile.nationality" class="form-control" placeholder="Enter your Nationality">
+											<div class="input-group mb-3">
+												<input v-model="profile.nationality" type="text" class="form-control"   placeholder="{{ Auth::user()->nationality }}">
+												<label class="input-group-text" for="inputGroupSelect02">Nationality</label>
 											</div>
 										</div>
 										
@@ -124,6 +117,8 @@
 				</div>
 			</div>
 			<textarea name=""  style="display:none;" id="profileUpdate" cols="30" rows="10">{{ route('user.profile.update')}}</textarea>
+			<textarea name=""  style="display:none;" id="profile" cols="30" rows="10">{{ json_encode($profile)}}</textarea>
+
 		</div>
 		
 		@endsection
@@ -133,8 +128,8 @@
 	<!--end wrapper-->
 	<!--start switcher-->
 	@section('script')
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 		<script src="{{ asset('assets/js/app/settings/profile.js') }}"></script>
-	
 	@endsection
 </body>
 </html>

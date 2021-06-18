@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\User;
+use App\Models\PaymentTransactionLog;
 use Illuminate\Http\Request;
 use Auth, Log, Exception;
 
@@ -13,13 +14,18 @@ class DashboardController extends Controller
     }
 
 
-    public function Dashboard()
+    public function Dashboard(Request $request)
     {
         try {
             $users = User::where(['id' => Auth::id()])->get();
+            $total_investment = PaymentTransactionLog::where([
+                'user_id' => Auth::id(),
+                'status' => 'completed'
+                ])->sum('amount');
             $data = [
                 'page' => 'dashboard',
                 'subs' => '',
+                'total_investment' => $total_investment,
                 'users' => $users,
 
             ];

@@ -116,7 +116,7 @@ new Vue({
                 "showMethod": "fadeIn",
                 "hideMethod": "fadeOut"
                 }
-                window.location.href = data.route
+                window.location.href = data.url
                  }).catch((error) => {
                 console.log(error.response)
                 this.isLoading = false;
