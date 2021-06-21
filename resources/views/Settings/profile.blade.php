@@ -62,7 +62,8 @@
 													<p class="text-secondary mb-1">Support Staff</p>
 												@endif
 												<!-- <button class="btn btn-primary">Change Picture</button> -->
-												<div class="fileUpload btn-md btn-primary" style=" padding: 10px; border-radius:6%; box-shadow: 4px 3px 5px grey;">
+												<div class="fileUpload btn-md btn-primary" style=" padding: 10px; border-radius:6%; box-shadow: 4px 3px 5px grey;
+												">
 													<span>Change Picture</span>
 													<input type="file" id="uploadBtn file" accept="image/*"  @change="changeProfilePics()" ref="file" class="form-control upload">
 												</div>

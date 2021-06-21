@@ -18,6 +18,8 @@ new Vue({
             currencies: []
         },
 
+      
+
         withdrawal: {
             amount: '',
             
@@ -32,11 +34,12 @@ new Vue({
             init_payment: ''
         }
     },
-
     mounted() {
         this.route.init_payment = $('#initializePayment').val();
         this.cryptocurrencies.currencies = JSON.parse($('#currencies').val())
         console.log('currencies', this.cryptocurrencies.currencies)
+        // alert('welcome')
+        
     },
 
     computed: {
@@ -57,36 +60,10 @@ new Vue({
             return 0;
 
         }
-
-        // convertedPrice() {
-        //     if (this.selected_coin && this.entered_price) {
-        //         this.cryptocurrencies.currencies[this.selected_coin]
-        //         const value = this.cryptocurrencies.currencies[this.selected_coin]
-        //         const result = value.quotes.USD.price * this.entered_price
-        //         return result;
-
-        //         console.log('value', value)
-        //         console.log('selected_coin', this.selected_coin)
-        //         console.log('price', this.entered_price)
-        //     }
-        //     return 0;
-
-        // }
     },
 
-
     methods: {
-
-        // percentageIncrement() {
-        //     const val = (20 / 100) * this.investment.amount + parseInt(this.investment.amount)
-        //     this.investment.increment = this.investment.amount ?
-        //         parseFloat(val).toFixed(2) : '';
-
-        // },
-       
-       
-
-
+      
         initiateTransaction() {
             this.isloading = false;
             axios.post(this.route.init_payment, {
@@ -96,10 +73,7 @@ new Vue({
                 description: this.investment.description,
                 trans_type: this.investment.trans_type,
                 increment: this.increment
-
             }).then((response) => {
-                this.isLoading = false;
-                // $('#makeInvestment').modal('hide');
                 this.isloading = false;
                 const data = response.data
                 Command: toastr["success"](response.data.message)

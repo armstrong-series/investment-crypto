@@ -6,12 +6,12 @@
 @endsection
 <body>
 	<!--wrapper-->
-	<div class="wrapper" id="investment">
+	<div class="wrapper" >
     @section('content')
 		<!--end header -->
 		<!--start page wrapper -->
 		
-			<div class="page-wrapper">
+			<div class="page-wrapper" id="investment">
 				<div class="page-content">
 					<!--breadcrumb-->
 					<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
@@ -78,7 +78,7 @@
 												<div class="input-group mb-3">
 													<select class="form-select" v-model="selected_coin">
 														<option value="" disabled>Choose</option>
-														<option v-for="(currency, key) in cryptocurrencies.currencies" v-bind:value="key">@{{ currency.name }}</option>					
+														<option v-for="(currency, key) in cryptocurrencies.currencies" v-bind:value="key">@{{ currency.name }}</option>									
 													</select>
 													<label class="input-group-text" for="inputGroupSelect02">Coin</label>
 												</div>
@@ -92,8 +92,7 @@
 												<div class="input-group mb-3">
 													<!-- <input  @keyup="percentageIncrement()"  v-bind:value="convertedPrice" type="text" class="form-control"  disabled placeholder="USD Equivalent"> -->
 													<input  @keyup="convertedPrice()"  v-bind:value="convertedPrice" type="text" class="form-control"  disabled placeholder="USD Equivalent">
-										
-													<!-- <input @keyup="percentageIncrement()"  v-model="investment.amount" type="text" class="form-control"  placeholder="USD Equivalent"> -->
+								
 													<label class="input-group-text" for="inputGroupSelect02">USD</label>
 												</div>
 											</div>	
@@ -111,13 +110,13 @@
 											
 																				
 											<div class="row mb-3">
-												<button v-on:click="initiateTransaction()" class="btn btn-md" style="background: navy; color:white;">Pay</button>
+												<button v-on:click="initiateTransaction()" 
+												class="btn btn-md" style="background: navy; color:white;">Invest</button>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-
 
 							  <!-- Modal -->
 							  <div class="modal fade" id="withdraw" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -125,7 +124,7 @@
                                     <div class="modal-content">
                                     <div class="modal-body">
 										<div class="row mb-3">
-											<div class="input-group mb-3">
+											<div class="input-group mb-3">-
 												<select class="form-select" v-model="selected_coin">
 													<option value="" disabled>Choose</option>
 													<option v-for="(currency, key) in cryptocurrencies.currencies" v-bind:value="key">@{{ currency.name }}</option>					
@@ -135,20 +134,20 @@
 										</div>
 										<div class="row mb-3">										
 											<div class="input-group mb-3">
-												<input  type="text" class="form-control" d placeholder=" Enter Amount">
+												<input  type="text" class="form-control"  placeholder=" Enter Amount">
 												<label class="input-group-text" for="inputGroupSelect02">Amount</label>
 											</div>
 										</div>
 										<div class="row mb-3">										
 											<div class="input-group mb-3">
-												<input  type="text" class="form-control" d placeholder=" Enter Narration ">
+												<input  type="text" class="form-control"  placeholder=" Enter Narration ">
 												<label class="input-group-text" for="inputGroupSelect02">Narration</label>
 											</div>
 										</div>
                                     </div>
                                     <div class="modal-footer">
                                    		 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button  type="button" class="btn btn-primary btn-md">Proceed</button>
+                                        <button  type="button" @click="withdraw()" class="btn btn-primary btn-md">Proceed</button>
                                     </div>
                                     </div>
                                 </div>
@@ -168,54 +167,8 @@
 	</div>
 
 	@section('script')	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-	<script src="{{ asset('assets/js/app/investment.js') }}"></script>
-	<!-- <script src="{{ asset('assets/js/app/exchange-rate.js') }}"></script> -->
-	<!-- <script>
-		new Vue ({
-
-			el: '#investment',
-			data: {
-				cryptocurrencies: {
-				coin: '', 
-				price: '',
-				currencies: []
-        	 },  
-
-			 selected_coin: '',
-			 entered_price: '',
-			 price: ''
-			},
-
-
-			mounted(){
-				this.cryptocurrencies.currencies = JSON.parse($('#currencies').val())
-				console.log('currencies', this.cryptocurrencies.currencies)
-			}, 
-
-			computed:{
-				convertedPrice(){
-					if(this.selected_coin  && this.entered_price){
-						this.cryptocurrencies.currencies[this.selected_coin]
-						const value = this.cryptocurrencies.currencies[this.selected_coin]
-						const result = value.quotes.USD.price * this.entered_price
-						 return result;
-
-						console.log('value', value)
-						console.log('selected_coin', this.selected_coin)
-						console.log('price', this.entered_price)
-						
-					}
-					return 0;
-					
-				}
-			}
-
-
-		})
-	</script>    -->
-
-	
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+		<script src="{{ asset('assets/js/app/investment.js') }}"></script>
 	@endsection
 </body>
 </html>

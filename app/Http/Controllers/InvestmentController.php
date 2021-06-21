@@ -28,6 +28,7 @@ class InvestmentController extends Controller
             $price = file_get_contents($rate);
             $result = json_decode($price, true);
             $currencies = $result['data'];
+        
             $account_balance = PaymentTransactionLog::where([
                 'user_id' => Auth::id(),
                 'status' => 'completed'
