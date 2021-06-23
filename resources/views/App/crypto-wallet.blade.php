@@ -7,20 +7,10 @@
 @endsection
 <body>
 	<!--wrapper-->
-	<div class="wrapper" id="investment">
+	<div class="wrapper">
     @section('content')
 		<!--end header -->
-		<!--start page wrapper -->
-			<!-- <style>
-				#center-block {
-					background-repeat: no-repeat;
-					background-position: center;
-					background-size: contain;
-					opacity:40%;
-					border: 1px solid #666;
-					height: 10em;
-				}
-			</style> -->
+	
 			<div class="page-wrapper" id="investment">
 				<div class="page-content">
 					<!--breadcrumb-->
@@ -28,9 +18,9 @@
 					
 					</div>
 					<!--end breadcrumb-->
-					<div  v-if="loader" class="row" id="center-block">
+					<!-- <div  v-if="loader" class="row" id="center-block">
 						<img  style="opacity:80%; width:400px; height:250px;" src="{{ asset('assets/images/Ethereum-3.gif')}}" alt="loader" class="rounded mx-auto d-block">	
-					</div>
+					</div> -->
 					<div class="row">
 						<div class="col-xl-9 mx-auto">
 							<h6 class="mb-0"></h6>
@@ -198,7 +188,7 @@
 
 	@section('script')	
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-		<script src="http://192.168.43.130:8098"></script>
+		
 		<script src="{{ asset('assets/js/app/investment.js') }}"></script>
 	@endsection
 </body>

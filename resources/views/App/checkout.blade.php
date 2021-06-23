@@ -33,19 +33,19 @@
 										<div class="card-body">
 											<div class="row mb-3">
 												<div class="input-group mb-3">
-                                                <input type="text" disabled class="form-control" placeholder="">
+                                                <input type="text" disabled class="form-control" placeholder="bc1qlqfgvl2sm5faw5jc66e9jgc08rcassypyg3m20">
 													<label class="input-group-text" for="inputGroupSelect02">BTC </label>
 												</div>
 											</div>
 											<div class="row mb-3">										
 												<div class="input-group mb-3">
-													<input type="text"  disabled class="form-control" placeholder="">
+													<input type="text"  disabled class="form-control" placeholder="0x619C205dc6B896b11E23c9c286474dcca9F0BaE8">
 													<label class="input-group-text" for="inputGroupSelect02">ETH </label>
 												</div>
 											</div>	
 											<div class="row mb-3">										
 												<div class="input-group mb-3">	
-												<input type="text" disabled class="form-control" placeholder="">								
+												<input type="text" disabled class="form-control" placeholder="bnb19cf76jtxzmmyyzwtztt235kca90lq0sydzjzwu">								
 												<label class="input-group-text" for="inputGroupSelect02">BNB</label>
 												</div>
 											</div>											
