@@ -26,12 +26,14 @@
 	<link rel="stylesheet" href="{{ asset('assets/css/dark-theme.css') }}" />
 	<link rel="stylesheet" href="{{ asset('assets/css/semi-dark.css') }}" />
 	<link rel="stylesheet" href="{{ asset('assets/css/header-colors.css') }}" />
-	<title>Forex Investment</title>
+	<link rel="stylesheet" href="{{ asset('assets/fontawesome/css/all.css') }}" />
+	<title>All Resources</title>
 </head>
 @yield('title')
 <body>
 	<!--wrapper-->
 	<div class="wrapper">
+		
 		<!--sidebar wrapper -->
         @include('Includes.sidebar')
 		<!--end sidebar wrapper -->

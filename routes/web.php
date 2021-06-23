@@ -22,7 +22,9 @@ Route::get('/account-create', [Controller\UserController::class, 'accountView'])
 
 Route::post('/payment', [Controller\Integrations\RaveController::class, 'initialize'])->name('make-payment');
 Route::get('/payment-callback', [Controller\Integrations\RaveController::class, 'callback'])->name('users.payment.callback');
-Route::get('/transaction-history', [Controller\InvestmentController::class, 'transactionHistory'])->name('users.withdrawal');
+Route::get('/checkout', [Controller\Integrations\InvestmentController::class, 'checkout'])->name('users.checkout');
+Route::get('/transaction-history', [Controller\InvestmentController::class, 'transactionHistory'])->name('users.transaction-history');
+Route::get('/transactions', [Controller\InvestmentController::class, 'getTransactions'])->name('users.transactions');
 Route::post('withdrawal', [Controller\InvestmentController::class, 'withdrawal'])->name('users.withdrawal');
 Route::post('/create-users', [Controller\Admin\AdminController::class, 'createUser'])->name('admin.user.create');
 Route::get('user-management', [Controller\Admin\AdminController::class, 'userManagement'])->name('admin.user.management');

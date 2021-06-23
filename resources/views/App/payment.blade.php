@@ -1,7 +1,7 @@
 @extends('Layout.master')
 
 @section('title')
-    <title>Payment Integration </title>
+    <title>Transaction</title>
 @endsection
 
 <body>

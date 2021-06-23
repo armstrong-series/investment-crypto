@@ -31,7 +31,7 @@
 						<div class="menu-title">Wallet</div>
 					</a>
 				</li>
-				<li> <a href="{{ route('users.withdrawal') }}" title="withdrawal" class="{{ $page == 'withdrawal' ? 'active' : '' }}">
+				<li> <a href="{{ route('users.transaction-history') }}" title="transaction" class="{{ $page == 'transaction' ? 'active' : '' }}">
 						<div class="parent-icon">
 							<i class="lni lni-google-wallet"></i>
 						</div>
@@ -51,10 +51,14 @@
 						
 					</ul>
 				</li>
-				<li>
-					<a href="{{ route('admin.user.management') }}" class="{{ $page == 'user-management' ? 'active' : '' }}"><i class="lni lni-users"></i>&nbsp;&nbsp;User Management</a>
-				</li>
 				
+				<li> <a href="{{ route('admin.user.management') }}" title="user management" class="{{ $page == 'user-management' ? 'active' : '' }}">
+						<div class="parent-icon">
+						<i class="lni lni-users"></i>
+						</div>
+						<div class="menu-title">User Management</div>
+					</a>
+				</li>
 				@endif
 				
 				

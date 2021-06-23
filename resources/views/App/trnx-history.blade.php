@@ -1,21 +1,19 @@
 @extends('Layout.master')
 
 @section('title')
-    <title>Transaction </title>
+    <title>Transactions </title>
 
 @endsection
 <body>
 	<!--wrapper-->
-	<div class="wrapper" id="investment">
-    @section('content')
+	<div class="wrapper"  id="investment">
+   		 @section('content')
 		<!--end header -->
 		<!--start page wrapper -->
-		<div class="page-wrapper">
+		<div class="page-wrapper" id="investment">
 			<div class="page-content">
 				<!--breadcrumb-->
-                <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-                    
-				</div>
+                
 				<!--end breadcrumb-->
 				<h6 class="mb-0 text-uppercase">TRANSACTION HISTORY</h6>
 				<hr/>
@@ -61,22 +59,21 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td>Tiger Nixon</td>
-										<td>System Architect</td>
-										<td>Edinburgh</td>
-										<td>61</td>
-										<td>2011/04/25</td>
-										<td>complete</td>
+									<tr v-for="transaction in transactions">
+										<td>@{{ transaction.txn_id }}</td>
+										<td>@{{ transaction.trans_type }}</td>
+										<td>@{{ transaction.coin }}</td>
+										<td>@{{ transaction.amount}}</td>
+										<td>@{{ transaction.increment }}</td>
+										<td>@{{ transaction.txn_date }}</td>
+										<td>@{{ transaction.status }}</td>				
 										<td>
 											<div class="btn-group">
-												
 												<button type="button" class="btn btn-defauly split-bg-default dropdown-toggle dropdown-toggle-split"
 												 data-bs-toggle="dropdown">	<span class="visually-hidden">Toggle Dropdown</span> Action
 												</button>
 												<div class="dropdown-menu dropdown-menu-right dropdown-menu">
-													<a class="dropdown-item" href="javascript:;">Remove</a>
-													
+													<a class="dropdown-item" href="j#">Remove</a>			
 												</div>
 											</div>
 										</td>
@@ -88,16 +85,14 @@
 				</div>
 			</div>
 		</div>
-			</div>
-
-		</div>
+		
+			<textarea name="" id="allTransactions"  style="display:none;" cols="30" rows="10">{{ json_encode($transaction) }}</textarea>
+	</div>
 		<!--end page wrapper -->
 	@endsection	
 
 
-	@section('script')
-
-		
+	@section('script')	
         <script src="{{ asset('assets/js/app/investment.js') }}"></script>
 	@endsection
 </body>
