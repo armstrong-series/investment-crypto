@@ -103,7 +103,7 @@
 												</div>
 												<div class="row mb-3">										
 													<div class="input-group mb-3">
-														<input v-if="selected_coin" v-model="investment.crypto_address" type="text" class="form-control"  :placeholder="'Enter your' +selected_coin.name +' Address'">
+														<input v-if="selected_coin" v-model="investment.crypto_address" type="text" class="form-control"  :placeholder="'Enter your '+selected_coin.name +' Address'">
 														<label v-if="selected_coin" class="input-group-text" for="inputGroupSelect02">Address</label>
 													</div>
 												</div>
@@ -116,7 +116,7 @@
 												</div>
 												<div class="row mb-3">										
 													<div class="input-group mb-3">
-														<input v-model="increment" type="text" class="form-control" disabled placeholder=" 20% Monthly Increment in USD">
+														<input v-model="increment" type="text" class="form-control" disabled placeholder=" 20%  Increment">
 														<label class="input-group-text" for="inputGroupSelect02">ROI</label>
 													</div>
 												</div>

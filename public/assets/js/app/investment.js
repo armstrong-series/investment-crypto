@@ -3,7 +3,7 @@
 new Vue({
     el: '#investment',
 
-     
+
     data: {
         isloading: false,
 
@@ -15,10 +15,10 @@ new Vue({
         },
 
         withdrawal: {
-            amount: '', 
+            amount: '',
             address: '',
             coin: '',
-           description:''
+            description: ''
         },
 
         cryptocurrencies: {
@@ -27,9 +27,9 @@ new Vue({
             currencies: []
         },
 
-        
+
         selected_currency: '',
-        
+
         transactions: [],
         loader: true,
 
@@ -37,7 +37,7 @@ new Vue({
         entered_price: '',
         price: '',
         increment: '',
-        
+
         route: {
             init_payment: '',
             withdrawal: ''
@@ -49,41 +49,55 @@ new Vue({
         this.route.withdrawal = $('#withdrawal').val();
         this.cryptocurrencies.currencies = JSON.parse($('#currencies').val())
         console.log('currencies', this.cryptocurrencies.currencies)
-        
+
     },
 
+    // convertedPrice() {
+    //     if (this.selected_coin && this.entered_price) {
+    //         this.cryptocurrencies.currencies[this.selected_coin]
+    //         const value = this.cryptocurrencies.currencies[this.selected_coin]
+    //         this.investment.amount = value.quotes.USD.price * this.entered_price
+    //         console.log('result', this.investment.amount)
+    //         if(this.investment.amount){
+    //             const roi_value = (20 / 100) * this.investment.amount + parseInt(this.investment.amount)
+    //             this.increment = this.investment.amount ?  parseFloat(roi_value).toFixed(2) : '';
 
+    //         }
+    //         return this.investment.amount;
+
+    //     }
+    //     return 0;
+
+    // }
 
     computed: {
         convertedPrice() {
-            if (this.selected_coin.id && this.entered_price) {
-                this.cryptocurrencies.currencies[this.selected_coin.id]
-                const value = this.cryptocurrencies.currencies[this.selected_coin.id]
+            if (this.selected_coin && this.entered_price) {
+                this.cryptocurrencies.currencies[this.selected_coin]
+                const value = this.cryptocurrencies.currencies[this.selected_coin]
                 this.investment.amount = value.quotes.USD.price * this.entered_price
                 console.log('result', this.investment.amount)
-                if(this.investment.amount){
+                if (this.investment.amount) {
                     const roi_value = (20 / 100) * this.investment.amount + parseInt(this.investment.amount)
-                    this.increment = this.investment.amount ?  parseFloat(roi_value).toFixed(2) : '';
-                   
+                    this.increment = this.investment.amount ? parseFloat(roi_value).toFixed(2) : '';
+
                 }
                 return this.investment.amount;
-                
+
             }
             return 0;
 
-        },
-
+        }
 
     },
 
     methods: {
-      
+
         invest() {
             this.isloading = false;
             axios.post(this.route.init_payment, {
                 amount: this.entered_price,
-                // amount: this.investment.amount,
-                coin:  this.cryptocurrencies.currencies.symbol,
+                coin: this.selected_coin.symbol,
                 crypto_address: this.investment.crypto_address,
                 description: this.investment.description,
                 increment: this.increment
@@ -137,7 +151,7 @@ new Vue({
 
         },
 
-        withdraw(){
+        withdraw() {
             this.isloading = false;
             axios.post(this.route.withdrawal, {
                 amount: this.withdrawal.amount,
