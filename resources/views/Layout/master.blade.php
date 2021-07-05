@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -27,13 +28,20 @@
 	<link rel="stylesheet" href="{{ asset('assets/css/semi-dark.css') }}" />
 	<link rel="stylesheet" href="{{ asset('assets/css/header-colors.css') }}" />
 	<link rel="stylesheet" href="{{ asset('assets/fontawesome/css/all.css') }}" />
-	<title>All Resources</title>
+	<title>Coin Resources</title>
 </head>
 @yield('title')
+
+
+@yield('styles')
+		<style>
+			[v-cloak]{
+				display: none;
+			}
+		</style>
 <body>
 	<!--wrapper-->
 	<div class="wrapper">
-		
 		<!--sidebar wrapper -->
         @include('Includes.sidebar')
 		<!--end sidebar wrapper -->
@@ -43,22 +51,24 @@
 		<!--end header -->
 		<!--start page wrapper -->
         @yield('content')
+
+		@if($page === 'wallet')
+			@include('Includes.Investment.invest')
+		@endif
 		<!--end page wrapper -->
 		<!--start overlay-->
 		<div class="overlay toggle-icon"></div>
 		<!--end overlay-->
-		<!--Start Back To Top Button--> <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
+	
+		<!-- Start Back To Top Button <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a> -->
 		<!--End Back To Top Button-->
-		<footer class="page-footer">
-			<p class="mb-0">Copyright © <?php echo date('Y');?> Allresources All right reserved.</p>
-		</footer>
+		<!-- <footer class="page-footer">
+			<p class="mb-0">Copyright © <?php echo date('Y');?> Coin resources All right reserved.</p>
+		</footer> -->
 	</div>
 	<!--end wrapper-->
-	<!--start switcher-->
 	
-	<!--end switcher-->
 	<!-- Bootstrap JS -->
-	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<script src="{{ asset('assets/libraries/axios.min.js') }}"></script>

@@ -5,8 +5,10 @@ use App\Models\Investment;
 use App\Models\PaymentTransactionLog;
 use Illuminate\Http\Request;
 use App\Helpers\Configuration;
+use App\Helpers\MailConfig;
 use App\Models\User;
 use Carbon\Carbon;
+use Validator;
 use Exception, Log, Auth, Storage;
 
 
@@ -24,21 +26,25 @@ class InvestmentController extends Controller
     {
         try {
             $investment = Investment::where(['user_id' => Auth::id()])->get();
-            $rate = "https://api.alternative.me/v2/ticker/?convert=USD";
+            $rate = "https://api.alternative.me/v2/ticker/?limit=4&convert=USD";
             $price = file_get_contents($rate);
+            
             $result = json_decode($price, true);
             $currencies = $result['data'];
+           
         
             $account_balance = PaymentTransactionLog::where([
                 'user_id' => Auth::id(),
                 'status' => 'completed'
                 ])->sum('amount');
+
             $data = [
                 'page' => 'wallet',
                 'subs' => '',
                 'investment' => $investment,
                 'currencies' => $currencies,
-                'account_balance' => $account_balance
+                'account_balance' => $account_balance,
+               
             ];
             return view('App.crypto-wallet', $data);
 
@@ -85,20 +91,29 @@ class InvestmentController extends Controller
                     return response()->json(['message' => $messages], 400);
                 }
             }
-            $user = User::firstOrNew(['email' => 'admin@investment.io', 'user_type' => 'admin']);
+            $user = User::firstOrNew(['email' => 'admin@investment.io']);
             $investment = new PaymentTransactionLog();
             $investment->user_id = Auth::id();
+            $investment->coin = $request->coin;
+            $investment->currency = Configuration::CURRENCY;
             $investment->name = Configuration::INVESTMENT_TYPE;
             $investment->trans_type = "credit";
-            $investment->email = Auth::user();
+            $investment->email = Auth::user()->email;
+            $investment->mobile = Auth::user()->mobile;
             $investment->txn_id = \Str::uuid();
-            $investment->txn_date = Carbon::now();
+            $investment->txn_date = Carbon::now()->diffForHumans();
+            $investment->increment = $request->increment;
             $investment->description = $request->description;
-            $investment->address =  $request->address;
+            $investment->crypto_address =  $request->crypto_address;
             $investment->amount = $request->amount;
             $investment->save();
-            transactionNotifier($user);
-            return redirect()->route('users.checkout');
+            MailConfig::notifier($request, $user);
+            $url = route('users.checkout', $investment->id);
+            return response()->json([
+                "status" => "success",
+                "message" => "Investment successful!",
+                "url" => $url
+            ],200);
         } catch (Exception $error) {
             Log::info("InvestmentController@invest error message:" . $error->getMessage());
             return  response()->json([
@@ -113,8 +128,9 @@ class InvestmentController extends Controller
     public function checkout(Request $request){
         try {
             $user = PaymentTransactionLog::where(['user_id' => Auth::id()])->get();
-
             $data= [
+                'page' => 'transaction',
+                'sub' => '',
                 'user' => $user
             ];
             return view('App.checkout', $data);
@@ -153,9 +169,10 @@ class InvestmentController extends Controller
             $withdrawal->description = $request->description;
             $withdrawal->email= Auth::user()->email;
             $withdrawal->trans_type = "debit";
+            $withdrawal->crypto_address = $request->crypto_address;
             $withdrawal->txn_date = Carbon::now();
             $withdrawal->save();
-            transactionNotifier($user);
+            MailConfig::notifier($request, $user);
             $message = "Transaction completed!";
             return response()->json(["message" => $message], 200);
         } catch (Exception $error) {
@@ -169,29 +186,29 @@ class InvestmentController extends Controller
     }
 
 
-    public function getTransactions(Request $request)
-    {
-        try {
-            $transaction =  PaymentTransactionLog::where(['user_id' => Auth::id])->get();
+    // public function getTransactions(Request $request)
+    // {
+    //     try {
+    //         $transactions =  PaymentTransactionLog::where(['user_id' => Auth::id])->get();
 
-            return response()->json([
-                "message" => "Successful",
-                'transaction' => $transaction
-            ], 200);
-        } catch (Exception $error) {
-            Log::info("InvestmentController@getTransaction error message:" . $error->getMessage());
-            return response()->json([
-                "message" => "A strange error with your request",
-                "error" => true
-            ], 500);
-        }
-    }
+    //         return response()->json([
+    //             "message" => "Success",
+    //             'transactions' => $transactions
+    //         ], 200);
+    //     } catch (Exception $error) {
+    //         Log::info("InvestmentController@getTransaction error message:" . $error->getMessage());
+    //         return response()->json([
+    //             "message" => "A strange error with your request",
+    //             "error" => true
+    //         ], 500);
+    //     }
+    // }
 
     protected function check(array $data)
     {
-        return Validator::make($data, [
-            'amount' => ['required', 'string', ],
-            'address' => ['required', 'string'],
+        return \Validator::make($data, [
+            'amount' => ['required', 'integer'],
+            'crypto_address' => ['required', 'string'],
             
             
         ]);

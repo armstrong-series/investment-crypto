@@ -22,15 +22,14 @@
 						<div class="col-xl-9 mx-auto">
 							<h6 class="mb-0"></h6>
 							<hr/>
-							<div class="card">
-                                <h3 class="card-title">Make Payment using the Addresses Below</h3>	
-							</div>
+							
 							<hr/>
 						
 							<div class="row">
 								<div class="col-lg-8">
 									<div class="card">
 										<div class="card-body">
+											<p>Make Payment using the Addresses Below</p>
 											<div class="row mb-3">
 												<div class="input-group mb-3">
                                                 <input type="text" disabled class="form-control" placeholder="bc1qlqfgvl2sm5faw5jc66e9jgc08rcassypyg3m20">
@@ -50,8 +49,8 @@
 												</div>
 											</div>											
 											<div class="row mb-3">
-												<button  
-												class="btn btn-md" style="background: navy; color:white;"><i class="fas fa-donate"></i>Invest</button>
+												<a href="{{ url()->previous() }}"
+												class="btn btn-md" style="background: navy; color:white;"><i class="fas fa-donate"></i>Go Back</a>
 											</div>
 										</div>
 									</div>

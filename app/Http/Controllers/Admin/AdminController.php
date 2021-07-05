@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Models\PaymentTransactionLog;
 use Illuminate\Http\Request;
 use Auth, Log, Exception, Validator;
 use Hash;
@@ -21,7 +22,8 @@ class AdminController extends Controller
     {
         try {
 
-            $users = User::where(['id' => Auth::id()])->get();
+            // $users = User::where(['id' => Auth::id()])->get();
+            $users = User::all();
             return response()->json([
                 'error' => false,
                 "message" => "Successful",
@@ -60,8 +62,10 @@ class AdminController extends Controller
             return $response;
         }
     }
-    public function userManagement(Request $request)
-    {
+
+
+
+    public function userManagement(Request $request){
         try {
         
             if (Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'support') {
@@ -76,15 +80,26 @@ class AdminController extends Controller
                     'users' => $users,
     
                 ];
+
+                // return response()->json([
+                //     "message" => "Success",
+                //     "users" => $users
+                // ], 200);
             }else {
                 return redirect()->back();
             }
                 return view('App.user-management', $data);
 
         } catch (Exception $error){
-            
+            Log::info("UserController::class, 'deleteUser'" . $error->getMessage());
+            $message = 'Unable to get information. Please try checking your network';
+            return $error;
         }
     }
+
+
+    
+
 
     public function createUser(Request $request)
     {

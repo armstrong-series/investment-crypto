@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\PasswordSecurity;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
@@ -42,8 +43,9 @@ class User extends Authenticatable
     ];
 
 
-    public function twoFactorAuthentication(){
+    public function passwordSecurity(){
 
-        return $this->hasOne('App\Models\TwoFactorModel');
+        // return $this->hasOne('App\Models\PasswordSecurity');
+        return $this->hasOne(PasswordSecurity::class);
     }
 }

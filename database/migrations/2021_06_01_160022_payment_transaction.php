@@ -24,7 +24,7 @@ class PaymentTransaction extends Migration
             $table->string('ref')->unique()->nullable();
             $table->string('description')->nullable();
             $table->string('currency')->nullable();
-            $table->string('email')->unique();
+            $table->string('email')->nullable();
             $table->enum('trans_type', ['credit', 'debit']);
             $table->enum('status', ['pending', 'complete', 'failed']);
             $table->string('mobile')->nullable();

@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "bacon/bacon-qr-code": "^2.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
@@ -27,7 +28,8 @@
         "files": [
             "app/Helpers/Configuration.php",
             "app/Helpers/Paths.php",  
-            "app/Helpers/Routines.php"
+            "app/Helpers/Routines.php",
+            "app/Helpers/MailConfig.php"
         ],
         "psr-4": {
             "App\\": "app/",

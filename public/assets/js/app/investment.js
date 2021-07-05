@@ -1,4 +1,4 @@
-const { default: axios } = require("axios");
+
 
 new Vue({
     el: '#investment',
@@ -10,7 +10,7 @@ new Vue({
         investment: {
             amount: '',
             description: '',
-            address: '',
+            crypto_address: '',
             coin: ''
         },
 
@@ -27,7 +27,6 @@ new Vue({
             currencies: []
         },
 
-        preferred_coin: '',
         
         selected_currency: '',
         
@@ -49,17 +48,7 @@ new Vue({
         this.route.init_payment = $('#initializePayment').val();
         this.route.withdrawal = $('#withdrawal').val();
         this.cryptocurrencies.currencies = JSON.parse($('#currencies').val())
-        // console.log('currencies', this.cryptocurrencies.currencies)
-        this.preferred_coin = 
-        this.cryptocurrencies.currencies.filter((coin) => ['BTC', 'ETH', 'BNB', 'USDT'].includes(coin.symbol))
-        console.log('coin', this.preferred_coin)
-
-        
-        setTimeout(function(){
-            console.log('welcome')
-            this.loader = false;
-       }, 3000);
-
+        console.log('currencies', this.cryptocurrencies.currencies)
         
     },
 
@@ -89,17 +78,21 @@ new Vue({
 
     methods: {
       
-        initiateTransaction() {
+        invest() {
             this.isloading = false;
             axios.post(this.route.init_payment, {
-                amount: this.investment.amount,
-                name: this.investment.name,
-                email: this.investment.email,
+                amount: this.entered_price,
+                // amount: this.investment.amount,
+                coin:  this.cryptocurrencies.currencies.symbol,
+                crypto_address: this.investment.crypto_address,
                 description: this.investment.description,
                 increment: this.increment
             }).then((response) => {
                 this.isloading = false;
+                $('#invest').modal('hide');
                 const data = response.data
+                window.location.href = data.url
+                console.log(data)
                 Command: toastr["success"](response.data.message)
                 toastr.options = {
                     "closeButton": false,

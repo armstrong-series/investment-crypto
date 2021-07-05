@@ -27,7 +27,7 @@
 	<link rel="stylesheet" href="{{ asset('assets/css/semi-dark.css') }}" />
 	<link rel="stylesheet" href="{{ asset('assets/css/header-colors.css') }}" />
 	<link rel="stylesheet" href="{{ asset('assets/fontawesome/css/all.css') }}" />
-	<title>All Resources</title>
+	<title>allResources</title>
 </head>
 @yield('title')
 <body>

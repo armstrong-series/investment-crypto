@@ -18,18 +18,22 @@ Route::post('/login', [Controller\Auth\LoginController::class, 'login'])->name('
 Route::get('/logout', [Controller\Auth\LoginController::class, 'logout'])->name('auth.logout');
 Route::get('/account-create', [Controller\UserController::class, 'accountView'])->name('auth.register');
 
+Route::get('/reset-password/{token}', [Controller\Auth\ResetPasswordController::class, 'resetPassword'])->name('auth.reset-password');
+Route::post('/reset-password', [Controller\Auth\ResetPasswordController::class,'updatePassword'])->name('auth.update-password');
 
-
-Route::post('/payment', [Controller\Integrations\RaveController::class, 'initialize'])->name('make-payment');
-Route::get('/payment-callback', [Controller\Integrations\RaveController::class, 'callback'])->name('users.payment.callback');
-Route::get('/checkout', [Controller\Integrations\InvestmentController::class, 'checkout'])->name('users.checkout');
+// Route::post('/payment', [Controller\Integrations\RaveController::class, 'initialize'])->name('make-payment');
+// Route::get('/payment-callback', [Controller\Integrations\RaveController::class, 'callback'])->name('users.payment.callback');
+Route::get('/checkout', [Controller\InvestmentController::class, 'checkout'])->name('users.checkout');
 Route::get('/transaction-history', [Controller\InvestmentController::class, 'transactionHistory'])->name('users.transaction-history');
-Route::get('/transactions', [Controller\InvestmentController::class, 'getTransactions'])->name('users.transactions');
-Route::post('withdrawal', [Controller\InvestmentController::class, 'withdrawal'])->name('users.withdrawal');
-Route::post('/create-users', [Controller\Admin\AdminController::class, 'createUser'])->name('admin.user.create');
-Route::get('user-management', [Controller\Admin\AdminController::class, 'userManagement'])->name('admin.user.management');
-Route::get('all-users', [Controller\Admin\AdminController::class, 'Users'])->name('user.admin.management');
 
+Route::post('/withdrawal', [Controller\InvestmentController::class, 'withdrawal'])->name('users.withdrawal');
+Route::post('/create-users', [Controller\Admin\AdminController::class, 'createUser'])->name('admin.user.create');
+Route::post('/users-updarw', [Controller\Admin\AdminController::class, 'updateUser'])->name('admin.user.update');
+Route::get('/user-management', [Controller\Admin\AdminController::class, 'userManagement'])->name('admin.user.management');
+Route::get('/all-users', [Controller\Admin\AdminController::class, 'Users'])->name('user.admin.management');
+Route::get('/admin/transactions', [Controller\Admin\TransactionController::class, 'getUserstransactions'])->name('admin.transactions');
+Route::get('/transactions', [Controller\Admin\TransactionController::class, 'transactions'])->name('all-transactions');
+Route::post('/admin/approve-transactions}', [Controller\Admin\TransactionController::class, 'approveTransaction'])->name('admin.approve.transaction');
 
 Route::get('/profile-pics', [Controller\UserController::class, 'profilePics'])->name('user.profile.pics');
 Route::get('/profile', [Controller\UserController::class, 'profile'])->name('user.profile');
@@ -46,21 +50,23 @@ Route::post('/create-invest', [Controller\InvestmentController::class, 'invest']
 Route::get('/admin', [Controller\Admin\AdminController::class, 'Dashboard'])->name('admin.dashboard');
 Route::get('/settings', [Controller\Settings\SettingsController::class, 'settingsDashboard'])->name('users.settings');
 Route::get('/settings/security', [Controller\Settings\SettingsController::class, 'security'])->name('users.settings.security');
+Route::get('/asset',  [Controller\Admin\AssetsController::class, 'assetsPreview'])->name('admin.assets');
 
 
 
 
-Route::group(['prefix'=>'2fa'], function(){
-    Route::get('/two-factor-auth', [Controller\Settings\TwoFactorController::class, 'Authentication'])->name('auth.two-factor');
-    Route::post('/generateSecret', [Controller\Settings\TwoFactorController::class, 'generate2faSecret'])->name('generate2faSecret');
-    Route::post('/enable2fa', [Controller\Settings\TwoFactorController::class, 'enable2fa'])->name('enable2fa');
-    Route::post('/disable2fa',[Controller\Settings\TwoFactorController::class, 'disable2fa'])->name('disable2fa');
+    // Route::get('/settings/auth/2fa', [Controller\Settings\TwoFactorController::class, 'authentication'])->name('auth.two-factor');
+    // Route::post('/generateSecret', [Controller\Settings\TwoFactorController::class, 'generate2faSecret'])->name('generate2faSecret');
+    Route::post('/generateSecret', ['uses' =>  [Controller\Settings\SettingsController::class, 'generate2faSecretCode'],
+        'as' => 'generateSecretCode'
+    ]);
 
-    // 2fa middleware
-    Route::post('/2faVerify', function () {
-        return redirect(URL()->previous());
-    })->name('2faVerify')->middleware('2fa');
-});
-// Auth::routes();
+    Route::post('/enable2fa', ['uses' =>  [Controller\Settings\SettingsController::class, 'enable2fa'],
+    'as' => 'enable2fa'
+    ]);
 
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::post('/disable2fa', ['uses' =>  [Controller\Settings\SettingsController::class, 'disable2fa'],
+        'as' => 'disable2fa'
+    ]);
+
+

@@ -1,7 +1,7 @@
 @extends('Layout.auth')
 
 @section('title')
-<title>Account | Password-reset</title>
+<title>Forgot Password</title>
 @endsection
 
 @section('auth-content')

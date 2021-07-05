@@ -31,32 +31,40 @@
 						<div class="menu-title">Wallet</div>
 					</a>
 				</li>
-				<li> <a href="{{ route('users.transaction-history') }}" title="transaction" class="{{ $page == 'transaction' ? 'active' : '' }}">
-						<div class="parent-icon">
-							<i class="lni lni-google-wallet"></i>
-						</div>
-						<div class="menu-title">Transactions</div>
-					</a>
-				</li>
+				@if(Auth::user()->user_type === "regular")
+					<li> <a href="{{ route('users.transaction-history') }}" title="transaction" class="{{ $page == 'transaction' ? 'active' : '' }}">
+							<div class="parent-icon">
+								<i class="lni lni-google-wallet"></i>
+							</div>
+							<div class="menu-title">Transactions</div>
+						</a>
+					</li>
+				@endif
 			
-				@if(Auth::user()->user_type == "admin" || Auth::user()->user_type  == "support")
-				<li>
-					<a class="has-arrow" href="javascript:;">
-						<div class="parent-icon"><i class="bx bx-repeat"></i>
-						</div>
-						<div class="menu-title">Media</div>
-					</a>
-					<ul>
-						<li> <a href="#"><i class="bx bx-right-arrow-alt"></i>Page</a></li>
-						
-					</ul>
-				</li>
+				@if(Auth::user()->user_type === "admin" || Auth::user()->user_type  === "support")
 				
 				<li> <a href="{{ route('admin.user.management') }}" title="user management" class="{{ $page == 'user-management' ? 'active' : '' }}">
 						<div class="parent-icon">
 						<i class="lni lni-users"></i>
 						</div>
 						<div class="menu-title">User Management</div>
+					</a>
+				</li>
+
+				<li> <a href="{{ route('admin.assets') }}" title="user management" class="{{ $page == 'assets' ? 'active' : '' }}">
+						<div class="parent-icon">
+	
+						<i class="fadeIn animated bx bx-cube-alt"></i>
+						</div>
+						<div class="menu-title">Assets</div>
+					</a>
+				</li>
+				<li> <a href="{{ route('admin.transactions') }}" title="users transactions" class="{{ $page == 'alltransactions' ? 'active' : '' }}">
+						<div class="parent-icon">
+						
+						<i class="fadeIn animated bx bx-notification"></i>
+						</div>
+						<div class="menu-title">Manage Transaction</div>
 					</a>
 				</li>
 				@endif

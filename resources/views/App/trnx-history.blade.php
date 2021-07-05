@@ -52,6 +52,7 @@
 										<th>Type</th>
 										<th>Coin</th>
 										<th>Amount</th>
+										<th>Coin Address</th>
 										<th>ROI</th>
 										<th>Date</th>
 										<th>Status</th>
@@ -64,6 +65,7 @@
 										<td>@{{ transaction.trans_type }}</td>
 										<td>@{{ transaction.coin }}</td>
 										<td>@{{ transaction.amount}}</td>
+										<td>@{{ transaction.crypto_address }}</td>
 										<td>@{{ transaction.increment }}</td>
 										<td>@{{ transaction.txn_date }}</td>
 										<td>@{{ transaction.status }}</td>				
@@ -73,7 +75,7 @@
 												 data-bs-toggle="dropdown">	<span class="visually-hidden">Toggle Dropdown</span> Action
 												</button>
 												<div class="dropdown-menu dropdown-menu-right dropdown-menu">
-													<a class="dropdown-item" href="j#">Remove</a>			
+													<a class="dropdown-item" href="#">Remove</a>			
 												</div>
 											</div>
 										</td>

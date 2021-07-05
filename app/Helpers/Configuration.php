@@ -4,7 +4,7 @@ namespace App\Helpers;
 
 class  Configuration {
     
-    const INVESTMENT_CURRENCY = 'usd';
+    const CURRENCY = 'USD';
     const INVESTMENT_TYPE = 'GOLD PLATE';
     
 }
