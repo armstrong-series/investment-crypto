@@ -69,11 +69,9 @@
 								<div class="tab-content py-3">
 									<div class="tab-pane fade show active" id="primaryhome" role="tabpanel">
 											<button class="btn btn-md btn-primary" data-bs-toggle="modal" data-bs-target="#bannerModal" type="button">Add Banner</button>
-
-
-											<div class="fileUpload btn-md btn-default"
-											 style=" width:150px; padding: 10px; border-radius:6%; box-shadow: 4px 3px 5px grey">
-													<span>Choose Image file</span>
+											<div class="fileUpload btn-md text-center"
+											 style=" width:150px; padding: 10px; background:navy; color:white;border-radius:6%; float:right; box-shadow: 4px 3px 5px grey">
+													<span>Browse Image</span>
 													<input type="file" id="uploadBtn file" accept="image/*"  @change="changeProfilePics()" ref="file" class="form-control upload">
 											</div>
 									</div>
@@ -90,7 +88,7 @@
                 </div>
 				<!--end row-->
 				<div class="row">
-					<div class="col">
+					<div class="col-md-8">
 						<!-- <h6 class="mb-0 text-uppercase">Individual Interval</h6>
 						<hr/> -->
 						<div class="card">

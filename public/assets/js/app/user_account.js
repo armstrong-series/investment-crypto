@@ -1,4 +1,5 @@
 
+
 new Vue({
     el: '#auth',
 
@@ -31,6 +32,7 @@ new Vue({
             create: '',
             create_user: '',
             update_user: '',
+            delete_user: '',
             users:''
         }
     },
@@ -38,6 +40,7 @@ new Vue({
         this.route.create = $('#create').val();
         this.route.create_user = $('#create_users').val();
         this.route.update_user = $('#update_users').val();
+        this.route.delete_user =$('#delete_users').val();
         // this.route.users = $('#"users').val();
         this.users = $('#all-users').val() ? JSON.parse($('#all-users').val()) : [];
         
@@ -171,6 +174,64 @@ new Vue({
             });
         },
 
+        deleteUser(id){
+            console.log(id)
+            const notifier = swal({
+                title: "Are you sure?",
+                text: "Once deleted, this file can't be recovered!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+              });
+             notifier.then(value =>{
+                 if(value === "delete"){
+                    axios.delete(`/delete-user/${id}`).then(response => {
+                        this.isloading = false;
+                        const data = response.data
+                        Command: toastr["success"](response.data.message)
+                        toastr.options = {
+                        "closeButton": false,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                        }
+                    }).catch((error) => {
+                        console.log(error.response)
+                        this.isLoading = false;
+                        Command: toastr["info"](error.response.data.message)
+                            toastr.options = {
+                            "closeButton": false,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": false,
+                            "positionClass": "toast-top-right",
+                            "preventDuplicates": false,
+                            "onclick": null,
+                            "showDuration": "300",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                            }
+                    });
+                 }
+             })
+          
+        },
         createAccount() {
             this.isloading = false;
             axios.post(this.route.create, {

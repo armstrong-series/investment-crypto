@@ -46,7 +46,7 @@
                                                 <td v-cloak>
                                     
                                                     <button type="button" @click="dialog(index)" class="btn btn-md" data-bs-toggle="modal" data-bs-target="edit" ><i class="lni lni-pencil"></i></button> 
-                                                    <button type="button" class="btn btn-sm"><i class="lni lni-trash"></i></button>
+                                                    <button type="button" @click="deleteUser(user.id)" class="btn btn-sm"><i class="lni lni-trash"></i></button>
                                                 </td>
                                             </tr>
                                            
@@ -165,7 +165,9 @@
 			</div>
 
 		</div>
+
         <textarea name="" id="create_users" style="display: none;">{{ route('admin.user.create') }}</textarea>
+       
         <textarea name="" id="update_users" style="display: none;">{{ route('admin.user.update') }}</textarea>
         <textarea name="" id="users" style="display: none;" cols="30" rows="10">{{ route('user.admin.management') }}</textarea>
         <textarea name="" id="all-users" style="display: none;">{{ json_encode($users) }}</textarea>
@@ -175,6 +177,7 @@
 
 	@section('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	 <script src="{{ asset('assets/js/app/user_account.js') }}"></script>
 	@endsection
 </body>

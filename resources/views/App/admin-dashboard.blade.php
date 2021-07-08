@@ -65,8 +65,8 @@
 							<div class="card-body">
 								<div class="d-flex align-items-center">
 									<div>
-										<p class="mb-0 text-secondary font-14">Users</p>
-										<h5 class="my-0">956</h5>
+										<p class="mb-0 text-secondary font-14">Regulars</p>
+										<h5 class="my-0">{{ $count_regulars }}</h5>
 									</div>
 									<div class="text-warning ms-auto font-30"><i class='bx bx-beer'></i>
 									</div>

@@ -54,8 +54,8 @@
                                                 <td v-cloak>@{{ transaction.txn_date }}</td>
                                                 <td v-cloak>@{{ transaction.status }}</td>
                                                 <td>
-                                                  <button v-cloak style="box-shadow:4px 3px 4px grey; width: 50px; height:24px;" title="approval" @click="approve()" type="button" class="btn">
-                                            
+                                                  <button v-cloak style="box-shadow:4px 3px 4px grey; width: 50px; height:24px;" title="approval" @click="approveTransaction(transaction.txn_id)" type="button" class="btn">
+                        
                                                         <i style="color:lime; padding:10px;" class="fadeIn animated bx bx-caret-right"></i>
                                                     </button>
                                                     
@@ -71,7 +71,7 @@
                     <!--end row-->
 
                     <textarea name="" id="allTransactions" cols="30"  style="display:none;" rows="10">{{ json_encode($transactions) }}</textarea>
-                    <textarea name="" id="approve" cols="30"  style="display:none;" rows="10">{{ route('admin.approve.transaction') }}</textarea>
+                   
                    
             </div>
         </div>
@@ -80,7 +80,7 @@
 
     	<!--end page wrapper -->
 	@section('script')
-   
+    <script>window.Laravel = {csrfToken: '{{ csrf_token() }}'}</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="{{ asset('assets/js/app/transactions.js') }}"></script>
 	@endsection

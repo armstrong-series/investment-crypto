@@ -21,8 +21,6 @@ class AdminController extends Controller
     public function Users(Request $request)
     {
         try {
-
-            // $users = User::where(['id' => Auth::id()])->get();
             $users = User::all();
             return response()->json([
                 'error' => false,
@@ -40,12 +38,15 @@ class AdminController extends Controller
             $users = User::all();
             $admin = User::where(['user_type' => 'admin'])->get();
             $support = User::where(['user_type' => 'support'])->get();
+            $regulars = User::where(['user_type' => 'regular'])->get();    
+            $count_regulars = count($regulars);
             $data = [
                 'page' => 'admin-dashboard',
                 'subs' => '',
                 'support' => $support,
                 'admin' => $admin,
                 'users' => $users,
+                'count_regulars' =>  $count_regulars 
 
             ];
          }else {
@@ -71,6 +72,7 @@ class AdminController extends Controller
             if (Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'support') {
                 $users = User::all();
                 $admin = User::where(['user_type' => 'admin'])->get();
+               
                 $support = User::where(['user_type' => 'support'])->get();
                 $data = [
                     'page' => 'user-management',
@@ -78,13 +80,8 @@ class AdminController extends Controller
                     'support' => $support,
                     'admin' => $admin,
                     'users' => $users,
-    
                 ];
-
-                // return response()->json([
-                //     "message" => "Success",
-                //     "users" => $users
-                // ], 200);
+            
             }else {
                 return redirect()->back();
             }
@@ -177,18 +174,20 @@ class AdminController extends Controller
         }
     }
 
-    public function deleteUser(Request $request, $id)
+    public function deleteUser($id)
     {
         try {
-            $user = User::where(['id' => $id])->first();
+            $user = User::where('id', $id)->first();
             if (!$user) {
                 $message = "User was not found";
                 return response()->json(['message' => $message], 404);
             }
 
             $user->delete();
-            $message = "User deleted successfully";
-
+            $message = "User deleted successfully!";
+            return response()->json([
+                'message' =>$message,
+            ], 200);
         } catch (Exception $error) {
             Log::info("UserController::class, 'deleteUser'" . $error->getMessage());
             $message = 'Unable to get information. Please try checking your network';

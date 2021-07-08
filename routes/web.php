@@ -28,12 +28,13 @@ Route::get('/transaction-history', [Controller\InvestmentController::class, 'tra
 
 Route::post('/withdrawal', [Controller\InvestmentController::class, 'withdrawal'])->name('users.withdrawal');
 Route::post('/create-users', [Controller\Admin\AdminController::class, 'createUser'])->name('admin.user.create');
-Route::post('/users-updarw', [Controller\Admin\AdminController::class, 'updateUser'])->name('admin.user.update');
+Route::post('/users-update', [Controller\Admin\AdminController::class, 'updateUser'])->name('admin.user.update');
+Route::delete('/delete-user/{id}', [Controller\Admin\AdminController::class, 'deleteUser'])->name('admin.user.delete');
 Route::get('/user-management', [Controller\Admin\AdminController::class, 'userManagement'])->name('admin.user.management');
 Route::get('/all-users', [Controller\Admin\AdminController::class, 'Users'])->name('user.admin.management');
 Route::get('/admin/transactions', [Controller\Admin\TransactionController::class, 'getUserstransactions'])->name('admin.transactions');
 Route::get('/transactions', [Controller\Admin\TransactionController::class, 'transactions'])->name('all-transactions');
-Route::post('/admin/approve-transactions}', [Controller\Admin\TransactionController::class, 'approveTransaction'])->name('admin.approve.transaction');
+Route::post('/admin/approve-transactions/{tnx_id}', [Controller\Admin\TransactionController::class, 'approveTransaction'])->name('admin.approve.transaction');
 
 Route::get('/profile-pics', [Controller\UserController::class, 'profilePics'])->name('user.profile.pics');
 Route::get('/profile', [Controller\UserController::class, 'profile'])->name('user.profile');

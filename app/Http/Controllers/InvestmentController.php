@@ -12,7 +12,7 @@ use Validator;
 use Exception, Log, Auth, Storage;
 
 
-
+// const oneMonth = Carbon::now()->addMonth();
 
 class InvestmentController extends Controller
 {
@@ -101,25 +101,17 @@ class InvestmentController extends Controller
             $investment->email = Auth::user()->email;
             $investment->mobile = Auth::user()->mobile;
             $investment->txn_id = \Str::uuid();
-            $investment->txn_date = Carbon::now()->diffForHumans();
+            $investment->txn_date = Carbon::now();
             $investment->increment = $request->increment;
             $investment->description = $request->description;
             $investment->crypto_address =  $request->crypto_address;
             $investment->amount = $request->amount;
             $investment->save();
             MailConfig::notifier($request, $user);
-            $url = route('users.checkout', $investment->id);
-            return response()->json([
-                "status" => "success",
-                "message" => "Investment successful!",
-                "url" => $url
-            ],200);
+            return response()->json(["message" => "Investment successful!" ],200);
         } catch (Exception $error) {
             Log::info("InvestmentController@invest error message:" . $error->getMessage());
-            return  response()->json([
-                "message" => "Unable to process request",
-                "error" => true
-            ], 500);
+            return $error;
         }
     }
 
@@ -157,6 +149,11 @@ class InvestmentController extends Controller
             $withdrawal = PaymentTransactionLog::where([
                 'user_id' => Auth::id(),
                 'txn_id'=> $request->txn_id])->decrement('increment', $request->amount);
+
+            if($withdrawal->txn_date !== oneMonth){
+                $message = "Sorry, your investment is not up to a month!";
+                return response()->json(["message" => $message], 400);
+            }
             if(!$withdrawal){
                 $message = "Invalid transaction!";
                 return response()->json(["message" => $message], 404);

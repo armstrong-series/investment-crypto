@@ -77,6 +77,7 @@ new Vue({
                 const value = this.cryptocurrencies.currencies[this.selected_coin]
                 this.investment.amount = value.quotes.USD.price * this.entered_price
                 console.log('result', this.investment.amount)
+                console.log('coin', this.selected_coin.symbol)
                 if (this.investment.amount) {
                     const roi_value = (20 / 100) * this.investment.amount + parseInt(this.investment.amount)
                     this.increment = this.investment.amount ? parseFloat(roi_value).toFixed(2) : '';
@@ -105,8 +106,8 @@ new Vue({
                 this.isloading = false;
                 $('#invest').modal('hide');
                 const data = response.data
-                window.location.href = data.url
                 console.log(data)
+                console.log('coin',this.selected_coin)
                 Command: toastr["success"](response.data.message)
                 toastr.options = {
                     "closeButton": false,
@@ -125,6 +126,7 @@ new Vue({
                     "showMethod": "fadeIn",
                     "hideMethod": "fadeOut"
                 }
+                window.location = '/wallet';
 
             }).catch((error) => {
                 console.log(error.response)

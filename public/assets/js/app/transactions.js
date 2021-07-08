@@ -12,18 +12,18 @@ new Vue({
 
         transactions: {
             isLoading: false,
-            approve: '', 
+            approve_transaction: '', 
             disaprove: ''
 
         },
         
         route: {
-            approve:""
+            approve_transaction: ""
         }
     },
     mounted() {
         this.transaction_details = $('#allTransactions').val() ? JSON.parse($('#allTransactions').val()) : [];
-        this.route.approve = $('#approve').val();
+        this.route.approve = $('#approveTransaction').val();
         
     },
 
@@ -33,9 +33,9 @@ new Vue({
         dispproval(){
           
         },
-        approve(){  
-            // console.log('transactionid',txn_id )
-            axios.post(this.route.approve).then((response) => {
+        approveTransaction(txn_id){  
+            console.log('transactionid',txn_id)
+            axios.post(`/admin/approve-transactions/${txn_id}`).then((response) => {
                 this.isLoading = false;
                 const data = response.data
                 Command: toastr["success"](response.data.message)

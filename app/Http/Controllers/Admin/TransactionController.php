@@ -19,7 +19,9 @@ class TransactionController extends Controller
 
     public function getUserstransactions(Request $request)
     {
+
         try {
+
             if (Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'support') {
                 $transactions = PaymentTransactionLog::all();
                 $admin = User::where(['user_type' => 'admin'])->get();
@@ -45,19 +47,17 @@ class TransactionController extends Controller
         }
     }
 
-    public function approveTransaction(Request $request)
+    public function approveTransaction($tnx_id)
     {
         try {
-
-            dd($request->all());
             $approve_transaction = PaymentTransactionLog::where([
-                'txn_id' => $request->txn_id,
+                'txn_id' => $tnx_id,
                 'id' => Auth::id()])->update([
                 "status" => "complete",
             ]);
-            if (!$approve_transaction) {
-                return response()->json(["message" => "Transaction not found!"], 404);
-            }
+            // if (!$approve_transaction) {
+            //     return response()->json(["message" => "Transaction not found!"], 404);
+            // }
             $approve_transaction->save();
             return response()->json(["message" => "Transaction approved!"], 200);
 
@@ -71,11 +71,13 @@ class TransactionController extends Controller
     public function disapproveTransaction(Request $txn_id)
     {
         try {
-            $approve_transaction = PaymentTransactionLog::where(['txn_id' => $txn_id])->update([
-                "status" => "failed",
+            $disapprove_transaction = PaymentTransactionLog::where([
+                'txn_id' => $txn_id, 
+                'id' => Auth::id()])->update([
+                "status" => "pending",
             ]);
 
-            $approve_transaction->save();
+            $disapprove_transaction->save();
             return response()->json(["message" => "Transaction disapproved! "], 200);
 
         } catch (Exception $error) {

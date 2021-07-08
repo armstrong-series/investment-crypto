@@ -103,8 +103,9 @@
 												</div>
 												<div class="row mb-3">										
 													<div class="input-group mb-3">
-														<input v-if="selected_coin" v-model="investment.crypto_address" type="text" class="form-control"  :placeholder="'Enter your '+selected_coin.name +' Address'">
-														<label v-if="selected_coin" class="input-group-text" for="inputGroupSelect02">Address</label>
+													
+														<input v-if="selected_coin" v-model="investment.crypto_address" type="text" class="form-control"  :placeholder="'Enter your '+selected_coin.name +' Address'">@{{ selected_coin }}
+														<label v-if="selected_coin" class="input-group-text" for="inputGroupSelect02">Address  </label>
 													</div>
 												</div>
 												<div class="row mb-3">										
@@ -123,7 +124,7 @@
 												<div class="row mb-3">										
 													<div class="input-group mb-3">
 														<input v-model="investment.description"  type="text" class="form-control" placeholder="Enter Transaction Narration">
-
+														<label class="input-group-text" for="inputGroupSelect02">Narration</label>
 													</div>
 												</div>	
 											</div>
