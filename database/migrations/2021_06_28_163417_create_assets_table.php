@@ -17,7 +17,7 @@ class CreateAssetsTable extends Migration
             $table->id();
             $table->integer('user_id');
             $table->string('name')->nullable();
-            $table->string('niche')->nullable();
+            $table->enum('niche', ['advert', 'marketing'])->nullable();
             $table->string('image')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();

@@ -48,7 +48,7 @@
                                                 <a href="javascript:void(0);" v-cloak  class="text-primary"   data-bs-toggle="tooltip" data-bs-placement="left" title="Status"><strong>@{{ transaction.status }}</strong></a>
                                             </div>
                                             <div class="col">
-                                                <a href="javascript:void(0);" v-cloak  class="btn text-secondary"  @click="adminDeleteTransaction(transaction.txn_id)" data-bs-toggle="tooltip" data-bs-placement="left" title="Delete">Remove <i class="fas fa-trash" style="color:red;"></i></a>
+                                                <a href="javascript:void(0);" v-cloak  class="btn text-secondary"  @click="adminDeleteTransaction(transaction.txn_id)" data-bs-toggle="tooltip" data-bs-placement="left" title="Delete"><i class="fas fa-trash" style="color:red;"></i></a>
                                             </div>
                                         </div>
                                     </div>

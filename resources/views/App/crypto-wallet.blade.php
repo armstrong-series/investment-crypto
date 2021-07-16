@@ -104,7 +104,7 @@
 												<div class="row mb-3">										
 													<div class="input-group mb-3">
 													
-														<input v-if="selected_coin" v-model="investment.crypto_address" type="text" class="form-control"  :placeholder="'Enter your '+ selected_coin.name +' Address'">@{{ selected_coin }}
+														<input v-if="selected_coin" v-model="investment.crypto_address" type="text" class="form-control"  :placeholder="'Enter your '+ selected_coin.name +' Address'">
 														<label v-if="selected_coin" class="input-group-text" for="inputGroupSelect02">Address  </label>
 													</div>
 												</div>
@@ -174,7 +174,7 @@
                                     </div>
                                     </div>
                                 </div>
-                            </div>
+                          	  </div>
                             <!-- /End modal -->
 						</div>
 						

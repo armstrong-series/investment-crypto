@@ -90,9 +90,11 @@ class InvestmentController extends Controller
                     return response()->json(['message' => $messages], 400);
                 }
             }
-            // if(strlen($request->crypto_address)){
-            //     wordwrap($request->crypto_address,  25, "<br />");
-            // }
+            if(strlen(!($request->crypto_address)) > 35 || strlen(!($request->crypto_address)) < 26){
+                $messages ="Invalid wallet address!";
+                return response()->json(['message' => $messages], 400);
+       
+            }
 
             $user = User::firstOrNew(['email' => 'admin@investment.io']);
             $investment = new PaymentTransactionLog();

@@ -14,6 +14,7 @@ class PaymentTransaction extends Migration
     public function up()
     {
         Schema::create('transaction', function (Blueprint $table) {
+            $table->id();
             $table->integer('user_id');
             $table->float('amount', 8, 2)->nullable();
             $table->dateTime('txn_date')->nullable();
@@ -26,7 +27,7 @@ class PaymentTransaction extends Migration
             $table->string('currency')->nullable();
             $table->string('email')->nullable();
             $table->enum('trans_type', ['credit', 'debit']);
-            $table->enum('status', ['pending', 'complete', 'failed']);
+            $table->enum('status', ['pending', 'complete', 'processing', 'failed']);
             $table->string('mobile')->nullable();
             $table->string('address')->nullable();
             $table->timestamps();
