@@ -53,9 +53,7 @@
 		<!--start page wrapper -->
         @yield('content')
 
-		@if($page === 'wallet')
-			@include('Includes.Investment.invest')
-		@endif
+		
 		<!--end page wrapper -->
 		<!--start overlay-->
 		<div class="overlay toggle-icon"></div>

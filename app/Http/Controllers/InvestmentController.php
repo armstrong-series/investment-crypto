@@ -34,7 +34,7 @@ class InvestmentController extends Controller
         
             $account_balance = PaymentTransactionLog::where([
                 'user_id' => Auth::id(),
-                'status' => 'complete'
+                'status' => Configuration::STATUS_COMPLETE
                 ])->sum('amount');
 
             $data = [
@@ -189,23 +189,6 @@ class InvestmentController extends Controller
     }
 
 
-    // public function getTransactions(Request $request)
-    // {
-    //     try {
-    //         $transactions =  PaymentTransactionLog::where(['user_id' => Auth::id])->get();
-
-    //         return response()->json([
-    //             "message" => "Success",
-    //             'transactions' => $transactions
-    //         ], 200);
-    //     } catch (Exception $error) {
-    //         Log::info("InvestmentController@getTransaction error message:" . $error->getMessage());
-    //         return response()->json([
-    //             "message" => "A strange error with your request",
-    //             "error" => true
-    //         ], 500);
-    //     }
-    // }
 
     protected function check(array $data)
     {

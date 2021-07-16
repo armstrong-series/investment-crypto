@@ -6,6 +6,9 @@ class  Configuration {
     
     const CURRENCY = 'USD';
     const INVESTMENT_TYPE = 'GOLD PLATE';
+    const STATUS_COMPLETE = 'complete';
+    const STATUS_PROCESS = 'processing';
+    const STATUS_PENDING = 'pending';
     // const oneMonth = Carbon::now()->addMonth();
     
 }

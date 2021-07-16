@@ -90,7 +90,7 @@
 													<div class="input-group mb-3">-
 														<select class="form-select" v-model="selected_coin">
 															<option value="" disabled>Choose</option>
-															<option v-for="(currency, key) in cryptocurrencies.currencies" v-bind:value="key">@{{ currency.name }}</option>					
+															<option v-for="(currency, key) in cryptocurrencies.currencies" v-bind:value="key">@{{ currency.name }}</option>			
 														</select>
 														<label class="input-group-text" for="inputGroupSelect02">Coin</label>
 													</div>
@@ -176,6 +176,11 @@
                                 </div>
                           	  </div>
                             <!-- /End modal -->
+						</div>
+						<div style="float:right;">
+							<button type="button" style="border-radius:50%;  height:50px; width: 50px; background:navy; color:white; box-shadow: 3px 4px 4px grey;"
+								class="btn btn-md btn-primary"data-bs-toggle="modal" data-bs-target="#invest" ><i class="bx bxs-wallet" style="color:white;"></i>
+							</button>		
 						</div>
 						
 					</div>

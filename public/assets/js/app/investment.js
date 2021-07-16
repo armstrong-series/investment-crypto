@@ -50,6 +50,8 @@ new Vue({
         this.cryptocurrencies.currencies = JSON.parse($('#currencies').val())
         console.log('currencies', this.cryptocurrencies.currencies)
 
+       
+
     },
 
 

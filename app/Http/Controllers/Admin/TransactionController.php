@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\PaymentTransactionLog;
+use App\Helpers\Configuration;
 use App\Models\User;
 use Auth;
 use Exception;
@@ -77,9 +78,9 @@ class TransactionController extends Controller
             if(!$disapprove){
                 return response()->json(["message" => "Transaction not found!"], 404);
             }
-            $disapprove->status = "pending";
+            $disapprove->status = Configuration::STATUS_PENDING;
             $disapprove->save();
-            return response()->json(["message" => "Transaction disapproved! "], 200);
+            return response()->json(["message" => "Transaction disapproved!"], 200);
 
         } catch (Exception $error) {
             Log::info("Admin\TransactionController@disapproveTransaction error message:" . $error->getMessage());
@@ -88,15 +89,15 @@ class TransactionController extends Controller
         }
     }
 
-    public function transactionDetails($tnx_id){
+    public function transactionDetails(Request $request, $tnx_id){
         try {
             $transaction = PaymentTransactionLog::where([
-                // 'user_id' => Auth::id(),
+                'id' => $request->id,
                 'txn_id' => $tnx_id
                 ])->first();
 
                 if(!$transaction){
-                    return response()->json(["message" => "Invalid transaction !"], 404);
+                    return response()->json(["message" => "Invalid transaction!"], 404);
                 }
                 $data = [
                     'transaction' => $transaction,
@@ -111,10 +112,10 @@ class TransactionController extends Controller
         }
     }
 
-    public function deleteTransaction($tnx_id)
+    public function deleteTransaction($id)
     {
         try {
-            $transaction = PaymentTransactionLog::where('txn_id', $tnx_id)->first();
+            $transaction = PaymentTransactionLog::where('id', $id)->first();
             if(!$transaction){
                 return response()->json(["message" => "Transaction not found!"], 404);
             }
