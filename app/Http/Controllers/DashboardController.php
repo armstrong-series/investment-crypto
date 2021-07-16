@@ -20,10 +20,10 @@ class DashboardController extends Controller
             $users = User::where(['id' => Auth::id()])->get();
             $total_investment = PaymentTransactionLog::where([
                 'user_id' => Auth::id(),
-                // 'status' => 'completed'
+                'status' => 'completed'
                 ])->sum('amount');
-            
-            
+
+
             $total_roi = PaymentTransactionLog::where([
                 'user_id' => Auth::id(),
                 'status' => 'completed'

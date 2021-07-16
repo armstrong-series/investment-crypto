@@ -43,13 +43,11 @@
                                                 <td v-cloak>@{{ user.email }}</td>
                                                 <td v-cloak>@{{ user.nationality }}</td>
                                                 <td v-cloak>@{{ user.user_type }}</td>
-                                                <td v-cloak>
-                                    
-                                                    <button type="button" @click="dialog(index)" class="btn btn-md" data-bs-toggle="modal" data-bs-target="edit" ><i class="lni lni-pencil"></i></button> 
+                                                <td v-cloak>                               
+                                                    <button type="button" @click="dialog(index)" class="btn btn-md" data-bs-toggle="modal" data-bs-target="#edit" ><i class="lni lni-pencil"></i></button>                        
                                                     <button type="button" @click="deleteUser(user.id)" class="btn btn-sm"><i class="lni lni-trash"></i></button>
                                                 </td>
-                                            </tr>
-                                           
+                                            </tr>                                          
                                         </tbody>
                                     </table>
                                 <!-- </div>
@@ -97,7 +95,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="clearData()">Close</button>
                                         <button  @click="createUser()" type="button" class="btn btn-primary btn-md">Proceed</button>
 
                                     </div>
@@ -140,7 +138,9 @@
                                         <div class="form-group">
                                             <select name="" id="" v-model="editUsers.user_type" class="form-control">
                                                 <option value="">Select</option>
+                                            @if(Auth::user()->user_type === "admin")
                                                 <option value="admin">Admin</option>
+                                            @endif
                                                 <option value="support">Support</option>
                                                 <option value="regular">Regular</option>
                                             </select>
@@ -148,7 +148,7 @@
                                     </div>
                                     <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button  @click="createUser()" type="button" class="btn btn-primary btn-md">Proceed</button>
+                                        <button  @click="updateUser()" type="button" class="btn btn-primary btn-md">Proceed</button>
 
                                     </div>
                                     </div>
@@ -159,12 +159,12 @@
 							</div>
 						</div>
                         <hr/>
-					</div>
 				</div>
-				<!--end row-->
 			</div>
-
+				<!--end row-->
 		</div>
+    
+		
 
         <textarea name="" id="create_users" style="display: none;">{{ route('admin.user.create') }}</textarea>
        
@@ -173,7 +173,7 @@
         <textarea name="" id="all-users" style="display: none;">{{ json_encode($users) }}</textarea>
     	<!--end page wrapper -->
 	@endsection
-
+    </div>
 
 	@section('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>

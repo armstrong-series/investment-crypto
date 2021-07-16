@@ -23,7 +23,8 @@ Route::post('/reset-password', [Controller\Auth\ResetPasswordController::class,'
 
 // Route::post('/payment', [Controller\Integrations\RaveController::class, 'initialize'])->name('make-payment');
 // Route::get('/payment-callback', [Controller\Integrations\RaveController::class, 'callback'])->name('users.payment.callback');
-Route::get('/checkout', [Controller\InvestmentController::class, 'checkout'])->name('users.checkout');
+
+
 Route::get('/transaction-history', [Controller\InvestmentController::class, 'transactionHistory'])->name('users.transaction-history');
 
 Route::post('/withdrawal', [Controller\InvestmentController::class, 'withdrawal'])->name('users.withdrawal');
@@ -32,9 +33,14 @@ Route::post('/users-update', [Controller\Admin\AdminController::class, 'updateUs
 Route::delete('/delete-user/{id}', [Controller\Admin\AdminController::class, 'deleteUser'])->name('admin.user.delete');
 Route::get('/user-management', [Controller\Admin\AdminController::class, 'userManagement'])->name('admin.user.management');
 Route::get('/all-users', [Controller\Admin\AdminController::class, 'Users'])->name('user.admin.management');
+
+Route::post('/create-post', [Controller\Admin\AssetsController::class, 'createAssets'])->name('admin.create.assets');
+
 Route::get('/admin/transactions', [Controller\Admin\TransactionController::class, 'getUserstransactions'])->name('admin.transactions');
 Route::get('/transactions', [Controller\Admin\TransactionController::class, 'transactions'])->name('all-transactions');
-Route::post('/admin/approve-transactions/{tnx_id}', [Controller\Admin\TransactionController::class, 'approveTransaction'])->name('admin.approve.transaction');
+Route::post('/transaction/confirmed', [Controller\Admin\TransactionController::class, 'approveTransaction'])->name('admin.approve.transaction');
+Route::get('/transaction-details/{txn_id}', [Controller\Admin\TransactionController::class, 'transactionDetails'])->name('transaction-details');
+Route::delete('/delete-transaction/{txn_id}',  [Controller\Admin\TransactionController::class, 'deleteTransaction'])->name('admin.transaction.delete');
 
 Route::get('/profile-pics', [Controller\UserController::class, 'profilePics'])->name('user.profile.pics');
 Route::get('/profile', [Controller\UserController::class, 'profile'])->name('user.profile');
@@ -52,7 +58,7 @@ Route::get('/admin', [Controller\Admin\AdminController::class, 'Dashboard'])->na
 Route::get('/settings', [Controller\Settings\SettingsController::class, 'settingsDashboard'])->name('users.settings');
 Route::get('/settings/security', [Controller\Settings\SettingsController::class, 'security'])->name('users.settings.security');
 Route::get('/asset',  [Controller\Admin\AssetsController::class, 'assetsPreview'])->name('admin.assets');
-
+Route::get('/assets-image/{file}', [Controller\Admin\AssetsController::class, 'assetsFile'])->name('assets-file');
 
 
 

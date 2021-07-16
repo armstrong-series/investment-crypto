@@ -41,7 +41,6 @@ new Vue({
         this.route.create_user = $('#create_users').val();
         this.route.update_user = $('#update_users').val();
         this.route.delete_user =$('#delete_users').val();
-        // this.route.users = $('#"users').val();
         this.users = $('#all-users').val() ? JSON.parse($('#all-users').val()) : [];
         
     },
@@ -62,7 +61,7 @@ new Vue({
 
         updateUser(){
             this.isloading = false;
-            axios.post(this.this.route.update_user, {
+            axios.post(this.route.update_user, {
                 name: this.editUsers.name,
                 email: this.editUsers.email,
                 nationality: this.editUsers.nationality,
@@ -97,7 +96,7 @@ new Vue({
             }).catch((error) => {
                 console.log(error.response)
                 this.isLoading = false;
-                Command: toastr["info"](error.response.data.message)
+                Command: toastr["error"](error.response.data.message)
                     toastr.options = {
                     "closeButton": false,
                     "debug": false,
@@ -130,6 +129,7 @@ new Vue({
             password_confirmation: this.account.password_confirmation
         }).then((response) => {
             $('#users').modal('hide');
+                this.clearData();
                 this.isloading = false;
                 const data = response.data
                 Command: toastr["success"](response.data.message)
@@ -285,6 +285,18 @@ new Vue({
                     }
                 
                 });
-        }
+        },
+      
+        clearData(){
+            this.account = {
+                name: '',
+                email: '',
+                password: '',
+                password_confirmation: '',
+                nationality: '',
+                user_type: '',
+                mobile: ''
+            };
+        },
     }
 })

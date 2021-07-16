@@ -6,10 +6,13 @@ use App\Helpers\Paths;
 use App\Http\Controllers\Controller;
 use App\Models\AssetsModel;
 use App\Models\Investment;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Exception;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Log;
+use File;
+use  Illuminate\Http\Response;
 use Storage;
 
 class AssetsController extends Controller
@@ -18,15 +21,17 @@ class AssetsController extends Controller
     {
         try {
             $assets = Investment::where('user_id', Auth::id())->get();
+            $all_assets = AssetsModel::all();
 
             $data = [
                 'page' => 'assets',
                 'subs' => '',
                 'assets' => $assets,
+                'all_assets' => $all_assets
             ];
             return view('App.marketing-assets', $data);
         } catch (Exception $error) {
-            Log::info("Admin\AssetsController@Assets error message:" . $error->getMessage());
+            Log::info("Admin\AssetsController@assetsPreview error message:" . $error->getMessage());
             return response()->json([
                 "message" => "Unable to process request",
                 "error" => true,
@@ -37,7 +42,6 @@ class AssetsController extends Controller
     public function createAssets(Request $request)
     {
         try {
-
             $validator = $this->checkAssets($request->all());
             if ($validator->fails()) {
                 $message = $validator->errors()->all();
@@ -45,24 +49,63 @@ class AssetsController extends Controller
                     return response()->json(['message' => $messages], 400);
                 }
             }
-            $assets = new AssetsModel();
-            $assets->id = Auth::id();
-            $assets->name = $request->name;
-            $assets->niche = $request->niche;
-            $assets->description = $request->description;
-            $assets->save();
-            return response()->json([
-                "status" => "success",
-                "message" => "Assets created successfully!",
-            ], 200);
+            if ($request->hasFile('image')) {
+                $imagePath = storage_path('app/' . Paths::MARKT_ASSETS);
+                $extension = $request->file('image')->getClientOriginalExtension();
+                if (in_array(strtolower($extension), ["jpg", "png", "jpeg"])) {
+                    $fileName = time() . '.' . $extension;
+                    $request->file('image')->move($imagePath, $fileName);
+                    $assets = new AssetsModel();
+                    $assets->user_id = Auth::id();
+                    // $assets->name = $request->name;
+                    $assets->niche = $request->niche;
+                    $assets->description = $request->description;
+                    $assets->image = $fileName;
+                    $assets->save();
+                    return response()->json([
+                        "message" => "Assets created successfully!" ], 200);
+
+                } else {
+                    $message = "Invalid file format!";
+                    return response()->json(['message' => $message], 400);
+                }
+
+            } else {
+                $message = "Request has no file";
+                return response()->json(['message' => $message], 400);
+            }
+
         } catch (Exception $error) {
-            Log::info("Admin\AssetsController@createAssets error message:" . $error->getMessage());
+            Log::info('Admin\AssetsContoller@createAssets error message: ' . $error->getMessage());
+            $message = 'Sorry, unable to create template. Please try again';
             return response()->json([
-                "message" => "Unable to process request",
-                "error" => true,
+                'error' => true,
+                "message" => $message,
             ], 500);
         }
+    }
 
+
+    public function assetsFile(Request $request)
+    {
+        try {  
+            $path = storage_path('app/' .  Paths::MARKT_ASSETS . $request->file);
+            if (!File::exists($path)) {
+                abort(404);
+            }
+            $file = File::get($path);
+            $type = File::mimeType($path);
+            $response = new Response($file, 200);
+            return $response;
+
+        } catch (Exception $error) {
+            Log::info('Admin\AdminController@adisplayImage error message: ' . $error->getMessage());
+            $message = 'Sorry, unable to create template. Please try again';
+            return response()->json([
+                'error' => true,
+                "message" => $message,
+            ], 500);
+        }
     }
 
     public function updateAssets(Request $request)
@@ -77,10 +120,7 @@ class AssetsController extends Controller
             $assets->niche = $request->niche ? $request->niche : $assets->niche;
             $assets->description = $request->description ? $request->description : $assets->description;
             $assets->save();
-            return response()->json([
-                "status" => "success",
-                "message" => "Assets updated successfully !",
-            ], 200);
+            return response()->json(["message" => "Assets updated successfully !"], 200);
 
         } catch (Exception $error) {
             Log::info("Admin\AssetsController@updateAssets error message:" . $error->getMessage());
@@ -171,10 +211,8 @@ class AssetsController extends Controller
     protected function checkAssets(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string'],
             'niche' => ['required', 'string'],
             'description' => ['required', 'string'],
-            
 
         ]);
     }

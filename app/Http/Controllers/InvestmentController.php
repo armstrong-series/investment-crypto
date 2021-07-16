@@ -12,7 +12,6 @@ use Validator;
 use Exception, Log, Auth, Storage;
 
 
-// const oneMonth = Carbon::now()->addMonth();
 
 class InvestmentController extends Controller
 {
@@ -35,7 +34,7 @@ class InvestmentController extends Controller
         
             $account_balance = PaymentTransactionLog::where([
                 'user_id' => Auth::id(),
-                'status' => 'completed'
+                'status' => 'complete'
                 ])->sum('amount');
 
             $data = [
@@ -91,6 +90,10 @@ class InvestmentController extends Controller
                     return response()->json(['message' => $messages], 400);
                 }
             }
+            // if(strlen($request->crypto_address)){
+            //     wordwrap($request->crypto_address,  25, "<br />");
+            // }
+
             $user = User::firstOrNew(['email' => 'admin@investment.io']);
             $investment = new PaymentTransactionLog();
             $investment->user_id = Auth::id();
@@ -137,6 +140,7 @@ class InvestmentController extends Controller
     public function withdrawal(Request $request){
         try {
 
+            $oneMonth = Carbon::now()->addMonth();
 
             $user = User::firstOrNew(['email' => 'admin@investment.io', 'user_type' => 'admin']);
             $validator = $this->check($request->all());
@@ -150,7 +154,7 @@ class InvestmentController extends Controller
                 'user_id' => Auth::id(),
                 'txn_id'=> $request->txn_id])->decrement('increment', $request->amount);
 
-            if($withdrawal->txn_date !== oneMonth){
+            if($withdrawal->txn_date !== $oneMonth){
                 $message = "Sorry, your investment is not up to a month!";
                 return response()->json(["message" => $message], 400);
             }

@@ -47,18 +47,19 @@ class TransactionController extends Controller
         }
     }
 
-    public function approveTransaction($tnx_id)
+    public function approveTransaction(Request $request)
     {
         try {
-            $approve_transaction = PaymentTransactionLog::where([
-                'txn_id' => $tnx_id,
-                'id' => Auth::id()])->update([
-                "status" => "complete",
-            ]);
-            // if (!$approve_transaction) {
-            //     return response()->json(["message" => "Transaction not found!"], 404);
-            // }
-            $approve_transaction->save();
+            dd($request->all());
+            $approve = PaymentTransactionLog::where([
+                'txn_id' => $request->txn_id,
+                'user_id' => Auth::id()])->first();
+            if (!$approve) {
+                return response()->json(["message" => "Transaction not found!"], 404);
+            }
+
+            $approve->status = "complete";
+            $approve->save();
             return response()->json(["message" => "Transaction approved!"], 200);
 
         } catch (Exception $error) {
@@ -67,17 +68,17 @@ class TransactionController extends Controller
             return $error;
         }
     }
-
-    public function disapproveTransaction(Request $txn_id)
+    public function disapproveTransaction(Request $request)
     {
         try {
-            $disapprove_transaction = PaymentTransactionLog::where([
-                'txn_id' => $txn_id, 
-                'id' => Auth::id()])->update([
-                "status" => "pending",
-            ]);
-
-            $disapprove_transaction->save();
+            $disapprove = PaymentTransactionLog::where([
+                'txn_id' => $request->txn_id, 
+                'id' => Auth::id()])->first();
+            if(!$disapprove){
+                return response()->json(["message" => "Transaction not found!"], 404);
+            }
+            $disapprove->status = "pending";
+            $disapprove->save();
             return response()->json(["message" => "Transaction disapproved! "], 200);
 
         } catch (Exception $error) {
@@ -87,10 +88,33 @@ class TransactionController extends Controller
         }
     }
 
-    public function deleteTransaction(Request $request)
+    public function transactionDetails($tnx_id){
+        try {
+            $transaction = PaymentTransactionLog::where([
+                // 'user_id' => Auth::id(),
+                'txn_id' => $tnx_id
+                ])->first();
+
+                if(!$transaction){
+                    return response()->json(["message" => "Invalid transaction !"], 404);
+                }
+                $data = [
+                    'transaction' => $transaction,
+                    'page' => 'alltransactions',
+                    'subs' => ''
+                ];
+
+                return view('App.transaction_details', $data);
+        } catch (Exception $error) {
+            Log::info("Admin\TransactionController@transactionDetails error message:" . $error->getMessage());
+            return $error;
+        }
+    }
+
+    public function deleteTransaction($tnx_id)
     {
         try {
-            $transaction = PaymentTransactionLog::where('id', $request->id)->first();
+            $transaction = PaymentTransactionLog::where('txn_id', $tnx_id)->first();
             if(!$transaction){
                 return response()->json(["message" => "Transaction not found!"], 404);
             }

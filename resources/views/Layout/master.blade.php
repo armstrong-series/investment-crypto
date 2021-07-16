@@ -9,8 +9,8 @@
 	<link rel="icon" href="{{ asset('assets/images/favicon-32x32.png') }}" type="image/png" />
 	<!--plugins-->
 	<!-- toastr Css -->
-	<link rel="stylesheet"
-	 type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+	<!-- <link rel="stylesheet"
+	 type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"> -->
 
 	<link href="{{ asset('assets/plugins/vectormap/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet"/>
 	<link href="{{ asset('assets/plugins/simplebar/css/simplebar.css') }}" rel="stylesheet" />
@@ -61,18 +61,19 @@
 		<div class="overlay toggle-icon"></div>
 		<!--end overlay-->
 	
-		<!-- Start Back To Top Button <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a> -->
+		<!-- Start Back To Top Button -->
+		 <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
 		<!--End Back To Top Button-->
-		<!-- <footer class="page-footer">
+		<footer class="page-footer">
 			<p class="mb-0">Copyright © <?php echo date('Y');?> Coin resources All right reserved.</p>
-		</footer> -->
+		</footer>
 	</div>
 	<!--end wrapper-->
 	
 	<!-- Bootstrap JS -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-	<!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
-	<!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
+	<script defer src="https://pro.fontawesome.com/releases/v5.10.0/js/all.js" integrity="sha384-G/ZR3ntz68JZrH4pfPJyRbjW+c0+ojii5f+GYiYwldYU69A+Ejat6yIfLSxljXxD" 
+  		crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script src="{{ asset('assets/libraries/axios.min.js') }}"></script>
 	<script src="{{ asset('assets/libraries/vue.js') }}"></script>
 	<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
@@ -89,7 +90,7 @@
 	<!--Morris JavaScript -->
 	<script src="{{ asset('assets/plugins/raphael/raphael-min.js') }}"></script>
 	<script src="{{ asset('assets/plugins/morris/js/morris.js') }}"></script>
-	<script src="{{ asset('assets/js/index2.js') }}"></script>
+	<!-- <script src="{{ asset('assets/js/index2.js') }}"></script> -->
 	<!--app JS-->
 	<script src="{{ asset('assets/js/app.js') }}"></script>
 	<script src="https://unpkg.com/@popperjs/core@2"></script>

@@ -52,6 +52,8 @@ new Vue({
 
     },
 
+
+
     // convertedPrice() {
     //     if (this.selected_coin && this.entered_price) {
     //         this.cryptocurrencies.currencies[this.selected_coin]

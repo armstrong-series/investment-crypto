@@ -139,24 +139,16 @@ class AdminController extends Controller
     public function updateUser(Request $request)
     {
         try {
-            $validator = $this->validator($request->all());
-            if ($validator->fails()) {
-                $message = $validator->errors()->all();
-                foreach ($message as $messages) {
-                    return response()->json(['message' => $messages], 400);
-                }
-            }
+           
             $user = User::where(['id' => $request->id])->first();
             if (!$user) {
-                $message = 'User not found';
-                return response()->json([
-                    'message' => $message,
-                ], 404);
+                $message = 'User not found!';
+                return response()->json(['message' => $message], 404);
             }
 
             $user->name = $request->name ? $request->name : $user->name;
             $user->email = $request->email ? $request->email : $user->email;
-            $user->phone_number = $request->phone_number ? $request->phone_number : $user->phone_number;
+            $user->mobile = $request->mobile ? $request->mobile : $user->mobile;
             $user->password = Hash::make($request->password) ? Hash::make($request->password) : $user->password;
             $user->user_type = $request->user_type ? $request->user_type : $user->user_type;
             $user->save();
