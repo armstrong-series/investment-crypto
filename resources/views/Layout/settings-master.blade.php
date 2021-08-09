@@ -1,87 +1,80 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<!-- Required meta tags -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!--favicon-->
-	<link rel="icon" href="{{ asset('assets/images/favicon-32x32.png') }}" type="image/png" />
-	<!--plugins-->
-	<!-- toastr Css -->
-	<link rel="stylesheet"
-	 type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-	<link href="{{ asset('assets/plugins/vectormap/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet"/>
-	<link href="{{ asset('assets/plugins/simplebar/css/simplebar.css') }}" rel="stylesheet" />
-	<link href="{{ asset('assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet" />
-	<link href="{{ asset('assets/plugins/metismenu/css/metisMenu.min.css') }}" rel="stylesheet" />
-	<!-- loader-->
-	<link href="{{ asset('assets/css/pace.min.css') }}" rel="stylesheet" />
-	<script src="{{ asset('assets/js/pace.min.js') }}"></script>
-	<!-- Bootstrap CSS -->
-	<link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet">
-	<link href="{{ asset('assets/css/app.css') }}" rel="stylesheet">
-	<link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet">
-	<!-- Theme Style CSS -->
-	<link rel="stylesheet" href="{{ asset('assets/css/dark-theme.css') }}" />
-	<link rel="stylesheet" href="{{ asset('assets/css/semi-dark.css') }}" />
-	<link rel="stylesheet" href="{{ asset('assets/css/header-colors.css') }}" />
-	<link rel="stylesheet" href="{{ asset('assets/fontawesome/css/all.css') }}" />
-	<title>allResources</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta keyword="Investment, Cryptocurrency, BTC, Bitcoin, Ethereum, Coin" description="Coin Resources is a cryptocurrency based investment system">
+
+    <!-- Toastr -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"
+  integrity="sha256-PHcOkPmOshsMBC+vtJdVr5Mwb7r0LkSVJPlPrp/IMpU=" crossorigin="anonymous"/>
+    <!-- Title -->
+    <title>Settings</title>
+
+    <!-- Favicon -->
+    <!-- <link rel="icon" href="{{ asset('clusterwink_logo.png') }}"> -->
+    <link rel="stylesheet" href="{{ asset('UI-assets/style.css') }}">
+    @yield('title')
 </head>
-@yield('title')
+
+@yield('styles')
+		<style>
+			[v-cloak]{
+				display: none;
+			}
+		</style>
 <body>
-	<!--wrapper-->
-	<div class="wrapper">
+    <!-- Preloader -->
+    <!-- <div id="preloader">
+        <div class="preloader-load"></div>
+    </div> -->
+    <!-- Preloader -->
+
+    <!-- ======================================
+    ******* Page Wrapper Area Start **********
+    ======================================= -->
+    <div class="ecaps-page-wrapper">
+        <!-- Sidemenu Area -->
+      @include('Includes.settings-side-bar')
+
+
+	  @yield('content')
 		
-		<!--sidebar wrapper -->
-        @include('Includes.settings-side-bar')
-		<!--end sidebar wrapper -->
-		<!--start header -->
-        @include('Includes.header')
-		
-		<!--end header -->
-		<!--start page wrapper -->
-        @yield('content')
-		<!--end page wrapper -->
-		<!--start overlay-->
-		<div class="overlay toggle-icon"></div>
-		<!--end overlay-->
-		<!--Start Back To Top Button--> <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
-		<!--End Back To Top Button-->
-		<footer class="page-footer">
-			<p class="mb-0">Copyright © <?php echo date('Y');?> Allresources All right reserved.</p>
-		</footer>
-	</div>
-	<!--end wrapper-->
-	<!--start switcher-->
-	
-	<!--end switcher-->
-	<!-- Bootstrap JS -->
-	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-	<script src="{{ asset('assets/libraries/axios.min.js') }}"></script>
-	<script src="{{ asset('assets/libraries/vue.js') }}"></script>
-	<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
-	<!--plugins-->
-	<script src="{{ asset('assets/js/jquery.min.js') }}"></script>
-	<script src="{{ asset('assets/plugins/simplebar/js/simplebar.min.js') }}"></script>
-	<script src="{{ asset('assets/plugins/metismenu/js/metisMenu.min.js') }}"></script>
-	<script src="{{ asset('assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js') }}"></script>
-	<script src="{{ asset('assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
-	<script src="{{ asset('assets/plugins/chartjs/js/Chart.min.js') }}"></script>
-	<script src="{{ asset('assets/plugins/chartjs/js/Chart.extension.js') }}"></script>
-	<script src="{{ asset('assets/plugins/sparkline-charts/jquery.sparkline.min.js') }}"></script>
-	<!--Morris JavaScript -->
-	<script src="{{ asset('assets/plugins/raphael/raphael-min.js') }}"></script>
-	<script src="{{ asset('assets/plugins/morris/js/morris.js') }}"></script>
-	<script src="{{ asset('assets/js/index2.js') }}"></script>
-	<!--app JS-->
-	<script src="{{ asset('assets/js/app.js') }}"></script>
-	<script src="https://unpkg.com/@popperjs/core@2"></script>
-	<script src="https://unpkg.com/@coreui/coreui/dist/js/coreui.min.js"></script>
-	@yield('script')
+    </div>
+
+ 
+
+    <script defer src="https://pro.fontawesome.com/releases/v5.10.0/js/all.js"integrity="sha384-G/ZR3ntz68JZrH4pfPJyRbjW+c0+ojii5f+GYiYwldYU69A+Ejat6yIfLSxljXxD" 
+     crossorigin="anonymous"></script>
+
+    <script src="{{ asset('assets/libraries/axios.min.js') }}"></script>
+    <script src="{{ asset('assets/libraries/vue.js') }}"></script>
+    <script src="https://unpkg.com/vue-toastr/dist/vue-toastr.umd.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <!-- Must needed plugins to the run this Template -->
+    <script src="{{ asset('UI-assets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('UI-assets/js/popper.min.js') }}"></script>
+    <script src="{{ asset('UI-assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('UI-assets/js/bundle.js') }}"></script>
+    <script src="{{ asset('UI-assets/js/default-assets/setting.js') }}"></script>
+    <script src="{{ asset('UI-assets/js/default-assets/fullscreen.js') }}"></script>
+
+    
+
+    <!-- Active JS -->
+    <script src="{{ asset('UI-assets/js/default-assets/active.js') }}"></script>
+
+    <!-- These plugins only need for the run this page -->
+    <script src="{{ asset('UI-assets/js/default-assets/ammap.min.js') }}"></script>
+    <script src="{{ asset('UI-assets/js/default-assets/radar.js') }}"></script>
+    <script src="{{ asset('UI-assets/js/default-assets/widget-page-chart-active.js') }}"></script>
+    <script src="{{ asset('UI-assets/js/default-assets/apexchart.min.js') }}"></script>
+    <script src="{{ asset('UI-assets/js/default-assets/dashboard-active.js') }}"></script>
+    @yield('scripts')
+
 </body>
 </html>

@@ -20,6 +20,7 @@ class AssetsController extends Controller
     public function assetsPreview(Request $request)
     {
         try {
+            if (Auth::user()->user_type === 'admin' || Auth::user()->user_type === 'support') {
             $assets = Investment::where('user_id', Auth::id())->get();
             $all_assets = AssetsModel::all();
 
@@ -28,8 +29,12 @@ class AssetsController extends Controller
                 'subs' => '',
                 'assets' => $assets,
                 'all_assets' => $all_assets
-            ];
-            return view('App.marketing-assets', $data);
+                 ];
+                return view('App.marketing-assets', $data);
+             }else {
+                return redirect()->back();
+            }
+
         } catch (Exception $error) {
             Log::info("Admin\AssetsController@assetsPreview error message:" . $error->getMessage());
             return response()->json([
@@ -52,12 +57,11 @@ class AssetsController extends Controller
             if ($request->hasFile('image')) {
                 $imagePath = storage_path('app/' . Paths::MARKT_ASSETS);
                 $extension = $request->file('image')->getClientOriginalExtension();
-                if (in_array(strtolower($extension), ["jpg", "png", "jpeg"])) {
+                if (in_array(strtolower($extension), ["jpg", "png", "jpeg", "svg"])) {
                     $fileName = time() . '.' . $extension;
                     $request->file('image')->move($imagePath, $fileName);
                     $assets = new AssetsModel();
                     $assets->user_id = Auth::id();
-                    // $assets->name = $request->name;
                     $assets->niche = $request->niche;
                     $assets->description = $request->description;
                     $assets->image = $fileName;
@@ -177,16 +181,16 @@ class AssetsController extends Controller
         }
     }
 
-    public function deleteThumbnail(Request $request)
+    public function deleteThumbnail(Request $request, $id)
     {
         try {
 
-            $assets = AssetsModel::where('id', $request->id)->first();
+            $assets = AssetsModel::where('id', $id)->first();
             if (!$assets) {
                 $message = "Assets not found!";
                 return response()->json(['message' => $message], 404);
             }
-            $imageUrl = Paths::MARKT_ASSETS . $assets->images;
+            $imageUrl = Paths::MARKT_ASSETS . $assets->image;
             if (Storage::has($imageUrl)) {
                 Storage::delete($imageUrl);
             }

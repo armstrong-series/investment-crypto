@@ -2,7 +2,6 @@
 
 @section('title')
     <title>Marketing Assets</title>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 @endsection
 
 <body>
@@ -65,7 +64,7 @@
 				border-radius: 15px;
 				}
 	
-			</style>bannerModal
+			</style>
 		<!--start page wrapper -->
 		<div class="page-wrapper" id="assets">
 			<div class="page-content">
@@ -121,17 +120,16 @@
 							<div class="card-body">
 								<div class="d-flex align-items-center">
 									<div>
-									<p v-cloak class="mb-0">@{{ asset.niche }}</p>
-									
-									<img :src="'/assets-image/'+asset.image" class="d-block w-100" alt="...">
+									<p v-cloak class="mb-0">@{{ asset.niche  === 'marketing' ? 'Marketing' : 'Advert' }}</p>							
+									<img v-cloak :src="'/storage/media/assets/'+asset.image" class="d-block w-100" alt="...">
 									</div>
 									<div class="dropdown ms-auto">
 										<div class="dropdown-toggle dropdown-toggle-nocaret cursor-pointer" data-bs-toggle="dropdown">	<i class='bx bx-dots-horizontal-rounded font-22'></i>
 										</div>
 										<ul class="dropdown-menu">
-											<li><a class="dropdown-item" @click="editThumbnail(asset)" href="javascript:;" data-bs-toggle="modal" data-bs-target="#editThumbnail" >Change Thumbnail</a>
-											</li>
-											<li><a class="dropdown-item" href="javascript:;">Delete</a>
+											<li><a class="dropdown-item" @click="editAssets(index)"  href="javascript:;" data-bs-toggle="modal" data-bs-target="#editAssets" >Edit Assets</a></li>
+											<li><a class="dropdown-item" @click="editThumbnail(asset)" href="javascript:;" data-bs-toggle="modal" data-bs-target="#editThumbnail" >Change Thumbnail</a></li>
+											<li><a class="dropdown-item" href="javascript:;" @click="removeThumbnail(asset.id)">Delete</a>
 											</li>
 											
 										</ul>
@@ -146,34 +144,7 @@
 					
 				</div>
 				<!--end row-->
-				<!-- <div class="row">
-					<div class="col-md-8">
-					
-						<div class="card">
-							<div class="card-body">
-								<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
-									<div class="carousel-inner">
-										<div class="carousel-item active" data-bs-interval="10000">
-											<img src="{{ asset('assets/images/gallery/32.png') }}" class="d-block w-100" alt="...">
-										</div>
-										<div class="carousel-item" data-bs-interval="2000">
-											<img src="{{ asset('assets/images/gallery/33.png') }}" class="d-block w-100" alt="...">
-										</div>
-										<div class="carousel-item">
-											<img src="{{ asset('assets/images/gallery/34.png') }}" class="d-block w-100" alt="...">
-										</div>
-									</div>
-									<a class="carousel-control-prev" href="#carouselExampleInterval" role="button" data-bs-slide="prev">	<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-										<span class="visually-hidden">Previous</span>
-									</a>
-									<a class="carousel-control-next" href="#carouselExampleInterval" role="button" data-bs-slide="next">	<span class="carousel-control-next-icon" aria-hidden="true"></span>
-										<span class="visually-hidden">Next</span>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div> -->
+				
 			</div>
 
 				<!-- Modal -->
@@ -185,10 +156,14 @@
 						</div>
 						<div class="modal-body"> 						
 							<div class="input-group mb-3">
-								<input type="text" v-model="assets.niche" class="form-control" placeholder="Specify a Niche">
+								<select class="form-select" v-model="assets.niche">
+									<option value="" disabled>Selected Niche</option>
+									<option value="marketing" >Marketing</option>		
+									<option value="advert" >Advert</option>		
+								</select>
 								<label class="input-group-text" for="inputGroupSelect02">Niche</label>
 							</div>
-							<div class="input-group">
+							<div class="input-group mb-3">
 								<textarea class="form-control" v-model="assets.description" aria-label="With textarea"></textarea>
 								<span class="input-group-text">Description</span>
 							</div>
@@ -215,12 +190,53 @@
 									
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary"  data-bs-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary" @click="createAssets()">Save & Continue</button>
+							<button v-if="!isLoading"type="button" class="btn btn-secondary"  data-bs-dismiss="modal">Close</button>
+							<button v-if="!isLoading" type="button" class="btn btn-primary" @click="createAssets()">Save & Continue</button>
+
+							<div v-if="isLoading" class="spinner-border text-success" role="status">
+								<span class="visually-hidden">Loading...</span>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+
+			<!-- Edit Assets -->
+
+			<div class="modal fade" id="editAssets" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body"> 						
+							<div class="input-group mb-3">
+								<select class="form-select" v-model="assetsEdit.niche">
+									<option value="" disabled>Selected Niche</option>
+									<option value="marketing" >Marketing</option>		
+									<option value="advert" >Advert</option>		
+								</select>
+								<label class="input-group-text" for="inputGroupSelect02">Niche</label>
+							</div>
+							<div class="input-group mb-3">
+								<textarea class="form-control" v-model="assetsEdit.description" aria-label="With textarea"></textarea>
+								<span class="input-group-text">Description</span>
+							</div>
+		
+									
+						</div>
+						<div class="modal-footer">
+							<button v-if="!isLoading"type="button" class="btn btn-secondary"  data-bs-dismiss="modal">Close</button>
+							<button v-if="!isLoading" type="button" class="btn btn-primary" @click="updateAsset()">Save Changes</button>
+
+							<div v-if="isLoading" class="spinner-border text-success" role="status">
+								<span class="visually-hidden">Loading...</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- / -->
 
 			<!-- edit thumbnailModal -->
 			<div class="modal fade" id="editThumbnail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -264,16 +280,16 @@
 		</div>
 
 		<textarea name="" id="createMarktAssets" cols="30" rows="10" style="display:none;">{{ route('admin.create.assets') }}</textarea>
+		<textarea name="" id="updateAssets" cols="30" rows="10" style="display:none;">{{ route('admin.update.assets') }}</textarea>
+		
 		<textarea name="" id="all_assets" cols="30" rows="10" style="display:none;">{{ json_encode($all_assets) }}</textarea>
-		$all_assets
-
 		<!--end page wrapper -->
 		@endsection
 
 	</div>
 	<!--end wrapper-->
 	@section('script')	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script> -->
    		 <script src="{{ asset('assets/js/app/assets.js') }}"></script>
 	@endsection
 </body>

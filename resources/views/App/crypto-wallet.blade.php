@@ -32,44 +32,48 @@
 								</div>
 							</div>
 							<hr/>
-						
+							
 							
 							<div class="row">
 								<div class="card">
 									<div class="card-body">
-									<div class="col-lg-4" style="float:right;">
-										<div class="card">
-											<div class="card-body">
-											<h5 class="mb-0 text-primary text-center font-weight-bold">Balance</h5>
-										
+										<div class="col-lg-4" style="float:right;">
+											<div class="card">
+												<div class="card-body">
+												<h5 class="mb-0 text-primary text-center font-weight-bold">Balance</h5>
+											
+											</div>
+											<div class="progress mt-3" style="height:7px;">
+												<div class="progress-bar" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+												<div class="progress-bar bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+												<div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+											</div>
+											<div class="mt-3"></div>
+											<div class="d-flex align-items-center">
+												<div class="flex-grow-1 ms-2">
+													<h3 class="mb-0 text-secondary font-weight-bold">{{ $account_balance }} BTC</h3>
+												</div>	
+											</div>
+											<div class="progress mt-3" style="height:7px;">
+												<div class="progress-bar" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+												<div class="progress-bar bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+												<div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+											</div>
+												<hr class="my-4" />	
+											</div>											
 										</div>
-										<div class="progress mt-3" style="height:7px;">
-											<div class="progress-bar" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-											<div class="progress-bar bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-											<div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-										<div class="mt-3"></div>
-										<div class="d-flex align-items-center">
-											<div class="flex-grow-1 ms-2">
-												<h3 class="mb-0 text-secondary font-weight-bold">{{ $account_balance }} BTC</h3>
-											</div>	
-										</div>
-										<div class="progress mt-3" style="height:7px;">
-											<div class="progress-bar" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-											<div class="progress-bar bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-											<div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-											<hr class="my-4" />	
-										</div>											
-									</div>
 									</div>
 								
 									<div class="col-lg-6">											
-							
+										<div class="row mb-3 right">
+											<button type="button" style="border-radius:50%;  height:50px; width: 50px; background:navy; color:white; box-shadow: 3px 4px 4px grey;"
+												class="btn btn-md btn-primary"data-bs-toggle="modal" data-bs-target="#Invest" ><i class="bx bxs-wallet" style="color:white;"></i>
+											</button>		
+										</div>
 										<div class="row mb-3">
 											<button  data-bs-toggle="modal" data-bs-target="#withdraw"  style="color:white; box-shadow: 4px 3px 4px grey;"
 											class="btn btn-md btn-secondary"><i class="bx bxs-wallet" style="color:white;"></i>Withdraw</button>	
-										</div>
+										</div>			
 									</div>
 								
 							
@@ -82,15 +86,15 @@
 								</div> -->
 								</div>
 								  <!-- Modal -->
-								  <div class="modal fade" id="invest" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								  <div class="modal fade" id="Invest" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 										<div class="modal-dialog" role="document">
 											<div class="modal-content">
 											<div class="modal-body">
 												<div class="row mb-3">
-													<div class="input-group mb-3">-
+													<div class="input-group mb-3">
 														<select class="form-select" v-model="selected_coin">
 															<option value="" disabled>Choose</option>
-															<option v-for="(currency, key) in cryptocurrencies.currencies" v-bind:value="key">@{{ currency.name }}</option>			
+															<option v-for="(currency, key) in cryptocurrencies.currencies" v-bind:value="key">@{{ currency.name }}</option>		
 														</select>
 														<label class="input-group-text" for="inputGroupSelect02">Coin</label>
 													</div>
@@ -102,8 +106,7 @@
 													</div>
 												</div>
 												<div class="row mb-3">										
-													<div class="input-group mb-3">
-													
+													<div class="input-group mb-3">					
 														<input v-if="selected_coin" v-model="investment.crypto_address" type="text" class="form-control"  :placeholder="'Enter your '+ selected_coin.name +' Address'">
 														<label v-if="selected_coin" class="input-group-text" for="inputGroupSelect02">Address  </label>
 													</div>
@@ -131,6 +134,9 @@
 											<div class="modal-footer">
 												<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 												<button  type="button" v-on:click="invest()" class="btn btn-primary btn-md">Proceed</button>
+												<div v-if="isLoading" class="spinner-border text-success" role="status">
+													<span class="visually-hidden">Loading...</span>
+												</div>
 											</div>
 											</div>
 										</div>
@@ -177,11 +183,7 @@
                           	  </div>
                             <!-- /End modal -->
 						</div>
-						<div style="float:right;">
-							<button type="button" style="border-radius:50%;  height:50px; width: 50px; background:navy; color:white; box-shadow: 3px 4px 4px grey;"
-								class="btn btn-md btn-primary"data-bs-toggle="modal" data-bs-target="#invest" ><i class="bx bxs-wallet" style="color:white;"></i>
-							</button>		
-						</div>
+						
 						
 					</div>
 					<!--end row-->

@@ -37,7 +37,8 @@ class DashboardController extends Controller
                 'total_roi' => $total_roi
 
             ];
-            return view('App.dashboard', $data);
+            // return view('App.dashboard', $data);
+            return view('App.index', $data);
         } catch (Exception $error) {
             Log::info("DashboardController@Dashboard error message:" . $error->getMessage());
             $response = [

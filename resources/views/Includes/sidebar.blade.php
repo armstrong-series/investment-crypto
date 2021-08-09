@@ -27,14 +27,18 @@
 					@endif
 				</li>
 				<li> <a href="{{ route('users.wallet') }}" title="wallet"	class="{{ $page == 'wallet' ? 'active' : '' }}">
-						<div class="parent-icon"><i class="lni lni-wallet"></i></div>
+						<div class="parent-icon">
+							<!-- <i class="lni lni-wallet"></i> -->
+							<i class="fas fa-wallet"></i>
+						</div>
 						<div class="menu-title">Wallet</div>
 					</a>
 				</li>
 				@if(Auth::user()->user_type === "regular")
 					<li> <a href="{{ route('users.transaction-history') }}" title="transaction" class="{{ $page == 'transaction' ? 'active' : '' }}">
 							<div class="parent-icon">
-								<i class="lni lni-google-wallet"></i>
+								<!-- <i class="lni lni-google-wallet"></i> -->
+								<i class="fas fa-tasks"></i>
 							</div>
 							<div class="menu-title">Transactions</div>
 						</a>
@@ -54,7 +58,8 @@
 				<li> <a href="{{ route('admin.assets') }}" title="user management" class="{{ $page == 'assets' ? 'active' : '' }}">
 						<div class="parent-icon">
 	
-						<i class="fadeIn animated bx bx-cube-alt"></i>
+						<!-- <i class="fadeIn animated bx bx-cube-alt"></i> -->
+						<i class="fab fa-accusoft"></i>
 						</div>
 						<div class="menu-title">Assets</div>
 					</a>
@@ -62,7 +67,7 @@
 				<li> <a href="{{ route('admin.transactions') }}" title="users transactions" class="{{ $page == 'alltransactions' ? 'active' : '' }}">
 						<div class="parent-icon">
 						
-						<i class="fadeIn animated bx bx-notification"></i>
+						<i class="fas fa-tasks"></i>
 						</div>
 						<div class="menu-title">Manage Transaction</div>
 					</a>

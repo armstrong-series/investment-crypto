@@ -9,4 +9,5 @@ class PaymentTransactionLog extends Model
 {
     use HasFactory;
     protected $table = "transaction";
+
 }

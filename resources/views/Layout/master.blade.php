@@ -9,8 +9,10 @@
 	<link rel="icon" href="{{ asset('assets/images/favicon-32x32.png') }}" type="image/png" />
 	<!--plugins-->
 	<!-- toastr Css -->
-	<!-- <link rel="stylesheet"
-	 type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"> -->
+
+
+	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"
+      integrity="sha256-PHcOkPmOshsMBC+vtJdVr5Mwb7r0LkSVJPlPrp/IMpU="crossorigin="anonymous"/>
 
 	<link href="{{ asset('assets/plugins/vectormap/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet"/>
 	<link href="{{ asset('assets/plugins/simplebar/css/simplebar.css') }}" rel="stylesheet" />
@@ -68,12 +70,15 @@
 	</div>
 	<!--end wrapper-->
 	
+	
 	<!-- Bootstrap JS -->
 	<script defer src="https://pro.fontawesome.com/releases/v5.10.0/js/all.js" integrity="sha384-G/ZR3ntz68JZrH4pfPJyRbjW+c0+ojii5f+GYiYwldYU69A+Ejat6yIfLSxljXxD" 
   		crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
 	<script src="{{ asset('assets/libraries/axios.min.js') }}"></script>
 	<script src="{{ asset('assets/libraries/vue.js') }}"></script>
+	<script src="https://unpkg.com/vue-toastr/dist/vue-toastr.umd.min.js"></script>
 	<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
 	<!--plugins-->
 	<script src="{{ asset('assets/js/jquery.min.js') }}"></script>

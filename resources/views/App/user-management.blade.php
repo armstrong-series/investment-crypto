@@ -1,184 +1,145 @@
-@extends('Layout.master')
-
+@extends('Layout.new-master')
 @section('title')
-    <title>User Management</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+<title>User Management</title>
 @endsection
-<body>
-	<!--wrapper-->
-	<div class="wrapper" id="auth">
-    @section('content')
-		<!--end header -->
-		<!--start page wrapper -->
-		<div class="page-wrapper">
-			<div class="page-content">
-				<!--breadcrumb-->
-                <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-                <button type="button" style="border-radius: 50%; box-shadow: 3px 4px 4px grey;"  class="btn btn-md btn-primary" data-bs-toggle="modal"
-                         data-bs-target="#users" >+</button>  
-					   
-				</div>
-				<!--end breadcrumb-->
-				<div class="row">
-					<div class="col-xl-9 mx-auto">
-						<h6 class="mb-0"></h6>
-						<hr/>
-						<div class="card">
-							<div class="card-body">
-                            <!-- <div class="card">
-                                <div class="card-body"> -->
-                                    <table class="table mb-0 table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Username</th>
-                                                <th scope="col">Email</th>
-                                                <th scope="col">Nationality</th>
-                                                <th scope="col">Role</th>
-                                                <th scope="col">Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr v-for="(user, index) in users">
-                                                <td v-cloak>@{{ user.name }}</td>
-                                                <td v-cloak>@{{ user.email }}</td>
-                                                <td v-cloak>@{{ user.nationality }}</td>
-                                                <td v-cloak>@{{ user.user_type }}</td>
-                                                <td v-cloak>                               
-                                                    <button type="button" @click="dialog(index)" class="btn btn-md" data-bs-toggle="modal" data-bs-target="#edit" ><i class="lni lni-pencil"></i></button>                        
-                                                    <button type="button" @click="deleteUser(user.id)" class="btn btn-sm"><i class="lni lni-trash"></i></button>
-                                                </td>
-                                            </tr>                                          
-                                        </tbody>
-                                    </table>
-                                <!-- </div>
-						    </div> -->
-                           
-					    </div>
 
-                            <!-- Modal -->
-                            <div class="modal fade" id="users" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <input type="text" v-model="account.name" class="form-control" placeholder="Enter Username">
-                                        </div>
-                                        <label for="">Email</label>
-                                        <div class="form-group">
-                                            <input type="text"  v-model="account.email" class="form-control" placeholder="Enter Email Address">
-                                        </div>
-                                        <label for="">Nationality</label>
-                                        <div class="form-group">
-                                            <input type="text"  v-model="account.nationality" class="form-control" placeholder="Nationality">
-                                        </div>
-                                        <label for="">Mobile</label>
-                                        <div class="form-group">
-                                            <input type="text"  v-model="account.mobile" class="form-control" placeholder="Enter your Mobile">
-                                        </div>
-                                        <label for="">Password</label>
-                                        <div class="form-group">
-                                            <input type="password"v-model="account.password" class="form-control" placeholder="Enter Password">
-                                        </div>
-                                        <label for="">Confirm Password</label>
-                                        <div class="form-group">
-                                            <input type="password" v-model="account.password_confirmation" class="form-control" placeholder="Confirm Password">
-                                        </div>
-                                        
-                                            <label for="">User Role</label>
-                                        <div class="form-group">
-                                            <select name="" id="" v-model="account.user_type" class="form-control">
-                                                <option value="">Select</option>
-                                                <option value="admin">Admin</option>
-                                                <option value="support">Support</option>
-                                                <option value="regular">Regular</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="clearData()">Close</button>
-                                        <button  @click="createUser()" type="button" class="btn btn-primary btn-md">Proceed</button>
-
-                                    </div>
-                                    </div>
+@section('content')
+        <!-- Page Content -->
+<div class="ecaps-page-content">
+    <!-- Top Header Area -->
+    @include('Includes.main-header')
+    <!-- Main Content Area -->
+    <div class="main-content" id="auth">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 box-margin">
+                    <div class="animated-progressbar">
+                        <div class="card">
+                            <div class="card-body"> 
+                                <button class="btn btn-info mt-15" data-toggle="modal" data-target="#createUser"><i class="fas fa-user-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                @csrf
+                <div class="col-lg-6 col-xl-4 height-card box-margin" v-for="(user, index) in users">
+                    <div class="card">                
+                        <div class="card-body">
+                            <div class="single-smart-card d-flex">
+                                <div class="icon mr-3">
+                        
+                                    <img src="{{ asset('UI-assets/icons/profile-user.svg')}}" width="40" height="40" alt="">
+                                </div>
+                                <div class="text">
+                                    <h5 v-cloak>@{{ user.name }}</h5>
+                                    <smaill v-cloak>@{{ user.user_type === "admin" ? "Admin" : "Regular" }}</small>
+                                    
                                 </div>
                             </div>
+                        </div>
+                        <div class="dropdown right">
+                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-list-ul"></i>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="javascript:void(0);" @click="dialog(index)" data-toggle="modal" title="Edit" data-target="#editUser"><i class="fas fa-pen-fancy" style="width:15px; height:15px;"></i></a>
+                            <hr>
+                                <a class="dropdown-item" @click="deleteUser(user.id)" title="delete" href="javascript:void(0);"><i class="fas fa-trash" style="width:15px; color:red; height:15px;"></i></a>
+                            <hr>
+                        </div>
+                    </div>  
+                    </div>
+                        
+                </div>
 
-                            <!-- /End modal -->
-
-                             <!-- Modal -->
-                             <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <input type="text" v-model="editUsers.name" class="form-control" placeholder="Enter Username">
-                                        </div>
-                                        <label for="">Email</label>
-                                        <div class="form-group">
-                                            <input type="text"  v-model="editUsers.email" class="form-control" placeholder="Enter Email Address">
-                                        </div>
-                                        <label for="">Nationality</label>
-                                        <div class="form-group">
-                                            <input type="text"  v-model="editUsers.nationality" class="form-control" placeholder="Nationality">
-                                        </div>
-                                        <label for="">Mobile</label>
-                                        <div class="form-group">
-                                            <input type="text"  v-model="editUsers.mobile" class="form-control" placeholder="Enter your Mobile">
-                                        </div>
-                                        <label for="">Password</label>
-                                        <div class="form-group">
-                                            <input type="password"v-model="editUsers.password" class="form-control" placeholder="Enter Password">
-                                        </div>
-                                        <label for="">Confirm Password</label>
-                                        <div class="form-group">
-                                            <input type="password" v-model="editUsers.password_confirmation" class="form-control" placeholder="Confirm Password">
-                                        </div>
-                                        
-                                            <label for="">User Role</label>
-                                        <div class="form-group">
-                                            <select name="" id="" v-model="editUsers.user_type" class="form-control">
-                                                <option value="">Select</option>
-                                            @if(Auth::user()->user_type === "admin")
-                                                <option value="admin">Admin</option>
-                                            @endif
-                                                <option value="support">Support</option>
-                                                <option value="regular">Regular</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button  @click="updateUser()" type="button" class="btn btn-primary btn-md">Proceed</button>
-
-                                    </div>
-                                    </div>
-                                </div>
+                <!-- Modal  -->
+                <div class="modal inmodal" id="createUser" tabindex="-1" role="dialog" aria-hidden="true">
+                    @csrf
+                    <div class="modal-dialog">
+                        <div class="modal-content animated bounceInRight">
+                            <div class="modal-header">
+                            
                             </div>
+                            <div class="modal-body">
+                                <div class="form-group"><input type="text" v-model="account.name"  placeholder="Enter Name" class="form-control"></div>
+                                <div class="form-group"><input type="text" v-model="account.email" placeholder="Enter Email Address" class="form-control"></div>
+                                <div class="form-group"><input type="text" v-model="account.nationality" placeholder="Enter Nationality" class="form-control"></div>
+                                <div class="form-group"><input type="text" v-model="account.mobile" placeholder="Enter Mobile Number" class="form-control"></div>
+                                <div class="form-group"><input type="password"  v-model="account.password" placeholder="Enter Password" class="form-control"></div>
+                                <div class="form-group"><input type="password"  v-model="account.password_confirmation" placeholder="Confrim Password" class="form-control"></div>
 
-                            <!-- /End modal -->
-							</div>
-						</div>
-                        <hr/>
-				</div>
-			</div>
-				<!--end row-->
-		</div>
-    
-		
+                                <div class="form-group">
+                                    <select name="" id="" class="form-control" v-model="account.user_type">
+                                        <option value="" disabled>Role</option>
+                                        <option value="admin" >Admin</option>
+                                        <option value="support">Support</option>
+                                        <option value="regular">Regular</option>
+                                    </select>
+                                </div>
+                        
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                <button type="button"  @click="createUser()" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+
+        <!-- Edit User Modal -->
+            <div class="modal inmodal" id="editUser" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content animated bounceInRight">
+                        <div class="modal-header">
+                        
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group"><input type="text" v-model="editUsers.name" placeholder="Enter Name" class="form-control"></div>
+                            <div class="form-group"><input type="text"  v-model="editUsers.email" placeholder="Enter Email Address" class="form-control"></div>
+                            <div class="form-group"><input type="text"  v-model="editUsers.nationality" placeholder="Nationality" class="form-control"></div>
+                            <div class="form-group"><input type="text"  v-model="editUsers.mobile" placeholder="Enter Mobile" class="form-control"></div>
+                            <div class="form-group"><input type="password" v-model="editUsers.password" placeholder="Enter Password" class="form-control"></div>
+                            <div class="form-group"><input type="password" v-model="editUsers.password_comfirmation" placeholder="Enter Password" class="form-control"></div>
+
+                            <div class="form-group">
+                                <select name="" id="" class="form-control" v-model="editUsers.user_type">
+                                    <option value="" disabled>Role</option>
+                                    @if(Auth::user()->user_type === "admin")
+                                        <option value="admin">Admin</option>
+                                    @endif
+                                    <option value="support">Support</option>
+                                    <option value="regular">Regular</option>
+                                </select>
+                            </div>
+                    
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="button" @click="updateUser()" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!--/  -->
+        </div>
+
+
+        </div>
+        
         <textarea name="" id="create_users" style="display: none;">{{ route('admin.user.create') }}</textarea>
-       
         <textarea name="" id="update_users" style="display: none;">{{ route('admin.user.update') }}</textarea>
         <textarea name="" id="users" style="display: none;" cols="30" rows="10">{{ route('user.admin.management') }}</textarea>
         <textarea name="" id="all-users" style="display: none;">{{ json_encode($users) }}</textarea>
-    	<!--end page wrapper -->
-	@endsection
-    </div>
 
-	@section('script')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	 <script src="{{ asset('assets/js/app/user_account.js') }}"></script>
-	@endsection
-</body>
-</html>
+        <!-- Footer Area -->
+        @include('Includes.footer')
+    </div>
+</div>
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('assets/js/app/user_account.js') }}"></script>    
+@endsection

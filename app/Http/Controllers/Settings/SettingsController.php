@@ -27,7 +27,8 @@ class SettingsController extends Controller
                 'page' => 'settings-dashboard',
                 'subs' => '',
             ];
-            return view('Settings.settings', $data);
+            // return view('Settings.settings', $data);
+            return view('Settings.profile', $data);
 
         } catch (Exception $error) {
             Log::info("Settings\SettingsController@settingsDashboard error message:" . $error->getMessage());

@@ -35,10 +35,11 @@ Route::get('/user-management', [Controller\Admin\AdminController::class, 'userMa
 Route::get('/all-users', [Controller\Admin\AdminController::class, 'Users'])->name('user.admin.management');
 
 Route::post('/create-post', [Controller\Admin\AssetsController::class, 'createAssets'])->name('admin.create.assets');
+Route::post('/update-post', [Controller\Admin\AssetsController::class, 'updateAssets'])->name('admin.update.assets');
 
 Route::get('/admin/transactions', [Controller\Admin\TransactionController::class, 'getUserstransactions'])->name('admin.transactions');
 Route::get('/transactions', [Controller\Admin\TransactionController::class, 'transactions'])->name('all-transactions');
-Route::post('/transaction/confirmed', [Controller\Admin\TransactionController::class, 'approveTransaction'])->name('admin.approve.transaction');
+Route::post('/transaction/confirmed/', [Controller\Admin\TransactionController::class, 'confirmTransaction'])->name('admin.approve.transaction');
 Route::get('/transaction-details/{txn_id}', [Controller\Admin\TransactionController::class, 'transactionDetails'])->name('transaction-details');
 Route::delete('/delete-transaction/{txn_id}',  [Controller\Admin\TransactionController::class, 'deleteTransaction'])->name('admin.transaction.delete');
 
@@ -59,6 +60,7 @@ Route::get('/settings', [Controller\Settings\SettingsController::class, 'setting
 Route::get('/settings/security', [Controller\Settings\SettingsController::class, 'security'])->name('users.settings.security');
 Route::get('/asset',  [Controller\Admin\AssetsController::class, 'assetsPreview'])->name('admin.assets');
 Route::get('/assets-image/{file}', [Controller\Admin\AssetsController::class, 'assetsFile'])->name('assets-file');
+Route::delete('/delete-thumbnail/{id}', [Controller\Admin\AssetsController::class, 'deleteThumbnail'])->name('assets-thumbnail-delete');
 
 
 

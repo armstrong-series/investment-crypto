@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\PasswordSecurity;
 use Illuminate\Notifications\Notifiable;
+use Carbon\Carbon;
 
 class User extends Authenticatable
 {
@@ -43,9 +44,15 @@ class User extends Authenticatable
     ];
 
 
+    // public function getCreatedAtAttribute() {
+
+    //     $date = new Carbon($this->created_at);
+    //     return $date->isoFormat('D MMM YYY');
+    // }
+
+
     public function passwordSecurity(){
 
-        // return $this->hasOne('App\Models\PasswordSecurity');
         return $this->hasOne(PasswordSecurity::class);
     }
 }

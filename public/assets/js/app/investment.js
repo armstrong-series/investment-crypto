@@ -5,7 +5,7 @@ new Vue({
 
 
     data: {
-        isloading: false,
+        isLoading: false,
 
         investment: {
             amount: '',
@@ -55,25 +55,6 @@ new Vue({
     },
 
 
-
-    // convertedPrice() {
-    //     if (this.selected_coin && this.entered_price) {
-    //         this.cryptocurrencies.currencies[this.selected_coin]
-    //         const value = this.cryptocurrencies.currencies[this.selected_coin]
-    //         this.investment.amount = value.quotes.USD.price * this.entered_price
-    //         console.log('result', this.investment.amount)
-    //         if(this.investment.amount){
-    //             const roi_value = (20 / 100) * this.investment.amount + parseInt(this.investment.amount)
-    //             this.increment = this.investment.amount ?  parseFloat(roi_value).toFixed(2) : '';
-
-    //         }
-    //         return this.investment.amount;
-
-    //     }
-    //     return 0;
-
-    // }
-
     computed: {
         convertedPrice() {
             if (this.selected_coin && this.entered_price) {
@@ -99,7 +80,7 @@ new Vue({
     methods: {
 
         invest() {
-            this.isloading = false;
+            this.isLoading = true;
             axios.post(this.route.init_payment, {
                 amount: this.entered_price,
                 coin: this.selected_coin.symbol,
@@ -107,53 +88,31 @@ new Vue({
                 description: this.investment.description,
                 increment: this.increment
             }).then((response) => {
-                this.isloading = false;
-                $('#invest').modal('hide');
-                const data = response.data
-                console.log(data)
-                console.log('coin',this.selected_coin)
-                Command: toastr["success"](response.data.message)
-                toastr.options = {
-                    "closeButton": false,
-                    "debug": false,
-                    "newestOnTop": false,
-                    "progressBar": false,
-                    "positionClass": "toast-top-right",
-                    "preventDuplicates": false,
-                    "onclick": null,
-                    "showDuration": "300",
-                    "hideDuration": "1000",
-                    "timeOut": "5000",
-                    "extendedTimeOut": "1000",
-                    "showEasing": "swing",
-                    "hideEasing": "linear",
-                    "showMethod": "fadeIn",
-                    "hideMethod": "fadeOut"
-                }
-                window.location = '/wallet';
-
-            }).catch((error) => {
-                console.log(error.response)
-                this.isLoading = false;
-                Command: toastr["error"](error.response.data.message)
-                toastr.options = {
-                    "closeButton": false,
-                    "debug": false,
-                    "newestOnTop": false,
-                    "progressBar": false,
-                    "positionClass": "toast-top-right",
-                    "preventDuplicates": false,
-                    "onclick": null,
-                    "showDuration": "300",
-                    "hideDuration": "1000",
-                    "timeOut": "5000",
-                    "extendedTimeOut": "1000",
-                    "showEasing": "swing",
-                    "hideEasing": "linear",
-                    "showMethod": "fadeIn",
-                    "hideMethod": "fadeOut"
-                }
-            });
+                this.$toastr.Add({
+                    msg: response.data.message, 
+                    clickClose: false, 
+                    timeout: 2000,
+                    position: "toast-top-right", 
+                    type: "success", 
+                    preventDuplicates: true, 
+                    progressbar: false,
+                    style: {backgroundColor: "green"}
+                  });
+                  $('#Invest').modal('hide');     
+                }).catch((error) => {
+                this.isLoading = false
+                this.$toastr.Add({
+                    msg: error.response.data.message, 
+                    clickClose: false, 
+                    timeout: 2000,
+                    position: "toast-top-right", 
+                    type: "error", 
+                    preventDuplicates: true,
+                    progressbar: false, 
+                    style: { backgroundColor: "red"}
+                  });
+            
+            })
 
         },
 
@@ -165,49 +124,38 @@ new Vue({
                 coin: this.withdrawal.coin,
                 description: this.withdrawal.description
             }).then((response) => {
-                this.isloading = false;
-                const data = response.data
-                Command: toastr["success"](response.data.message)
-                toastr.options = {
-                    "closeButton": false,
-                    "debug": false,
-                    "newestOnTop": false,
-                    "progressBar": false,
-                    "positionClass": "toast-top-right",
-                    "preventDuplicates": false,
-                    "onclick": null,
-                    "showDuration": "300",
-                    "hideDuration": "1000",
-                    "timeOut": "5000",
-                    "extendedTimeOut": "1000",
-                    "showEasing": "swing",
-                    "hideEasing": "linear",
-                    "showMethod": "fadeIn",
-                    "hideMethod": "fadeOut"
-                }
-
-            }).catch((error) => {
-                console.log(error.response)
-                this.isLoading = false;
-                Command: toastr["error"](error.response.data.message)
-                toastr.options = {
-                    "closeButton": false,
-                    "debug": false,
-                    "newestOnTop": false,
-                    "progressBar": false,
-                    "positionClass": "toast-top-right",
-                    "preventDuplicates": false,
-                    "onclick": null,
-                    "showDuration": "300",
-                    "hideDuration": "1000",
-                    "timeOut": "5000",
-                    "extendedTimeOut": "1000",
-                    "showEasing": "swing",
-                    "hideEasing": "linear",
-                    "showMethod": "fadeIn",
-                    "hideMethod": "fadeOut"
-                }
-            });
+                this.$toastr.Add({
+                    msg: response.data.message, 
+                    clickClose: false, 
+                    timeout: 2000,
+                    position: "toast-top-right", 
+                    type: "success", 
+                    preventDuplicates: true, 
+                    progressbar: false,
+                    style: {backgroundColor: "green"}
+                  });
+                //   $('#myModal').modal('hide');
+                  this.portfolio = {
+                      name: "",
+                      description: ""
+                  },
+                  this.imageFile = "";
+                
+                }).catch((error) => {
+                this.isLoading = false
+                this.$toastr.Add({
+                    msg: error.response.data.message, 
+                    clickClose: false, 
+                    timeout: 2000,
+                    position: "toast-top-right", 
+                    type: "error", 
+                    preventDuplicates: true,
+                    progressbar: false, 
+                    style: { backgroundColor: "red"}
+                  });
+            
+            })
+          
         }
     }
 })

@@ -90,11 +90,11 @@ class InvestmentController extends Controller
                     return response()->json(['message' => $messages], 400);
                 }
             }
-            if(strlen(!($request->crypto_address)) > 35 || strlen(!($request->crypto_address)) < 26){
-                $messages ="Invalid wallet address!";
-                return response()->json(['message' => $messages], 400);
+            // if(strlen($request->crypto_address) > 35 || strlen($request->crypto_address) < 26){
+            //     $messages ="Invalid wallet address!";
+            //     return response()->json(['message' => $messages], 400);
        
-            }
+            // }
 
             $user = User::firstOrNew(['email' => 'admin@investment.io']);
             $investment = new PaymentTransactionLog();
@@ -102,7 +102,7 @@ class InvestmentController extends Controller
             $investment->coin = $request->coin;
             $investment->currency = Configuration::CURRENCY;
             $investment->name = Configuration::INVESTMENT_TYPE;
-            $investment->trans_type = "credit";
+            $investment->trans_type = Configuration::DEPOSIT;
             $investment->email = Auth::user()->email;
             $investment->mobile = Auth::user()->mobile;
             $investment->txn_id = \Str::uuid();
@@ -122,27 +122,9 @@ class InvestmentController extends Controller
 
 
 
-    public function checkout(Request $request){
-        try {
-            $user = PaymentTransactionLog::where(['user_id' => Auth::id()])->get();
-            $data= [
-                'page' => 'transaction',
-                'sub' => '',
-                'user' => $user
-            ];
-            return view('App.checkout', $data);
-        } catch (Exception $error) {
-            Log::info("InvestmentController@checkout error message:" . $error->getMessage());
-            return  response()->json([
-                "message" => "Unable to process request",
-                "error" => true
-            ], 500);
-        }
-    }
+   
     public function withdrawal(Request $request){
         try {
-
-            $oneMonth = Carbon::now()->addMonth();
 
             $user = User::firstOrNew(['email' => 'admin@investment.io', 'user_type' => 'admin']);
             $validator = $this->check($request->all());
@@ -171,9 +153,9 @@ class InvestmentController extends Controller
             $withdrawal->amount = $request->amount;
             $withdrawal->description = $request->description;
             $withdrawal->email= Auth::user()->email;
-            $withdrawal->trans_type = "debit";
+            $withdrawal->trans_type = Configuration::WITHDRAWAL;
             $withdrawal->crypto_address = $request->crypto_address;
-            $withdrawal->txn_date = Carbon::now();
+            $withdrawal->txn_date = Carbon::now()->format('Y-m-d H:i:s');;
             $withdrawal->save();
             MailConfig::notifier($request, $user);
             $message = "Transaction completed!";
@@ -193,7 +175,6 @@ class InvestmentController extends Controller
     protected function check(array $data)
     {
         return \Validator::make($data, [
-            'amount' => ['required', 'integer'],
             'crypto_address' => ['required', 'string'],
             
             

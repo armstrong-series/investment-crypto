@@ -1,136 +1,151 @@
-
-@extends('Layout.master')
-
+@extends('Layout.settings-master')
 @section('title')
-    <title>Profile </title>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+<title>Clusterwink | Settings</title>
 @endsection
-<body>
-	<!--wrapper-->
-	<div class="wrapper">
-		<!--sidebar wrapper -->
-		@section('content')
 
-			<style>
-				.fileUpload {
-				position: relative;
-				overflow: hidden;
-				margin: 10px;
-				}
-				.fileUpload input.upload {
-					position: absolute;
-					top: 0;
-					right: 0;
-					margin: 0;
-					padding: 0;
-					font-size: 20px;
-					cursor: pointer;
-					opacity: 0;
-					filter: alpha(opacity=0);
-				}
-				* {
-				box-sizing: border-box;
-				}
-				
 
-			</style>
-		<!--start page wrapper -->
-		<div class="page-wrapper" id="profile">
-			<div class="page-content">
-				<!--breadcrumb-->
-				<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-					<div class="breadcrumb-title pe-3">User Profile</div>
-				</div>
-				<!--end breadcrumb-->
-				<div class="container">
-					<div class="main-body">
-						<div class="row">
-							<div class="col-lg-4">
-								<div class="card">
-									<div class="card-body">
+@section('styles')
+<style>
+    .fileUpload {
+      position: relative;
+      overflow: hidden;
+      margin: 10px;
+      }
+    .fileUpload input.upload {
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin: 0;
+      padding: 0;
+      font-size: 20px;
+      cursor: pointer;
+      opacity: 0;
+      filter: alpha(opacity=0);
+    }
+    * {
+    box-sizing: border-box;
+    }
 
-										<div class="d-flex flex-column align-items-center text-center">
-											<img  v-if="!imageFile" src="{{ asset('/assets/images/man.png') }}" alt="Admin" class="rounded-circle p-1" width="110">	
-											<img v-bind:src="imagePreview" alt="Profile-pics" v-show="showPreview" class="rounded-circle p-1" height="200" width="200">
-											<div class="mt-3">
-												<h4>{{ Auth::user()->name }}</h4>
-												@if(Auth::user()->user_type === 'regular')
-													<p class="text-secondary mb-1">Regular</p>
-												@elseif(Auth::user()->user_type === 'admin')
-													<p class="text-secondary mb-1">Administrator</p>
-												@elseif(Auth::user()->user_type === 'support')
-													<p class="text-secondary mb-1">Support Staff</p>
-												@endif
-												<!-- <button class="btn btn-primary">Change Picture</button> -->
-												<div class="fileUpload btn-md btn-primary" style=" padding: 10px; border-radius:6%; box-shadow: 4px 3px 5px grey;
-												">
-													<span>Change Picture</span>
-													<input type="file" id="uploadBtn file" accept="image/*"  @change="changeProfilePics()" ref="file" class="form-control upload">
-												</div>
-												<!-- <progress max="100" :value.prop="uploadPercentage"></progress> -->
-												
-											</div>
-										</div>
-										<hr class="my-4" />	
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-8">
-								<div class="card">
-									<div class="card-body">
-										<div class="row mb-3">	
-											<div class="input-group mb-3">
-												<input v-model="profile.name" type="text" class="form-control" placeholder="{{ Auth::user()->name }}">
-												<label class="input-group-text" for="inputGroupSelect02">Username</label>
-											</div>
-										</div>
-										<div class="row mb-3">
-											<div class="input-group mb-3">
-												<input type="text" class="form-control"  disabled placeholder="{{ Auth::user()->email }}">
-												<label class="input-group-text" for="inputGroupSelect02">Email</label>
-											</div>
-										</div>
-										
-										<div class="row mb-3">
-											<div class="input-group mb-3">
-												<input v-model="profile.mobile" type="text" class="form-control"   placeholder="{{ Auth::user()->mobile }}">
-												<label class="input-group-text" for="inputGroupSelect02">Mobile</label>
-											</div>
-										</div>
-										<div class="row mb-3">
-											<div class="input-group mb-3">
-												<input v-model="profile.nationality" type="text" class="form-control"   placeholder="{{ Auth::user()->nationality }}">
-												<label class="input-group-text" for="inputGroupSelect02">Nationality</label>
-											</div>
-										</div>
-										
-										<div class="row">
-											<div class="col-sm-3"></div>
-											<div class="col-sm-9 text-secondary">
-												<input type="button" v-on:click="updateprofile()" class="btn btn-primary px-4" value="Save Changes" />
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<textarea name=""  style="display:none;" id="profileUpdate" cols="30" rows="10">{{ route('user.profile.update')}}</textarea>
-			<textarea name=""  style="display:none;" id="profile" cols="30" rows="10">{{ json_encode($profile)}}</textarea>
+    img.np-preview {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 5px;
+        height: 230px;
+        width: 400px;
+        margin: 10px;
+      }
 
-		</div>
-		
-		@endsection
-		<!--end page wrapper -->
-		
-	</div>
-	<!--end wrapper-->
-	<!--start switcher-->
-	@section('script')
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-		<script src="{{ asset('assets/js/app/settings/profile.js') }}"></script>
-	@endsection
-</body>
-</html>
+</style>
+@endsection
+@section('content')
+        <!-- Page Content -->
+        <div class="ecaps-page-content">
+            <!-- Top Header Area -->
+           @include('Includes.main-header')
+            <!-- Main Content Area -->
+            <div class="main-content">
+                <div class="container-fluid" id="profile">      
+                	<div class="row">
+                        <div class="col-12 col-md-4">
+                            <div class="card mb-30">
+                                   <!-- <div class="profile-cover-img np-image-preview" v-if="imageFile != null && imageFile.length != 0" >
+                                        <img class="np-preview" :src="imageFile" />
+                                    </div> -->
+                                <img src="{{ asset('UI-assets/img/blog-img/4.jpg') }}" class="profile-cover-img" alt="thumb">
+                                <div class="card-body text-center">
+                                    <h6 class="font-20 mb-1">{{ Auth::user()->name }}</h6>
+                                    @if(Auth::user()->user_type === 'admin')
+                                        <p class="font-13 text-dark">Admin</p>
+                                    @elseif(Auth::user()->user_type === 'support')
+                                        <p class="font-13 text-dark">Support</p>
+                                        @elseif(Auth::user()->user_type === 'regular')
+                                        <p class="font-13 text-dark">Regular</p>
+                                    @endif
+                               
+                                     <div  class="hire fileUpload px-5 py-2 mr-2 mb-2" title="upload a profile">
+                                         <!-- <span>Change Picture</span>&nbsp;&nbsp;<i v-if="!imageFile" class="fas fa-file-image"></i> -->
+                                         <img src="{{ asset('UI-assets/icons/camera.svg')}}"  width="80px" height="80px;" alt="change-profile">
+								        <input  type="file" id="uploadBtn file"  name="slides" @change="showImagePreview(event)" accept="image/*"   ref="file" class="form-control upload">
+							        </div>
+
+                                    <div class="col">
+                                             <a href="{{ route('auth.logout') }}" title="Logout"><img src="{{ asset('UI-assets/icons/turn-off.svg')}}"  width="60px" height="60px;" alt="logout"></a>                                               
+                                       </div> 
+                                    
+                                </div>
+                            </div>
+                            <!-- ./profile -->
+
+                        </div>
+
+                        <div class="col-12 col-md-8">
+                            <div class="profile-crm-area">
+                                <div class="card mb-30">
+                                    <div class="card-body">
+                                      
+                                        <div class="tab-content" id="myTabContent">
+                                            <!--first tab-->
+                                            <div class="tab-pane fade active show" id="basic" role="tabpanel" aria-labelledby="basic-tab">
+                                                <div class="card-body">
+                                                    <div class="row profile-row">
+                                                        <div class="col-xs-5 col-sm-3">
+                                                            <span class="profile-cat">Name</span>
+                                                        </div>
+                                                        <div class="col-xl-7 col-sm-9">
+                                                           <input type="text" class="form-control" placeholder="Enter Name">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row profile-row">
+                                                        <div class="col-xs-5 col-sm-3">
+                                                            <span class="profile-cat">Email</span>
+                                                        </div>
+                                                        <div class="col-xl-7 col-sm-9">
+                                                            <span class="profile-info">{{ Auth::user()->email }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row profile-row">
+                                                        <div class="col-xs-5 col-sm-3">
+                                                            <span class="profile-cat">Password</span>
+                                                        </div>
+                                                        <div class="col-xl-7 col-sm-9">
+                                                            <input type="password" class="form-control" placeholder="Enter Password">
+                                                        </div>
+                                                    </div>
+                                                    
+
+                                                   
+                                                    <div class="row profile-row">
+                                                        <div class="col-xs-5 col-sm-3">
+                                                            <span class="profile-cat">Confirm Password</span>
+                                                        </div>
+                                                        <div class="col-xl-7 col-sm-9">
+                                                            <input type="password" class="form-control" placeholder="Confirm Password">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row profile-row">
+                                                        
+                                                        <div class="col-xl-7 col-sm-9">
+                                                            <button class="btn btn-sm btn-primary" type="button">Update</button>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>             
+                    </div>
+                </div>
+
+                <!-- Footer Area -->
+                @include('Includes.footer')
+            </div>
+        </div>
+@endsection
+
+@section('script')
+<script src="{{ asset('assets/js/app/settings/profile.js') }}"></script>
+@endsection

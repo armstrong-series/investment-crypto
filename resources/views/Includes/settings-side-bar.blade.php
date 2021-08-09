@@ -1,31 +1,23 @@
-<div class="sidebar-wrapper" data-simplebar="true">
-			<div class="sidebar-header">
-				<div>
-					<img src="{{ asset('assets/images/logo-icon.png') }}" class="logo-icon" alt="logo icon">
-				</div>
-				<div>
-					<h4 class="logo-text">allresources</h4>
-				</div>
-				<div class="toggle-icon ms-auto"><i class='bx bx-arrow-to-left'></i>
-				</div>
-			</div>
-			<!--navigation-->
-			<ul class="metismenu" id="menu">
-				<li>
-					<a href="{{ route('user.dashboard') }}" class="{{ $page == 'dashboard' ? 'active' : '' }}">
-						<div class="parent-icon"><i class="fadeIn animated bx bx-tachometer"></i>
-						</div>
-						<div class="menu-title">Dashboard</div>
-					</a>
-					
-				</li>
-				<li>
-					<a href="{{ route('users.settings.security') }}" class="">
-						<div class="parent-icon"><i class="lni lni-lock-alt"></i>
-						</div>
-						<div class="menu-title">Security</div>
-					</a>
-				</li>	
-			</ul>
-			<!--end navigation-->
-		</div>
+<div class="ecaps-sidemenu-area">
+            <!-- Desktop Logo -->
+    <div class="ecaps-logo">
+        <a href="#"><img class="desktop-logo" src="{{ asset('clusterwink_logo.png') }}" width="50" height="50" alt="Desktop Logo">
+            <img class="small-logo" src="{{ asset('clusterwink_logo.png') }}" width="50" height="50" alt="Mobile Logo">
+        </a>
+    </div>
+    <!-- Side Nav -->
+    <div class="ecaps-sidenav" id="ecapsSideNav">
+        <!-- Side Menu Area -->
+        <div class="side-menu-area">
+            <!-- Sidebar Menu -->
+            <nav>
+                <ul class="sidebar-menu" data-widget="tree">
+                    <li class="{{ $page == 'dashboard' ? 'active' : '' }}"><a href="{{ route('user.dashboard') }}"><i class="zmdi zmdi-view-web"></i>&nbsp;&nbsp;<span>Dashboard</span></a></li>
+                    <li class="{{ $page == 'dashboard' ? 'active' : '' }}"><a href="#"><i class="zmdi zmdi-lock-outline"></i>&nbsp;&nbsp;<span>Security</span></a></li>
+                    <li class="{{ $page == 'dashboard' ? 'active' : '' }}"><a href="#"><i class="zmdi zmdi-flickr"></i>&nbsp;&nbsp;<span>Tokens</span></a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
