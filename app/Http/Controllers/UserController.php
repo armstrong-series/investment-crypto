@@ -2,24 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Exception, Log, Hash, Auth, Validator;
-use App\Models\User;
-use File;
-use Illuminate\Http\Response;
 use App\Helpers\Paths;
+use App\Models\User;
+use Auth;
+use Exception;
+use File;
+use Hash;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
+use Log;
+use Validator;
 
 class UserController extends Controller
 {
-    public function selectUserType(){
+    public function selectUserType()
+    {
         return view('Auth.select-user');
     }
 
-
-    public function forgotPassword(){
+    public function forgotPassword()
+    {
         return view('Auth.forgot-password');
     }
-
 
     public function accountView()
     {
@@ -62,7 +67,6 @@ class UserController extends Controller
         }
     }
 
-
     public function profile(Request $request)
     {
         try {
@@ -76,8 +80,8 @@ class UserController extends Controller
         } catch (Exception $error) {
             Log::info("UserController@profile error message:" . $error->getMessage());
             $response = [
-                'status' =>false,
-                "message" => "Encountered an error"
+                'status' => false,
+                "message" => "Encountered an error",
             ];
             return $response;
         }
@@ -86,69 +90,82 @@ class UserController extends Controller
     public function updateProfile(Request $request)
     {
         try {
-           
-        
-            if ($request->hasFile('profile_pics')) {
-                $imagePath = storage_path('app/' . Paths::PROFILE_PICS);
-                $extension = $request->file('profile_pics')->getClientOriginalExtension();
-                if (in_array(strtolower($extension), ["jpg", "png", "jpeg"])) {
-                    $fileName = time() . '.' . $extension;
-                    $request->file('profile_pics')->move($imagePath, $fileName);
-                    $user = User::where(['id' => Auth::id()])->first();
-                    if (!$user) {
-                        $message = 'User not found';
-                        return response()->json([
-                            'message' => $message,
-                        ], 404);
-                    }
-                    $user->name = $request->name ? $request->name : $user->name;
-                    $user->mobile = $request->mobile  ? $request->mobile  : $user->mobile;
-                    $user->profile_pics = $fileName ? $fileName :  $user->profile_pics;
-                    $user->nationality = $request->nationality ? $request->nationality : $user->nationality;
-                    $user->save();
-                    return response()->json([
-                        'message' => "Profile updated successfully!",
-                    ], 200);
-                   
 
-                    }else{
-                        $message = "Invalid image format!";
-                        return response()->json(['message' => $message], 400);
-                    }
-                
-                }else{
-                    $message = "Request has no file";
-                    return response()->json(['message' => $message], 400);
+            $validator = $this->validateMobile($request->all());
+            if ($validator->fails()) {
+                $message = $validator->errors()->all();
+                foreach ($message as $messages) {
+                    return response()->json(['message' => $messages], 400);
                 }
-            
-          
+            }
+
+            $user = User::where('id', $request->id)->first();
+            if (!$user) {
+                $message = 'User not found!';
+                return response()->json(['message' => $message], 404);
+            }
+            $user->name = $request->name ? $request->name : $user->name;
+            $user->mobile = $request->mobile ? $request->mobile : $user->mobile;
+            $user->nationality = $request->nationality ? $request->nationality : $user->nationality;
+            $user->password = Hash::make($request->password) ? Hash::make($request->password) : $user->password;
+            $user->save();
+            return response()->json([
+                'message' => "Profile updated successfully!"], 200);
 
         } catch (Exception $error) {
             Log::info("UserController@updateProfile error message:" . $error->getMessage());
             $response = [
-                'status' =>false,
-                "message" => "Unable to update profile"
+                'status' => false,
+                "message" => "Unable to complete request",
             ];
             return $response;
         }
     }
 
-  
-
-    public function profilePics(Request $request)
+    protected function validateMobile(array $data)
     {
-        try {  
-            $path = storage_path('app/' . Paths::PROFILE_PICS . $request->file);
-            if (!File::exists($path)) {
-                abort(404);
+        return Validator::make($data, [
+            'mobile' => ['number', 'max:13', 'min:11', 'unique:users'],
+        ]);
+    }
+
+    public function changeProfile(Request $request)
+    {
+        try {
+
+            $user = User::where('id', $request->id)->first();
+            if (!$user) {
+                $message = "User not found!";
+                return response()->json(['message' => $message], 404);
             }
-            $file = File::get($path);
-            $type = File::mimeType($path);
-            $response = new Response($file, 200);
-            return $response;
+
+            if (!$request->hasFile('profile_pics')) {
+                $message = "An Image is required to complete request!";
+                return response()->json(['message' => $message], 400);
+            }
+
+            $profile_pics = Paths::PROFILE_PICS . $request->file . $user->profile_pics;
+            if (Storage::has($profile_pics)) {
+                Storage::delete($profile_pics);
+            }
+
+            $imagePath = storage_path('app/' . Paths::PROFILE_PICS);
+            $extension = $request->file('profile_pics')->getClientOriginalExtension();
+            if (!in_array(strtolower($extension), ["jpg", "png", "jpeg"])) {
+                $message = "Invalid file format!";
+                return response()->json(['message' => $message], 400);
+            }
+
+            $fileName = time() . '.' . $extension;
+            $request->file('profile_pics')->move($imagePath, $fileName);
+            $user->profile_pics = $fileName;
+            $user->save();
+            return response()->json([
+                "message" => "Profile updated successfully!",
+            ], 200);
 
         } catch (Exception $error) {
-            Log::info('UserController@displayProfilePics error message: ' . $error->getMessage());
+            Log::info('UserController@changeProfile error message: ' . $error->getMessage());
             $message = 'Sorry, unable to create template. Please try again';
             return response()->json([
                 'error' => true,
@@ -157,19 +174,15 @@ class UserController extends Controller
         }
     }
 
-
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', ],
+            'name' => ['required', 'string'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'confirmed'],
             'nationality' => ['required', 'string'],
-            
+
         ]);
     }
-
-   
-
 
 }

@@ -52,7 +52,8 @@ class AdminController extends Controller
          }else {
             return redirect()->back();
         }
-            return view('App.admin-dashboard', $data);   
+            return view('App.admin.admin', $data);   
+            // return view('App.admin-dashboard', $data);   
 
         } catch (Exception $error) {
             Log::info("Admin\AdminController@Dashboard error message:" . $error->getMessage());

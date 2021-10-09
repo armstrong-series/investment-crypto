@@ -97,7 +97,7 @@ class RaveController extends Controller
                 $transactionID = Flutterwave::getTransactionIDFromCallback();
                 $data = Flutterwave::verifyTransaction($transactionID);
         
-                dd($data);
+                // dd($data);
             }
             elseif ($status ==  'cancelled'){
                return response()->json([

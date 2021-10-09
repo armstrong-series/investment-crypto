@@ -13,7 +13,7 @@
             <nav>
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="{{ $page == 'dashboard' ? 'active' : '' }}"><a href="{{ route('user.dashboard') }}"><i class="zmdi zmdi-view-web"></i>&nbsp;&nbsp;<span>Dashboard</span></a></li>
-                    <li class="{{ $page == 'dashboard' ? 'active' : '' }}"><a href="#"><i class="zmdi zmdi-lock-outline"></i>&nbsp;&nbsp;<span>Security</span></a></li>
+                    <li class="{{ $page == 'two-factor' ? 'active' : '' }}"><a href="{{ route('account.two-factor') }}"><i class="zmdi zmdi-lock-outline"></i>&nbsp;&nbsp;<span>Security</span></a></li>
                     <li class="{{ $page == 'dashboard' ? 'active' : '' }}"><a href="#"><i class="zmdi zmdi-flickr"></i>&nbsp;&nbsp;<span>Tokens</span></a></li>
                 </ul>
             </nav>

@@ -22,7 +22,7 @@
 							<div class="parent-icon">
 								<i class="fadeIn animated bx bx-shield-quarter"></i>
 							</div>
-							<div class="menu-title">Admin</div>
+							<div class="menu-title">Administrator</div>
 						</a>
 					@endif
 				</li>

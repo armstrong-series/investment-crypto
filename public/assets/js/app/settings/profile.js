@@ -10,11 +10,13 @@ new Vue({
         imagePreview: '',
         uploadPercentage: 0,
 
-        profile:{
+        user:{
             id: "",
             mobile: "",
             nationality: "",
-            name: "",
+            password: "",
+            password_confirmation: "",
+            name: ""
         },
         users:[],
         profile: [],
@@ -34,11 +36,13 @@ new Vue({
     methods: {
 
         updateprofile(){
-            this.isloading = false;
+            this.isloading = true;
             let formData = new FormData();
             formData.append('profile_pics', this.imageFile);
-            formData.append('name', this.profile.name);
-            formData.append('nationality', this.profile.nationality);
+            formData.append('name', this.user.name);
+            formData.append('nationality', this.user.nationality);
+            formData.append('password', this.user.password);
+            formData.append('password_confirmation', this.user.password_confirmation);
             formData.append('mobile', this.profile.mobile);
             axios.post(this.route.profile_update, formData, {
                 headers: {
@@ -47,65 +51,46 @@ new Vue({
             }).then((response) => {
                 this.isloading = false;
                 console.log(response)
-                const data = response.data
-                Command: toastr["info"](response.data.message)
-                    toastr.options = {
-                    "closeButton": false,
-                    "debug": false,
-                    "newestOnTop": false,
-                    "progressBar": false,
-                    "positionClass": "toast-top-right",
-                    "preventDuplicates": false,
-                    "onclick": null,
-                    "showDuration": "300",
-                    "hideDuration": "1000",
-                    "timeOut": "5000",
-                    "extendedTimeOut": "1000",
-                    "showEasing": "swing",
-                    "hideEasing": "linear",
-                    "showMethod": "fadeIn",
-                    "hideMethod": "fadeOut"
-                    }
+                this.$toastr.Add({
+                    msg: response.data.message, 
+                    clickClose: false, 
+                    timeout: 2000,
+                    position: "toast-top-right", 
+                    type: "success", 
+                    preventDuplicates: true, 
+                    progressbar: false,
+                    style: {backgroundColor: "green"}
+                  });
                  }).catch((error) => {
                     console.log(error.response)
                     this.isLoading = false;
-                    Command: toastr["error"](error.response.data.message)
-                        toastr.options = {
-                        "closeButton": false,
-                        "debug": false,
-                        "newestOnTop": false,
-                        "progressBar": false,
-                        "positionClass": "toast-top-right",
-                        "preventDuplicates": false,
-                        "onclick": null,
-                        "showDuration": "300",
-                        "hideDuration": "1000",
-                        "timeOut": "5000",
-                        "extendedTimeOut": "1000",
-                        "showEasing": "swing",
-                        "hideEasing": "linear",
-                        "showMethod": "fadeIn",
-                        "hideMethod": "fadeOut"
-                        }
-                     });
-        },
-
-        changeProfilePics() {
-            this.imageFile = this.$refs.file.files[0];
-            const reader  = new FileReader();
-            reader.addEventListener("load", function () {
-              this.showPreview = true;
-              this.imagePreview = reader.result;
-                }.bind(this), false);
-            if(this.imageFile){
-              if ( /\.(jpe?g|png|gif)$/i.test( this.imageFile.name ) ) {
-                    reader.readAsDataURL( this.imageFile);
-                }
+                    this.$toastr.Add({
+                        msg: error.response.data.message, 
+                        clickClose: false, 
+                        timeout: 2000,
+                        position: "toast-top-right", 
+                        type: "error", 
+                        preventDuplicates: true,
+                        progressbar: false, 
+                        style: { backgroundColor: "red"}
+                      });
                 
-             }
-            //  onUploadProgress: function( progressEvent ) {
-            //     this.uploadPercentage = parseInt( Math.round( ( progressEvent.loaded / progressEvent.total ) * 100 );
-            //   }.bind(this)
+                     });
+                  },
+
+                  changeProfilePics() {
+                    this.imageFile = this.$refs.file.files[0];
+                    const reader  = new FileReader();
+                    reader.addEventListener("load", function () {
+                    this.showPreview = true;
+                    this.imagePreview = reader.result;
+                        }.bind(this), false);
+                    if(this.imageFile){
+                    if ( /\.(jpe?g|png|gif)$/i.test( this.imageFile.name ) ) {
+                            reader.readAsDataURL( this.imageFile);
+                        }
+                        
+                    }
             
          }   
 

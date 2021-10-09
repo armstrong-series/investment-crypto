@@ -1,6 +1,6 @@
 @extends('Layout.settings-master')
 @section('title')
-<title>Clusterwink | Settings</title>
+<title>Coin Resources | Settings</title>
 @endsection
 
 
@@ -92,7 +92,15 @@
                                                             <span class="profile-cat">Name</span>
                                                         </div>
                                                         <div class="col-xl-7 col-sm-9">
-                                                           <input type="text" class="form-control" placeholder="Enter Name">
+                                                           <input type="text" v-model="user.name" class="form-control" placeholder="Enter Name">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row profile-row">
+                                                        <div class="col-xs-5 col-sm-3">
+                                                            <span class="profile-cat">Mobile</span>
+                                                        </div>
+                                                        <div class="col-xl-7 col-sm-9">
+                                                           <input type="text" v-model="user.mobile" class="form-control" placeholder="Enter Mobile Number">
                                                         </div>
                                                     </div>
                                                     <div class="row profile-row">
@@ -108,7 +116,7 @@
                                                             <span class="profile-cat">Password</span>
                                                         </div>
                                                         <div class="col-xl-7 col-sm-9">
-                                                            <input type="password" class="form-control" placeholder="Enter Password">
+                                                            <input type="password"  v-model="user.password" class="form-control" placeholder="Enter Password">
                                                         </div>
                                                     </div>
                                                     
@@ -119,13 +127,13 @@
                                                             <span class="profile-cat">Confirm Password</span>
                                                         </div>
                                                         <div class="col-xl-7 col-sm-9">
-                                                            <input type="password" class="form-control" placeholder="Confirm Password">
+                                                            <input type="password"  v-model="user.password_confirmation"class="form-control" placeholder="Confirm Password">
                                                         </div>
                                                     </div>
                                                     <div class="row profile-row">
                                                         
                                                         <div class="col-xl-7 col-sm-9">
-                                                            <button class="btn btn-sm btn-primary" type="button">Update</button>
+                                                            <button class="btn btn-sm btn-primary" @click="updateprofile()" type="button">Update</button>
                                                         </div>
                                                     </div>
 
@@ -138,6 +146,8 @@
                             </div>
                         </div>             
                     </div>
+
+                    <textarea name="" id="profileUpdate" cols="30" rows="10" style="display:none;">{{ route('user.profile.update') }}</textarea>
                 </div>
 
                 <!-- Footer Area -->
@@ -146,6 +156,6 @@
         </div>
 @endsection
 
-@section('script')
+@section('scripts')
 <script src="{{ asset('assets/js/app/settings/profile.js') }}"></script>
 @endsection

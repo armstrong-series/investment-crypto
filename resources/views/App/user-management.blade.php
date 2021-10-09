@@ -92,6 +92,7 @@
         <!-- Edit User Modal -->
             <div class="modal inmodal" id="editUser" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog">
+                    @csrf
                     <div class="modal-content animated bounceInRight">
                         <div class="modal-header">
                         

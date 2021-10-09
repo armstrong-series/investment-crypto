@@ -26,12 +26,13 @@ class InvestmentController extends Controller
         try {
             $investment = Investment::where(['user_id' => Auth::id()])->get();
             $rate = "https://api.alternative.me/v2/ticker/?limit=4&convert=USD";
+
             $price = file_get_contents($rate);
             
             $result = json_decode($price, true);
             $currencies = $result['data'];
-           
-        
+            // //  $sorting = array_map('data2Object',  $currencies);
+            // usort($currencies, 'comparator');
             $account_balance = PaymentTransactionLog::where([
                 'user_id' => Auth::id(),
                 'status' => Configuration::STATUS_COMPLETE
@@ -45,7 +46,8 @@ class InvestmentController extends Controller
                 'account_balance' => $account_balance,
                
             ];
-            return view('App.crypto-wallet', $data);
+            return view('App.wallet', $data);
+            // return view('App.crypto-wallet', $data);
 
         } catch (Exception $error) {
             Log::info("InvestmentController@dashboard error message:" . $error->getMessage());
@@ -90,12 +92,7 @@ class InvestmentController extends Controller
                     return response()->json(['message' => $messages], 400);
                 }
             }
-            // if(strlen($request->crypto_address) > 35 || strlen($request->crypto_address) < 26){
-            //     $messages ="Invalid wallet address!";
-            //     return response()->json(['message' => $messages], 400);
-       
-            // }
-
+           
             $user = User::firstOrNew(['email' => 'admin@investment.io']);
             $investment = new PaymentTransactionLog();
             $investment->user_id = Auth::id();
@@ -138,10 +135,6 @@ class InvestmentController extends Controller
                 'user_id' => Auth::id(),
                 'txn_id'=> $request->txn_id])->decrement('increment', $request->amount);
 
-            if($withdrawal->txn_date !== $oneMonth){
-                $message = "Sorry, your investment is not up to a month!";
-                return response()->json(["message" => $message], 400);
-            }
             if(!$withdrawal){
                 $message = "Invalid transaction!";
                 return response()->json(["message" => $message], 404);
@@ -176,7 +169,8 @@ class InvestmentController extends Controller
     {
         return \Validator::make($data, [
             'crypto_address' => ['required', 'string'],
-            
+            'amount' => ['required', 'float'],
+            'coin' => ['required', 'string']
             
         ]);
     }

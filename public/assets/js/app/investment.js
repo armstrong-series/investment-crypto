@@ -50,7 +50,6 @@ new Vue({
         this.cryptocurrencies.currencies = JSON.parse($('#currencies').val())
         console.log('currencies', this.cryptocurrencies.currencies)
 
-       
 
     },
 
@@ -81,38 +80,46 @@ new Vue({
 
         invest() {
             this.isLoading = true;
-            axios.post(this.route.init_payment, {
-                amount: this.entered_price,
-                coin: this.selected_coin.symbol,
-                crypto_address: this.investment.crypto_address,
-                description: this.investment.description,
-                increment: this.increment
-            }).then((response) => {
-                this.$toastr.Add({
-                    msg: response.data.message, 
-                    clickClose: false, 
-                    timeout: 2000,
-                    position: "toast-top-right", 
-                    type: "success", 
-                    preventDuplicates: true, 
-                    progressbar: false,
-                    style: {backgroundColor: "green"}
-                  });
-                  $('#Invest').modal('hide');     
+            const formData = new FormData();
+            formData.append('_token', $('input[name=_token]').val());
+
+            for (let key in this.investment) {
+                let value = this.investment[key]
+                formData.append(key, value);
+            }
+            axios.post(this.route.init_payment, formData)
+                .then((response) => {
+                    $('#Invest').modal('hide');
+                    this.investment = {
+
+                    }
+                    this.$toastr.Add({
+                        msg: response.data.message,
+                        clickClose: false,
+                        timeout: 2000,
+                        position: "toast-top-right",
+                        type: "success",
+                        preventDuplicates: true,
+                        progressbar: false,
+                        style: { backgroundColor: "green" }
+                    });
+                    this.isLoading = false;
+                    this.transactions.push(Object.assign({}, response.data.investment, {}));
+
                 }).catch((error) => {
-                this.isLoading = false
-                this.$toastr.Add({
-                    msg: error.response.data.message, 
-                    clickClose: false, 
-                    timeout: 2000,
-                    position: "toast-top-right", 
-                    type: "error", 
-                    preventDuplicates: true,
-                    progressbar: false, 
-                    style: { backgroundColor: "red"}
-                  });
-            
-            })
+                    this.isLoading = false
+                    this.$toastr.Add({
+                        msg: error.response.data.message,
+                        clickClose: false,
+                        timeout: 2000,
+                        position: "toast-top-right",
+                        type: "error",
+                        preventDuplicates: true,
+                        progressbar: false,
+                        style: { backgroundColor: "red" }
+                    });
+
+                })
 
         },
 
@@ -125,37 +132,32 @@ new Vue({
                 description: this.withdrawal.description
             }).then((response) => {
                 this.$toastr.Add({
-                    msg: response.data.message, 
-                    clickClose: false, 
+                    msg: response.data.message,
+                    clickClose: false,
                     timeout: 2000,
-                    position: "toast-top-right", 
-                    type: "success", 
-                    preventDuplicates: true, 
+                    position: "toast-top-right",
+                    type: "success",
+                    preventDuplicates: true,
                     progressbar: false,
-                    style: {backgroundColor: "green"}
-                  });
-                //   $('#myModal').modal('hide');
-                  this.portfolio = {
-                      name: "",
-                      description: ""
-                  },
-                  this.imageFile = "";
-                
-                }).catch((error) => {
+                    style: { backgroundColor: "green" }
+                });
+                $('#withdraw').modal('hide');
+
+            }).catch((error) => {
                 this.isLoading = false
                 this.$toastr.Add({
-                    msg: error.response.data.message, 
-                    clickClose: false, 
+                    msg: error.response.data.message,
+                    clickClose: false,
                     timeout: 2000,
-                    position: "toast-top-right", 
-                    type: "error", 
+                    position: "toast-top-right",
+                    type: "error",
                     preventDuplicates: true,
-                    progressbar: false, 
-                    style: { backgroundColor: "red"}
-                  });
-            
+                    progressbar: false,
+                    style: { backgroundColor: "red" }
+                });
+
             })
-          
+
         }
     }
 })

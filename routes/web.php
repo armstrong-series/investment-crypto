@@ -14,15 +14,14 @@ use App\Http\Controllers as Controller;
 */
 Route::get('/login', [Controller\Auth\LoginController::class, 'loginView'])->name('login');
 Route::post('/login', [Controller\Auth\LoginController::class, 'login'])->name('auth.login.account');
-// Route::post('/login', [Controller\Auth\LoginController::class, 'login'])->name('auth.login.account');
 Route::get('/logout', [Controller\Auth\LoginController::class, 'logout'])->name('auth.logout');
 Route::get('/account-create', [Controller\UserController::class, 'accountView'])->name('auth.register');
 
 Route::get('/reset-password/{token}', [Controller\Auth\ResetPasswordController::class, 'resetPassword'])->name('auth.reset-password');
 Route::post('/reset-password', [Controller\Auth\ResetPasswordController::class,'updatePassword'])->name('auth.update-password');
 
-// Route::post('/payment', [Controller\Integrations\RaveController::class, 'initialize'])->name('make-payment');
-// Route::get('/payment-callback', [Controller\Integrations\RaveController::class, 'callback'])->name('users.payment.callback');
+Route::post('/payment', [Controller\Integrations\RaveController::class, 'initialize'])->name('make-payment');
+Route::get('/payment/callback', [Controller\Integrations\RaveController::class, 'callback'])->name('users.payment.callback');
 
 
 Route::get('/transaction-history', [Controller\InvestmentController::class, 'transactionHistory'])->name('users.transaction-history');
@@ -62,7 +61,7 @@ Route::get('/asset',  [Controller\Admin\AssetsController::class, 'assetsPreview'
 Route::get('/assets-image/{file}', [Controller\Admin\AssetsController::class, 'assetsFile'])->name('assets-file');
 Route::delete('/delete-thumbnail/{id}', [Controller\Admin\AssetsController::class, 'deleteThumbnail'])->name('assets-thumbnail-delete');
 
-
+Route::get('/two-factor', [Controller\Settings\SecurityController::class, 'twoFactorAuth'])->name('account.two-factor');
 
     // Route::get('/settings/auth/2fa', [Controller\Settings\TwoFactorController::class, 'authentication'])->name('auth.two-factor');
     // Route::post('/generateSecret', [Controller\Settings\TwoFactorController::class, 'generate2faSecret'])->name('generate2faSecret');

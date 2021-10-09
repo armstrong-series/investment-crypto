@@ -14,7 +14,7 @@
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="{{ $page == 'dashboard' ? 'active' : '' }}"><a href="{{ route('user.dashboard') }}"><i class="zmdi zmdi-view-web"></i>&nbsp;&nbsp;<span>Dashboard</span></a></li>
                     @if(Auth::user()->user_type === "admin" || Auth::user()->user_type  === "support")
-                        <li class="{{ $page == 'admin' ? 'active' : '' }}"><a href="{{ route('admin.dashboard') }}"><i class="fas fa-user-shield"></i>&nbsp;&nbsp;<span>Admin</span></a></li>
+                        <li class="{{ $page == 'admin' ? 'active' : '' }}"><a href="{{ route('admin.dashboard') }}"><i class="fas fa-user-shield"></i>&nbsp;&nbsp;<span>Administrator</span></a></li>
                     @endif
                     <li class="treeview {{ $page == 'page' ? 'active' : '' }}">
                         <a href="#"><i class="fad fa-browser"></i>&nbsp;&nbsp;<span>Apps</span> <i class="fa fa-angle-right"></i></a>

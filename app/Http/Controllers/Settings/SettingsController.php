@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Settings;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Auth, Exception, Dotenv\Validator;
+use Auth, Exception;
+use Validator;
 use App\Models\PasswordSecurity;
 use Illuminate\Support\Facades\Log;
 use \PragmaRX\Google2FAQRCode\Google2FA;
+use Illuminate\Support\Facades\Hash;
 
 class SettingsController extends Controller
 {
@@ -34,12 +36,13 @@ class SettingsController extends Controller
             Log::info("Settings\SettingsController@settingsDashboard error message:" . $error->getMessage());
             $response = [
                 'status' =>false,
-                "message" => "Encountered an error"
+                "message" => $error
             ];
             return $response;
         }
     }
 
+   
 
     public function security(Request $request)
     {

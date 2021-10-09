@@ -39,7 +39,8 @@
                                                          <a v-cloak href="javascript:void(0);" role="button" class="text-secondary" data-toggle="tooltip" data-placement="bottom" title="Coin Address">Send to<br>@{{ transaction.crypto_address }}</a>
                                                      </div>
                                                      <div class="col">
-                                                         <button v-cloak type="button" class="btn btn-sm btn-warning text-default" data-toggle="tooltip" style="color:white;" data-placement="top" title="Date"><small>@{{ transaction.txn_date }}</small></button>
+                                                         <!-- <button v-cloak type="button" class="btn btn-sm btn-warning text-default" data-toggle="tooltip" style="color:white;" data-placement="top" title="Date"><small>@{{ transaction.created_date }}</small></button> -->
+                                                         <a href="javascript:void(0);" v-cloak  class="text-info"   data-toggle="tooltip" data-placement="top" title="Date"><strong>@{{ transaction.created_date }}</strong></a>
                                                      </div>
                                                      <div class="col">
                                                          <a href="javascript:void(0);" v-cloak class="text-secondary" data-toggle="tooltip" data-placement="top" title="Amount">@{{ transaction.amount }}</a>

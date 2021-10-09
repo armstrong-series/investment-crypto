@@ -74,6 +74,8 @@
     <script src="{{ asset('UI-assets/js/default-assets/widget-page-chart-active.js') }}"></script>
     <script src="{{ asset('UI-assets/js/default-assets/apexchart.min.js') }}"></script>
     <script src="{{ asset('UI-assets/js/default-assets/dashboard-active.js') }}"></script>
+
+    
     @yield('scripts')
 
 </body>
